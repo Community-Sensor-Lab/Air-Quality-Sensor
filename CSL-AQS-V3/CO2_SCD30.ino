@@ -33,11 +33,13 @@ String readSCD30(float Pbme) {
 void initializeSCD30(int samplingInterval)  {
   Serial.print("starting SCD30... ");
   if (CO2sensor.begin() == false) {
-    Serial.println("SCD30 CO2 sensor not detected");
+    Serial.println("SCD30 Not Detected");
     stat |= 0x08; // set bit 3
+    display.println("SCD30 Not Detected");display.display();
   }
   else  {
     Serial.println("SCD30 ok");
+    display.println("SCD30 Connected");display.display();
     stat &= 0xF7; // clear bit 3
     CO2sensor.setAmbientPressure(0);      // 0=deactivate press. correction. Default 1013.25 mBar
     CO2sensor.setAutoSelfCalibration(false);     // de-activate Automatic Self-Calibraton

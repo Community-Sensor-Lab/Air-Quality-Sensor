@@ -12,7 +12,19 @@ void initializeBME()  {
     Serial.print("   ID of 0x56-0x58 represents a BMP 280,\n");
     Serial.print("        ID of 0x60 represents a BME 280.\n");
     Serial.print("        ID of 0x61 represents a BME 680.\n");
+    display.println("BME280 Not Detected");display.display();
   }
-  else
-    Serial.println("BME ok");
+  else{
+    Serial.println("BME Connected");
+    display.println("BME280 Connected");display.display();
+  }
+}
+
+String readBME()  {
+  float Tbme = bme.readTemperature();
+  float Pbme = bme.readPressure() / 100; // for hPa
+  float RHbme = bme.readHumidity();
+
+  String bmeString = String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) + String(", ");
+  return bmeString;
 }

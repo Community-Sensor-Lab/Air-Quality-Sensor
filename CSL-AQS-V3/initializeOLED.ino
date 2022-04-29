@@ -1,4 +1,5 @@
 // Adafruit OLED display
+
 void initializeOLED()  {
   Serial.print("starting 128x64 OLED... ");
   if (!display.begin(0x3C, true)) // Address 0x3C for 128x32
@@ -16,7 +17,10 @@ void initializeOLED()  {
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
     display.setCursor(0, 0);
+    display.println("Hello World");
+    display.display();
   }
+   
 }
 
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce )  {

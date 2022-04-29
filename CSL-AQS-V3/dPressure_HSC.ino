@@ -13,12 +13,15 @@ void initializeHSC() {
     delay(100);
   }
   if (hscStatus == 0) {
-    Serial.print("HSC ok ");
+    Serial.print("Differential Pressure Sensor Connected");
     stat &= 0xBF; // clear bit 6
+    display.println("HSC Connected");display.display();
   }
   else {
-    Serial.print("HSC not ok ");
+    Serial.print("Differential Pressure Sensor Not Detected");
+    display.println("HSC Not Connected");display.display();
     stat |= 0x40; // set bit 6
+    
   }
   Serial.println(hscStatus);
 }

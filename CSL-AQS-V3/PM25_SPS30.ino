@@ -52,7 +52,7 @@ void initializeSPS30() {
   pinMode(11, OUTPUT);
 
   int i = 0;
-  for (i = 1; i < 4; i++) {
+  for (i = 1; i < 3; i++) {
     digitalWrite(11, LOW); // turn off the power to the Adafruit Miniboost 3.7V->5V converter for SPS30
     delay(10000); // wait for voltage to drop so that SPS30 is off
     digitalWrite(11, HIGH); // turn on. If this power cycle isn't done the UART Serial1 won't connect
@@ -62,18 +62,22 @@ void initializeSPS30() {
     delay(1000);
     if (!sps30.begin(&Serial1))
       Serial.println("Serial1 communication channel NOT ok");
-    else if (!sps30.probe())    // check for SPS30 connection
+    else if (!sps30.probe()){    // check for SPS30 connection
       Serial.println("probe / connect with SPS30 NOT ok");
+      display.clearDisplay();display.setCursor(0, 0);
+      display.println("SPS30 Not Detected");display.display();}
     else if (!sps30.reset())
       Serial.println("reset SPS30 NOT ok");
     else if (!sps30.start())     // start measurement
       Serial.println("SPS30 start NOT ok");
     else {
-      Serial.println("SPS30 ok");
+      Serial.println("SPS30 Connected");
+      display.clearDisplay();display.setCursor(0, 0);
+      display.println("SPS30 Connected");display.display();
       break;
     }
-    Serial.print("Trying 2 times: ");
-    Serial.println(i);
+//    Serial.print("Trying 2 times: ");
+//    Serial.println(i);
   }
   if (i >= 3)
     stat |= 0x20; // error so set bit 5

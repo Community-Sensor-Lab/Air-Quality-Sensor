@@ -8,10 +8,12 @@ void initializeWiFi() {
 
   while (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
+    display.clearDisplay();display.setCursor(0, 0);
+    display.print("WiFi shield not present");display.display();
     delay(500);
   }
   wStatus = WiFi.status();
-  for (int i = 1; i < 5; i++) {
+  for (int i = 1; i < 4; i++) {
     if (wStatus != WL_CONNECTED) {
       Serial.print("Attempting to connect to SSID: ");
       Serial.println(ssid);
@@ -33,16 +35,17 @@ void initializeWiFi() {
 
   printWiFiStatus();
   WiFi.end(); // end wifi. will be restarted each upload.
-
-  display.print("SSID :");
-  display.println(ssid);
-  display.print("GSSID :");
-  display.println(GSSD_ID);
-  display.display(); // actually display all of the above
+//
+//  display.print("SSID :");
+//  display.println(ssid);
+//  display.print("GSSID :");
+//  display.println(GSSD_ID);
+//  display.display(); // actually display all of the above
 }
 
 void printWiFiStatus() {
   if (wStatus == WL_CONNECTED) {
+    display.println("Connected to Wifi");display.display();
     Serial.print("Connected to WiFi ");
     Serial.print("SSID: ");
     Serial.println(WiFi.SSID());
