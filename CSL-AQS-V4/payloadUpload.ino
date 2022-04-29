@@ -34,6 +34,20 @@ void payloadUpload(String payload) {
         char c = client.read();
         Serial.write(c);
       }
+      // example url to GET from: See notes above on how to make a google spreadsheet to communicate with
+
+      char url[] = "https://script.google.com/macros/s/AKfycbxG4kbBaP2-emw1eFy_rL06vR5Uc7oD4lBBwp7q5QKpF3KU_Q09/exec";
+      char server[] = "www.google.com";
+
+      char payload[] = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15\"}";
+      char HTTPreply[5000];
+      GETcommand(HTTPreply, server, url);
+      Serial.println("Reply:  ");
+      Serial.println(HTTPreply);
+
+      POSTcommand(HTTPreply, payload, server, url);
+      Serial.println("Reply:  ");
+      Serial.println(HTTPreply);
 
       client.stop();
       if (!client.connected()) {
