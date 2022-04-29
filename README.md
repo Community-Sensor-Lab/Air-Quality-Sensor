@@ -1,11 +1,12 @@
-# Air Quality Sensor V3 using WiFi to Google Sheets 🌱 
+# Air Quality Sensor V4 using WiFi to Google Sheets 🌱 
 
  Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
  The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, and **PM2.5** (dust or smoke). It has an on-board logger and WiFi connectivity to Google Sheets for (almost) real time data reporting. 
 <br>
 
-V3 has code for the SPS30 PM2.5 and HSC differential pressure (Met Museum) sensors. If these are not pesent the code keeps going and reports 'no sensor' to SD log and google sheet. Additionally, keeps the start-stop for Wifi and sleeps all for ~25mA operation.
+Version 4 code can pull information from Google Spreadsheets and display it on the Arduino serial monitor using HTTP request command GET.
+Functions in code were also modified to be read easier.
 
 <img src="images/air-qaulity-sensor-V2.jpeg" width="200" height = "300"> <img src="images/WIFI LOGGER CSL-AQS-V2.0.png" width="600" height = "300"> 
 <br>
@@ -93,8 +94,10 @@ For instructions on getting the AQS connected to a solar panel visit our documen
 
 
 ## Versions 🛠
-### Air-Quality-Sensor-V3
-This is our latest version of our Air Quality Sensor. The code on this page is the latest code. Bigger display screen, power booster, PM 2.5 and differential pressure sensors are included in this version.
+### Air-Quality-Sensor-V4
+This is our latest version of our Air Quality Sensor. The code on this page is the latest code.
+### Air-Quality-Sensor-V3.1
+Code from version 2.1 of the Air Quality Sensor can be seen on the branch [Version-3.1](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL-AQS-V3.1)
 ### Air-Quality-Sensor-V2.1
 Code from version 2.1 of the Air Quality Sensor can be seen on the branch [Version-2.1](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL-AQS-V2.1)
 ### Air-Quality-Sensor-v1
