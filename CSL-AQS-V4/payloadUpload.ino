@@ -2,13 +2,18 @@
   Write to Google Sheets through a Wifi POST HTTP1.1 request to a Google script.
 */
 void payloadUpload(String payload) {
-  for (int i = 1; i < 4; i++) { // allways try to connect to wifi
-//    if (password != "") // if password is not empty
-//      wStatus = WiFi.begin(ssid, password);
-//    else
-//      wStatus = WiFi.begin(ssid);
-//    delay(500);
-    WiFi.beginProvision();
+//  for (int i = 1; i < 4; i++) { // allways try to connect to wifi
+    //    if (password != "") // if password is not empty
+    //      wStatus = WiFi.begin(ssid, password);
+    //    else
+    //      wStatus = WiFi.begin(ssid);
+    //    delay(500);
+    Provisioning_Wifi();
+//    while (WiFi.status() != WL_CONNECTED) {   //delete when this is no longer needed
+//      digitalWrite(LEDPIN, HIGH);     delay(200);
+//      digitalWrite(LEDPIN, LOW);      delay(200);
+//    }
+
 
     if (WiFi.status() == WL_CONNECTED) {
       if (!client.connected()) {
@@ -55,15 +60,19 @@ void payloadUpload(String payload) {
         Serial.println("disconnected from server");
       };
       WiFi.end();
-      break;
+      //break;
     }
-    else {
-      Serial.print("Trying to connect to Wifi : "); Serial.println(i);
-    }
-  }
-  if (wStatus != WL_CONNECTED)
-    Serial.println("Continuing without WiFi");
+    //    else {
+    //      Serial.print("Trying to connect to Wifi : "); Serial.println(i);
+    //      //      WiFi.beginProvision();
+    //      //      delay(200);
+//  }
 }
+//  if (wStatus != WL_CONNECTED)
+//    Serial.println("Continuing without WiFi");
+//  //    WiFi.beginProvision();
+//  //    delay(200);
+//}
 
 void initializeClient() {
   Serial.print("\nStarting connection to server... ");

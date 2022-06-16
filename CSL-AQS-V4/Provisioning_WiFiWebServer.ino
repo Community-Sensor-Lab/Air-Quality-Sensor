@@ -57,6 +57,7 @@ void Provisioning_Wifi() {
   Serial.println(".local/");
 
   printWiFiStatus();
+  //WiFi.end();  //uncomment this when things work as intended
 }
 
 void listNetworks() {

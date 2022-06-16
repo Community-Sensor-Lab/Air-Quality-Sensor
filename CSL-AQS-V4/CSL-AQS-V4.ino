@@ -90,6 +90,8 @@ void setup(void) {
   initializeHSC();
   logfile = initializeSD(); // SD card and RTC
   Provisioning_Wifi();
+  WiFi.end();   // testing purposes only
+  //wStatus = WL_CONNECTED;
 }
 
 char outstr[160];
@@ -143,7 +145,7 @@ void loop(void)  {
 
   int ret = sps30.sleep(); // turn off SPS30
   // sleep cycle
-  for (int i = 1; i <= 8; i++)  {  // 124s = 8x16s sleep, only toggle display
+  for (int i = 1; i <= 2; i++)  {  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState)  { // turn display on with data
       display.clearDisplay();
