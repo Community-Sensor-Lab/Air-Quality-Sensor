@@ -3,11 +3,12 @@
 */
 void payloadUpload(String payload) {
   for (int i = 1; i < 4; i++) { // allways try to connect to wifi
-    if (password != "") // if password is not empty
-      wStatus = WiFi.begin(ssid, password);
-    else
-      wStatus = WiFi.begin(ssid);
-    delay(500);
+//    if (password != "") // if password is not empty
+//      wStatus = WiFi.begin(ssid, password);
+//    else
+//      wStatus = WiFi.begin(ssid);
+//    delay(500);
+    WiFi.beginProvision();
 
     if (WiFi.status() == WL_CONNECTED) {
       if (!client.connected()) {

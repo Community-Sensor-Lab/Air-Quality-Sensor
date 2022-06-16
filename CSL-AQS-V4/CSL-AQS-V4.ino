@@ -41,17 +41,18 @@
 #include "sps30.h" // this is Paul van Haastrecht library, not Sensirion's https://github.com/paulvha/sps30.git
 #include <HoneywellTruStabilitySPI.h> // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
 #include "arduino_secrets.h" // wifi name and password in .h file. see tab
-
+#include <WiFiMDNSResponder.h>//For provisioning
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
+#define LEDPIN 13 
 #define BUTTON_A  9 // Oled button also A7 enable pullup to read button
 #define BUTTON_B  6 // oled button
 #define BUTTON_C  5 // oled button
 #define SD_CS 10    // Chip select for SD card default for Adalogger
 #define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
 
-char ssid[] = SECRET_SSID;    // your network SSID (name)
-char password[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
+//char ssid[] = SECRET_SSID;    // your network SSID (name)
+//char password[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 String POSTCommand = String("POST /macros/s/") + String(GSSD_ID) + String("/exec?value=Hello HTTP/1.1");      // Google Sheets Script Deployment ID
 char server[] = "script.google.com"; // name address for Google scripts as we are communicationg with the scripg (using DNS)
 // these are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
@@ -88,7 +89,7 @@ void setup(void) {
   initializeBME();      // TPRH
   initializeHSC();
   logfile = initializeSD(); // SD card and RTC
-  initializeWiFi();
+  Provisioning_Wifi();
 }
 
 char outstr[160];
