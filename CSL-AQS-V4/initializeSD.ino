@@ -40,13 +40,14 @@ File initializeSD()  {
     stat = stat | 0x04; // 3rd bit set 'rtc not started'
 //    display.clearDisplay();
 //    display.setCursor(0, 0);
-    display.println("RTC Not ]");
+    display.println("RTC Not found");  //display RTC not starting
     display.display();
   }
-  else
+  else{    //added brackets
     Serial.println("RTC Connected");
     display.println("RTC Connected");
     display.display();
+  }
   // TO SET TIME at compile: run once to syncro then run again with line commented out
   //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 

@@ -43,7 +43,7 @@ void GETcommand(char* reply, char* server, char* url)  {
   }
   else {
     Serial.println("No connection to server. stopping.");
-    while (true);
+    //while (true);
   }
   Serial.println("disconnecting from server");
   client.stop();

@@ -1,6 +1,12 @@
 /*
   Write to Google Sheets through a Wifi POST HTTP1.1 request to a Google script.
 */
+
+/*
+ Figure out how to keep collecting data even when not connected to WiFi ******
+ */
+
+
 void payloadUpload(String payload) {
 //  for (int i = 1; i < 4; i++) { // allways try to connect to wifi
     //    if (password != "") // if password is not empty

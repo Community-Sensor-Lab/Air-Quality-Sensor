@@ -41,7 +41,7 @@ void POSTcommand(char* reply, char* payload, char* server, char* url)  {
   }
   else {
     Serial.println("No connection to server. stopping.");
-    while (true);
+    //while (true);
   }
   Serial.println("disconnecting from server");
   client.stop();

@@ -12,7 +12,8 @@ WiFiMDNSResponder mdnsResponder;
 
 void Provisioning_Wifi() {
   WiFi.setPins(8, 7, 4, 2);
-
+  display.clearDisplay();
+  display.setCursor(0, 0);
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
@@ -66,8 +67,13 @@ void listNetworks() {
   { Serial.println("Couldn't get a WiFi connection");
     while (true);
   }
-  for (int thisNet = 0; thisNet < numSsid; thisNet++)
+  display.println("Available Networks: ");
+  display.display();
+  for (int thisNet = 0; thisNet < numSsid; thisNet++) {
     Serial.println(WiFi.SSID(thisNet));
+    display.println(WiFi.SSID(thisNet));
+    display.display();
+  }
 }
 
 void printWiFiStatus() {
@@ -75,10 +81,12 @@ void printWiFiStatus() {
   Serial.print("SSID: ");
   Serial.println(WiFi.SSID());
 
+
   // print your WiFi shield's IP address:
   IPAddress ip = WiFi.localIP();
   Serial.print("IP Address: ");
   Serial.println(ip);
+
 
   // print the received signal strength:
   long rssi = WiFi.RSSI();

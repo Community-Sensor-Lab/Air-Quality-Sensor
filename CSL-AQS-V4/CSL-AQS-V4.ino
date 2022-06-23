@@ -141,11 +141,11 @@ void loop(void)  {
   Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + pmString + hscString);
 
   logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + pmString + hscString);
-  logfile.flush();   // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  logfile.flush();   // Write to disk. Uses 2048 bytes of I/O to SD card, takes power and time
 
   int ret = sps30.sleep(); // turn off SPS30
   // sleep cycle
-  for (int i = 1; i <= 2; i++)  {  // 124s = 8x16s sleep, only toggle display
+  for (int i = 1; i <= 8; i++)  {  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState)  { // turn display on with data
       display.clearDisplay();
