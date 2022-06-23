@@ -37,7 +37,11 @@ void Provisioning_Wifi() {
 
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("Connect to AP wifi101-XXXXs");
+    display.println("Connect to AP wifi101-XXXXs");
+    display.display();
     Serial.println("Configure SSID and password by visiting http://wifi101/ ");
+    display.println("Configure SSID and password by visiting http://wifi101/ ");
+    display.display();
   }
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -67,6 +71,8 @@ void listNetworks() {
   { Serial.println("Couldn't get a WiFi connection");
     while (true);
   }
+  display.clearDisplay();
+  display.setCursor(0, 0);
   display.println("Available Networks: ");
   display.display();
   for (int thisNet = 0; thisNet < numSsid; thisNet++) {
