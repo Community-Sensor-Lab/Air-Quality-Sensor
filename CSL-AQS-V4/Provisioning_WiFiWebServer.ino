@@ -49,6 +49,11 @@ void Provisioning_Wifi() {
     digitalWrite(LEDPIN, LOW);      delay(500);
   }
 
+  /*
+  ADD CODE SUCH THAT THE SENSOR STILL RUNS WITHOUT WIFI
+
+  */
+  
   // Setup the MDNS responder to listen to the configured name.
   // NOTE: You _must_ call this _after_ connecting to the WiFi network and
   // being assigned an IP address.
