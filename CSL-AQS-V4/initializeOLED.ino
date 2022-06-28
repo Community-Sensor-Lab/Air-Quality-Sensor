@@ -17,8 +17,20 @@ void initializeOLED()  {
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
     display.setCursor(0, 0);
-    display.println("Hello World");
+    display.println("Hello World!");
+//    display.println("Connect to WiFi?");
+//    display.println(""); 
+//    display.println("YES   (Press B)");
+//    display.println("");    
+//    display.println("NO    (Press C)");
+//    if (BUTTON_B == HIGH)
+//      wifi = True;
+//    else
+//      wifi = False;
+//    
     display.display();
+//    delay (5000);
+    //if ()
   }
    
 }

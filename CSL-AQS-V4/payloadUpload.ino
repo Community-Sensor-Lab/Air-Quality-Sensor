@@ -14,7 +14,9 @@ void payloadUpload(String payload) {
     //    else
     //      wStatus = WiFi.begin(ssid);
     //    delay(500);
-    Provisioning_Wifi();
+    if (usewifi == true)  //do provisioning wifi step
+      Provisioning_Wifi();
+    //skip provisioning wifi otheriwse
 //    while (WiFi.status() != WL_CONNECTED) {   //delete when this is no longer needed
 //      digitalWrite(LEDPIN, HIGH);     delay(200);
 //      digitalWrite(LEDPIN, LOW);      delay(200);

@@ -26,6 +26,7 @@ void Provisioning_Wifi() {
   digitalWrite(LEDPIN, LOW);
 
   listNetworks(); //starts scanning for network
+  
 
   // Start in provisioning mode:
   //  1) This will try to connect to a previously associated access point.
@@ -36,17 +37,33 @@ void Provisioning_Wifi() {
   WiFi.beginProvision();
 
   if (WiFi.status() != WL_CONNECTED) {
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("Connect to WiFi?");
+    display.println("");
     Serial.println("Connect to AP wifi101-XXXXs");
-    display.println("Connect to AP wifi101-XXXXs");
-    display.display();
+    display.println("If yes, connect to AP wifi101-XXXXs");
+    //display.display();
     Serial.println("Configure SSID and password by visiting http://wifi101/ ");
-    display.println("Configure SSID and password by visiting http://wifi101/ ");
+    display.println("Login to wifi at http://wifi101/ ");
+    //display.display();
+    display.println("");
+    display.println("If no, press button A");
     display.display();
   }
+  
 
   while (WiFi.status() != WL_CONNECTED) {
     digitalWrite(LEDPIN, HIGH);     delay(500);
     digitalWrite(LEDPIN, LOW);      delay(500);
+    butastat = digitalRead(BUTTON_A);
+    if (butastat == HIGH){   //only occurs if button is pressed
+      usewifi = false;
+      display.clearDisplay();
+      //display.println("Not Connecting");
+      //display.display();
+      break;
+    }
   }
 
   /*
