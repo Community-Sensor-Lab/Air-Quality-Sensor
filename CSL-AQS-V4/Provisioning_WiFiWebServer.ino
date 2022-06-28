@@ -26,7 +26,7 @@ void Provisioning_Wifi() {
   digitalWrite(LEDPIN, LOW);
 
   listNetworks(); //starts scanning for network
-  
+
 
   // Start in provisioning mode:
   //  1) This will try to connect to a previously associated access point.
@@ -50,27 +50,42 @@ void Provisioning_Wifi() {
     display.println("");
     display.println("If no, press button A");
     display.display();
-  }
-  
+  } 
+  pinMode(BUTTON_A, INPUT);
+
 
   while (WiFi.status() != WL_CONNECTED) {
     digitalWrite(LEDPIN, HIGH);     delay(500);
     digitalWrite(LEDPIN, LOW);      delay(500);
-    butastat = digitalRead(BUTTON_A);
-    if (butastat == HIGH){   //only occurs if button is pressed
+    int buttonRead = digitalRead(BUTTON_A);
+    if (buttonRead != lastButtonState)lastDebounceTime = millis(); // reset the debouncing timer
+
+    if ((millis() - lastDebounceTime) > debounceDelay) {
+      // whatever the reading is at, it's been there for longer than the debounce
+      // delay, so take it as the actual current state:
+
+      // if the button state has changed:
+      if (buttonRead != currentButtonState) {
+        currentButtonState = buttonRead;
+
+      }
+    }
+    if (currentButtonState == HIGH) {  //only occurs if button is pressed
       usewifi = false;
       display.clearDisplay();
       //display.println("Not Connecting");
       //display.display();
       break;
     }
+    // save the reading. Next time through the loop, it'll be the lastButtonState:
+    //lastButtonState = buttonRead;
   }
 
   /*
-  ADD CODE SUCH THAT THE SENSOR STILL RUNS WITHOUT WIFI
+    ADD CODE SUCH THAT THE SENSOR STILL RUNS WITHOUT WIFI
 
   */
-  
+
   // Setup the MDNS responder to listen to the configured name.
   // NOTE: You _must_ call this _after_ connecting to the WiFi network and
   // being assigned an IP address.

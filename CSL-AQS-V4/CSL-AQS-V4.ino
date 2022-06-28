@@ -64,6 +64,11 @@ uint16_t CO2; // for oled display
 float PM25 = 0;
 
 bool usewifi = true;
+int currentButtonState; // the current reading from the input pin
+int lastButtonState = LOW;   // the previous reading from the input pin
+unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
+unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
+
 
 WiFiSSLClient client; // make SSL client
 RTC_PCF8523 rtc; // Real Time Clock for RevB Adafruit logger shield
@@ -73,7 +78,7 @@ File logfile;  // the logging file
 SCD30 CO2sensor; // sensirion SCD30 CO2 NDIR
 SPS30 sps30; // SPS30 PM2.5 sensor
 TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0 ); // HSC differential pressure sensor for Met Eric Breunitg
-int butastat = 0;
+//int butastat = 0;
 uint8_t stat = 0; // status byte
 
 void setup(void) {
@@ -100,6 +105,7 @@ char outstr[160];
 int32_t Tsleep = 0;
 bool displayState = true;
 bool buttonAstate = true;
+
 
 int lastTimeToggle = 0;
 int timeDebounce = 100;
