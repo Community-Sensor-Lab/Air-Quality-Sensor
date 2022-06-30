@@ -5,8 +5,7 @@
  The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, and **PM2.5** (dust or smoke). It has an on-board logger and WiFi connectivity to Google Sheets for (almost) real time data reporting. 
 <br>
 
-Version 4 code can pull information from Google Spreadsheets and display it on the Arduino serial monitor using HTTP request command GET.
-Functions in code were also modified to be read easier.
+Version 4 code allows wireless connection to the internet. Connection to WiFi is optional with the click of a button. 
 
 <img src="images/air-qaulity-sensor-V2.jpeg" width="200" height = "300"> <img src="images/WIFI LOGGER CSL-AQS-V2.0.png" width="600" height = "300"> 
 <br>
