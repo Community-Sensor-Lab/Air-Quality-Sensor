@@ -34,7 +34,7 @@
 #include "RTClib.h"
 #include "SparkFun_SCD30_Arduino_Library.h"
 #include <Adafruit_GFX.h>
-#include <Adafruit_SH110X.h>  // oled library
+#include <Adafruit_SH110X.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <WiFi101.h>
@@ -64,10 +64,11 @@ uint16_t CO2; // for oled display
 float PM25 = 0;
 
 bool usewifi = true;
-int currentButtonState; // the current reading from the input pin
-int lastButtonState = LOW;   // the previous reading from the input pin
-unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
+
+//int currentButtonState; // the current reading from the input pin
+//int lastButtonState = LOW;   // the previous reading from the input pin
+//unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
+//unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
 
 
 WiFiSSLClient client; // make SSL client
@@ -105,6 +106,7 @@ char outstr[160];
 int32_t Tsleep = 0;
 bool displayState = true;
 bool buttonAstate = true;
+bool pressState = false;
 
 
 int lastTimeToggle = 0;

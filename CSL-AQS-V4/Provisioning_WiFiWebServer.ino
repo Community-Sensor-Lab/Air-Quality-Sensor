@@ -48,29 +48,28 @@ void Provisioning_Wifi() {
     display.println("Login to wifi at http://wifi101/ ");
     //display.display();
     display.println("");
-    display.println("If no, press button A");
+    display.println("Else, hold button A 2 sec");
     display.display();
   } 
-  pinMode(BUTTON_A, INPUT);
 
 
   while (WiFi.status() != WL_CONNECTED) {
     digitalWrite(LEDPIN, HIGH);     delay(500);
     digitalWrite(LEDPIN, LOW);      delay(500);
-    int buttonRead = digitalRead(BUTTON_A);
-    if (buttonRead != lastButtonState)lastDebounceTime = millis(); // reset the debouncing timer
-
-    if ((millis() - lastDebounceTime) > debounceDelay) {
-      // whatever the reading is at, it's been there for longer than the debounce
-      // delay, so take it as the actual current state:
-
-      // if the button state has changed:
-      if (buttonRead != currentButtonState) {
-        currentButtonState = buttonRead;
-
-      }
-    }
-    if (currentButtonState == HIGH) {  //only occurs if button is pressed
+//    int buttonRead = digitalRead(BUTTON_A);
+//    if (buttonRead != lastButtonState)lastDebounceTime = millis(); // reset the debouncing timer
+//
+//    if ((millis() - lastDebounceTime) > debounceDelay) {
+//      // whatever the reading is at, it's been there for longer than the debounce
+//      // delay, so take it as the actual current state:
+//
+//      // if the button state has changed:
+//      if (buttonRead != currentButtonState) {
+//        currentButtonState = buttonRead;
+//
+//      }
+//    }
+    if (toggleButton(BUTTON_A, pressState, buttonAstate, lastTimeToggle, timeDebounce)) {  //only occurs if button is pressed
       usewifi = false;
       display.clearDisplay();
       //display.println("Not Connecting");
