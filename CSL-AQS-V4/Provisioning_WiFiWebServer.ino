@@ -39,16 +39,23 @@ void Provisioning_Wifi() {
   if (WiFi.status() != WL_CONNECTED) {
     display.clearDisplay();
     display.setCursor(0, 0);
-    display.println("Connect to WiFi?");
-    display.println("");
+
+    //to connect to WiFi connect to WiFi name wifi101... Visit http://wifi101/ 
+    display.println("To connect to WiFi ");
+    display.println("connect to ");
+    display.println("WiFi name: wifi101... ");
+    display.println("Visit http://wifi101/");
     Serial.println("Connect to AP wifi101-XXXXs");
-    display.println("If yes, connect to AP wifi101-XXXXs");
+    //display.println("If yes, connect to AP wifi101-XXXXs"); // Connect to WiFi name "wifi101..."
     //display.display();
-    Serial.println("Configure SSID and password by visiting http://wifi101/ ");
-    display.println("Login to wifi at http://wifi101/ ");
+    //display.println("Visit http://wifi101/ .Next login WiFi ");
+    //Serial.println("Configure SSID and password by visiting http://wifi101/ ");
+    //display.println("Login to wifi at http://wifi101/ ");
     //display.display();
     display.println("");
-    display.println("Else, hold button A 2 sec");
+    display.println("Else, hold button A ");
+    display.println("for 2 seconds");
+    //display.println("Until blinking light stops");
     display.display();
   } 
 
