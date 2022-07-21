@@ -16,9 +16,9 @@ String readSPS30()
     // loop to get data up to 2 times
     for (i = 1; i < 3; i++) {
       ret = sps30.GetValues(&val);
-      if (ret == ERR_DATALENGTH )
+      if (ret == SPS30_ERR_DATALENGTH )
         Serial.println("SPS30 err reading values");
-      else if (ret != ERR_OK)
+      else if (ret != SPS30_ERR_OK)
         Serial.println("SPS30 err reading values");
       else
         break;
