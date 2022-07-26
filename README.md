@@ -95,8 +95,8 @@ For instructions on getting the AQS connected to a solar panel visit our documen
 ## Versions 🛠
 ### Air-Quality-Sensor-V4
 This is our latest version of our Air Quality Sensor. The code on this page is the latest code.
-### Air-Quality-Sensor-V3.1
-Code from version 2.1 of the Air Quality Sensor can be seen on the branch [Version-3.0](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL-AQS-V3.0)
+### Air-Quality-Sensor-V3.0
+Code from version 3.0 of the Air Quality Sensor can be seen on the branch [Version-3.0](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL-AQS-V3.0)
 ### Air-Quality-Sensor-V2.1
 Code from version 2.1 of the Air Quality Sensor can be seen on the branch [Version-2.1](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL-AQS-V2.1)
 ### Air-Quality-Sensor-v1
