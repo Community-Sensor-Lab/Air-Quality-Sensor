@@ -17,7 +17,6 @@
    1- 0000 0010 0x02 SD could not create file
    2- 0000 0100 0x04 RTC failed
    3- 0000 1000 0x08 SCD30 CO2 sensor not available
-
    4- 0001 0000 0x10 SCD30 CO2 sensor timeout
    5- 0010 0000 0x20 SPS30 PM2.5 sensor malfunction
    6- 0100 0000 0x40 HSC differential pressure sensor absent or malfunction
@@ -40,7 +39,8 @@
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
 #include <HoneywellTruStabilitySPI.h> // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
-#include "arduino_secrets.h" // wifi name and password in .h file. see tab
+//#include "arduino_secrets.h" // wifi name and password in .h file. see tab
+#include <FlashStorage.h>
 
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
@@ -56,6 +56,15 @@
     (defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
 #define USE_PRODUCT_INFO
 #endif
+
+typedef struct {
+  boolean valid;
+  char saved_ssid[64];
+  char saved_passcode[64];
+  char saved_gsid[128];
+} Secrets;
+
+FlashStorage(flash_storage, Secrets);
 
 
 char server[] = "script.google.com"; // name address for Google scripts as we are communicationg with the scripg (using DNS)
@@ -96,7 +105,16 @@ void setup(void) {
   initializeBME();      // TPRH
   initializeHSC();
   logfile = initializeSD(); // SD card and RTC
-  AP_getInfo(ssidg, passcodeg, gsidg); 
+  //delay(5000);
+  //display.setCursor(0, 0);
+  //display.println("Please wait a few seconds...");
+  if (!check_valid()){
+    AP_getInfo(ssidg, passcodeg, gsidg); 
+  }
+  else{
+    storeinfo(ssidg, passcodeg, gsidg);
+  }
+  //storeinfo(ssidg, passcodeg, gsidg);
   //initializeWiFi();
 }
 
@@ -159,13 +177,13 @@ void loop(void)  {
       display.clearDisplay();
       display.setCursor(0, 0);
       display.print("CO2 ppm "); display.print(CO2);
-      display.print("  V "); display.println(measuredvbat);
-      display.print("    T C "); display.println(Tbme);
-      display.print(" P mBar "); display.println(Pbme);
-      display.print("    RH% "); display.println(RHbme);
-      display.print("  VOC "); display.println(Voc);
-      display.print("  NOX "); display.println(Nox);
-      display.print("  NewPM "); display.print(Pmv);
+      display.print("V "); display.println(measuredvbat);
+      display.print("T C "); display.println(Tbme);
+      display.print("P mBar "); display.println(Pbme);
+      display.print("RH% "); display.println(RHbme);
+      display.print("VOC "); display.println(Voc);
+      display.print("NOX "); display.println(Nox);
+      display.print("NewPM "); display.print(Pmv);
       display.display();
     }
     else  {  // turn display off
