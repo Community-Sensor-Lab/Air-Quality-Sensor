@@ -105,17 +105,18 @@ void setup(void) {
   initializeBME();      // TPRH
   initializeHSC();
   logfile = initializeSD(); // SD card and RTC
-  //delay(5000);
-  //display.setCursor(0, 0);
-  //display.println("Please wait a few seconds...");
+
+
   if (!check_valid()){
     AP_getInfo(ssidg, passcodeg, gsidg); 
   }
   else{
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("Connecting to previously saved network");
+    display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-  //storeinfo(ssidg, passcodeg, gsidg);
-  //initializeWiFi();
 }
 
 char outstr[160];

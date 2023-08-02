@@ -76,16 +76,25 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
 
   } else {
 
-    // Say hello to the returning user!
-    // SERIAL_PORT_MONITOR.println();
-    // SERIAL_PORT_MONITOR.print("Hi ");
-    // SERIAL_PORT_MONITOR.print(info.saved_ssid);
-    // SERIAL_PORT_MONITOR.print(" ");
-    // SERIAL_PORT_MONITOR.print(info.saved_passcode);
-    // SERIAL_PORT_MONITOR.println(", nice to see you again :-)");
+    //Allow User to force provisioning if they want to update the wifi information or if they have moved to a different location
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("If you would like to force provisioning, press any button");
+    display.println("except the reset button");
+    delay(2000);
+    int i = 0;
+    while (i < 10000){
+      Serial.print(" ");
+      if (){
+        AP_getInfo(ssid, passcode, gsid);
+        return;
+      }
+      i++;
+    }
 
 
     //Since the variables in the parameter are passed by reference we are able to modify the global variables value directly
+    //As such we can assign the saved values to the global variable that will then be used to connect to the wifi and the google sheet
     ssid = info.saved_ssid;
     passcode = info.saved_passcode;
     gsid = info.saved_passcode;
