@@ -79,13 +79,14 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     //Allow User to force provisioning if they want to update the wifi information or if they have moved to a different location
     display.clearDisplay();
     display.setCursor(0, 0);
-    display.println("If you would like to force provisioning, press any button");
-    display.println("except the reset button");
+    display.println("If you would like to force provisioning, press button a");
+    display.display();
     delay(2000);
     int i = 0;
-    while (i < 10000){
+    while (i < 100000){
       Serial.print(" ");
-      if (){
+      if (force_pro){
+        info.valid = false;
         AP_getInfo(ssid, passcode, gsid);
         return;
       }
@@ -97,7 +98,7 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     //As such we can assign the saved values to the global variable that will then be used to connect to the wifi and the google sheet
     ssid = info.saved_ssid;
     passcode = info.saved_passcode;
-    gsid = info.saved_passcode;
+    gsid = info.saved_gsid;
     SERIAL_PORT_MONITOR.println(info.saved_ssid);
     SERIAL_PORT_MONITOR.println(info.saved_passcode);
     SERIAL_PORT_MONITOR.println(info.saved_gsid);
