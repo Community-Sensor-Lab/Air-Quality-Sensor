@@ -41,7 +41,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 
 ## Arduino-IDE
 * [Installing Arduino and Getting Started](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing)
-### Installation Guide includes the following: <br />
+##### Installation Guide includes the following: <br />
 *Installation instruction for Arduino
 *Installation instructions for the libraries required to run the Air-Quality Sensor code
 *Installation instructions for the boards
