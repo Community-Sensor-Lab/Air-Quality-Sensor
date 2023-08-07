@@ -41,7 +41,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 
 ## Arduino-IDE
 <p> If you are new to Arduino, below is a guide on installing Arduino onto your computer along with the instructions on how to install the required libraries 
- and board managers needed to run our code. Included in our guide are additional setup instructions. </p>
+ and board managers needed to run our code. There are also additional setup instructions included in the guide for the WiFi and Real-Time-Clock. </p>
  
 * [Installing Arduino and Getting Started](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing)
 
