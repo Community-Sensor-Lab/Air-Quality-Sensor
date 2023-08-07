@@ -47,7 +47,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 
 <br>  
 
-* ### Downloading Code From Github 🐈‍⬛  
+### Downloading Code From Github 🐈‍⬛  
 If you are new to Github, **Welcome!** 
 Check out our guide:
 * [Downloading CSL AQS Code from Github](https://docs.google.com/document/d/1Vb9AufqkUwsVKtdozXMc4aboDjLqBNuyTXmZpECdKx0/edit?usp=sharing)
