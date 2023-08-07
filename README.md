@@ -47,12 +47,16 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 *Installation instructions for the boards
 *Connection testing instructions to make sure the sensor is connected to your computer
 *WiFi and clock setup instructions
+
 <br>  
+
 * ### Downloading Code From Github 🐈‍⬛  
 If you are new to Github, **Welcome!** 
 Check out our guide:
 * [Downloading CSL AQS Code from Github](https://docs.google.com/document/d/1Vb9AufqkUwsVKtdozXMc4aboDjLqBNuyTXmZpECdKx0/edit?usp=sharing)
+
 <br>
+
 ### Setting Up Your Arduino Sensor
 If you are new to the process of setting up a sensor, you can check out the guide we made that allows you to test the built sensor to make sure each component of the sensor is working as intended.
 * [Sensor Component Setup Guide](https://docs.google.com/document/d/1QF_vD6cMe2WdAhfrvd5zp7BLdgz92-z4E1pPEGmiRQw/edit?usp=sharing)
@@ -68,9 +72,11 @@ For instructions on getting the AQS connected with a Google Spreadsheet, take a 
 * Step-by-step instructions to then connecting your App Script to the AQS through the Arduino IDE
 
 <br>
-## Provisioning-and-Saved-State-Feature
+
+### Provisioning-and-Saved-State-Feature
 Our Air-Quality Sensor allows you to input wifi and google sheet information on the fly!
 For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning]()
+
 <br>
 
 
