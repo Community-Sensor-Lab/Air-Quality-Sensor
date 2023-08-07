@@ -44,6 +44,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
  and board managers needed to run our code. Included in the guide is also instructions on how to make sure your sensor is able to receive signals from your 
  computer along with the WiFi and Real-Time-Clock setup instructions to make sure the sensor is sychronised with your timezone and that the sensor will be 
  able to connect to your google sheet. </p>
+ 
 * [Installing Arduino and Getting Started](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing)
 
 <br>  
