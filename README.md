@@ -2,10 +2,10 @@
 
  Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
- The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, and **PM2.5** (dust or smoke). It has an on-board logger and WiFi connectivity to Google Sheets for (almost) real time data reporting. 
+ The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, and **PM2.5** (dust or smoke). It has an on-board logger and WiFi chip allowing connection to Google Sheets for real time data reporting. 
 <br>
 
-V3 has code for the SPS30 PM2.5 and HSC differential pressure (Met Museum) sensors. If these are not present the code keeps going and reports 'no sensor' to SD log and google sheet. Additionally, keeps the start-stop for Wifi and sleeps all for ~25mA operation. Version 4 is out with the provisioning code allowing users to connect the sensor to their wifi flexibly without having to input the wifi information beforehand.
+Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled
 
 <img src="images/csl_aqs_v3.5.jpeg" width="200" height = "300"> <img src="images/WIFI LOGGER CSL-AQS-V2.0.png" width="600" height = "300"> 
 <br>
@@ -22,6 +22,7 @@ V3 has code for the SPS30 PM2.5 and HSC differential pressure (Met Museum) senso
       * [Assembly](#Assembly)
       * [Arduino IDE](#Arduino-IDE)
       * [Setting Up Google Spreadsheet](#Setting-Up-Google-Spreadsheet)
+      * [How to utilize the provisioning feature](#Provisioning-and-Saved-State-Feature)
 
 
 ## Starting-From-Scratch💡 
@@ -40,10 +41,18 @@ V3 has code for the SPS30 PM2.5 and HSC differential pressure (Met Museum) senso
 
 ## Arduino-IDE
 * [Installing Arduino and Getting Started](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing)
+### Installation Guide includes the following:
+*Installation instruction for Arduino
+*Installation instructions for the libraries required to run the Air-Quality Sensor code
+*Installation instructions for the boards
+*Connection testing instructions to make sure the sensor is connected to your computer
+*WiFi and clock setup instructions
+<br>  
 * ### Downloading Code From Github 🐈‍⬛  
 If you are new to Github, **Welcome!** 
 Check out our guide:
 * [Downloading CSL AQS Code from Github](https://docs.google.com/document/d/1Vb9AufqkUwsVKtdozXMc4aboDjLqBNuyTXmZpECdKx0/edit?usp=sharing)
+<br>
 ### Setting Up Your Arduino Sensor
 If you are new to the process of setting up a sensor, you can check out the guide we made that allows you to test the built sensor to make sure each component of the sensor is working as intended.
 * [Sensor Component Setup Guide](https://docs.google.com/document/d/1QF_vD6cMe2WdAhfrvd5zp7BLdgz92-z4E1pPEGmiRQw/edit?usp=sharing)
@@ -57,6 +66,12 @@ For instructions on getting the AQS connected with a Google Spreadsheet, take a 
 * Step-by-step instructions to using the Google Script Editor for the AQS and deploying your app script
 * Managing troubleshooting issues
 * Step-by-step instructions to then connecting your App Script to the AQS through the Arduino IDE
+
+<br>
+## Provisioning-and-Saved-State-Feature
+Our Air-Quality Sensor allows you to input wifi and google sheet information on the fly!
+For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning]()
+<br>
 
 
 ## Parts-List 🖥 
