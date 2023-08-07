@@ -40,14 +40,11 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 
 
 ## Arduino-IDE
+<p> If you are new to Arduino, below is a guide on installing Arduino onto your computer along with the instructions on how to install the required libraries 
+ and board managers needed to run our code. Included in the guide is also instructions on how to make sure your sensor is able to receive signals from your 
+ computer along with the WiFi and Real-Time-Clock setup instructions to make sure the sensor is sychronised with your timezone and that the sensor will be 
+ able to connect to your google sheet. </p>
 * [Installing Arduino and Getting Started](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing)
-> Installation Guide includes the following: <br />
->> Installation instruction for Arduino <br />
->> Installation instructions for the libraries required to run the Air-Quality Sensor code<br />
->> Installation instructions for the boards<br />
->> Connection testing instructions to make sure the sensor is connected to your computer<br />
->> WiFi and clock setup instructions 
-
 
 <br>  
 
