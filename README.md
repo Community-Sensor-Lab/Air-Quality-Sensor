@@ -72,7 +72,7 @@ For instructions on getting the AQS connected with a Google Spreadsheet, take a 
 
 ### Provisioning-and-Saved-State-Feature
 Our Air-Quality Sensor allows you to input wifi and google sheet information on the fly!
-For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning]()
+For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning](https://docs.google.com/document/d/1_W05p6wplJaqzbf3onyIY-uPkPesUpoJflwmZjv0jfY/edit?usp=sharing)
 
 <br>
 
