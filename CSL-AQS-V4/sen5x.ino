@@ -38,9 +38,9 @@ void initializeSen5x(){
   Serial.print("starting Sen5x... ");
     Serial.begin(115200);
     
-    while (!Serial) {
-        delay(100);
-    }
+    // while (!Serial) {
+    //     delay(100);
+    // }
 
     Wire.begin();
 

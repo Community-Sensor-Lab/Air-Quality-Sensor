@@ -33,8 +33,8 @@ bool check_valid(){
 
 
 void storeinfo(String &ssid, String &passcode, String &gsid) {
-  SERIAL_PORT_MONITOR.begin(9600);
-  while (!SERIAL_PORT_MONITOR) {}
+  // SERIAL_PORT_MONITOR.begin(9600);
+  // while (!SERIAL_PORT_MONITOR) {}
 
   // Create a "Secrets" variable and call it "info"
   Secrets info;
@@ -67,22 +67,23 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     // Print a confirmation of the data inserted.
     display.clearDisplay();
     display.setCursor(0, 0);
-    SERIAL_PORT_MONITOR.println();
-    SERIAL_PORT_MONITOR.print("Your saved_ssid: ");
+    // SERIAL_PORT_MONITOR.println();
+    // SERIAL_PORT_MONITOR.print("Your saved_ssid: ");
     display.print("Your saved ssid: ");
-    SERIAL_PORT_MONITOR.println(info.saved_ssid);
+    // SERIAL_PORT_MONITOR.println(info.saved_ssid);
     display.println(info.saved_ssid);
-    SERIAL_PORT_MONITOR.print("and your saved_passcode: ");
+    // SERIAL_PORT_MONITOR.print("and your saved_passcode: ");
     display.print("Your saved passcode: ");
-    SERIAL_PORT_MONITOR.println(info.saved_passcode);
+    // SERIAL_PORT_MONITOR.println(info.saved_passcode);
     display.println(info.saved_passcode);
-    SERIAL_PORT_MONITOR.print("along with your saved_gsid: ");
+    // SERIAL_PORT_MONITOR.print("along with your saved_gsid: ");
     display.print("Your saved gsid: ");
-    SERIAL_PORT_MONITOR.println(info.saved_gsid);
+    // SERIAL_PORT_MONITOR.println(info.saved_gsid);
     display.println(info.saved_gsid);
-    SERIAL_PORT_MONITOR.println("have been saved.");
+    // SERIAL_PORT_MONITOR.println("have been saved.");
     display.println("have been saved.");
     display.display();
+    return;
 
   } else {
 
@@ -119,9 +120,9 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     display.print("Saved gsid: ");
     display.println(info.saved_gsid);
     display.display();
-    SERIAL_PORT_MONITOR.println(info.saved_ssid);
-    SERIAL_PORT_MONITOR.println(info.saved_passcode);
-    SERIAL_PORT_MONITOR.println(info.saved_gsid);
+    // SERIAL_PORT_MONITOR.println(info.saved_ssid);
+    // SERIAL_PORT_MONITOR.println(info.saved_passcode);
+    // SERIAL_PORT_MONITOR.println(info.saved_gsid);
     delay(5000);
     return;
   }

@@ -120,6 +120,8 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
       } else {
         // a device has disconnected from the AP, and we are back in listening mode
         Serial.println(F("Device disconnected from AP"));
+        display.println("Device disconnected");
+        display.display();
         client.stop();
       }
     }
