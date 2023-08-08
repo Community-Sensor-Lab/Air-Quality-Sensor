@@ -48,7 +48,7 @@
 #define BUTTON_B 6  // oled button
 #define BUTTON_C 5  // oled button
 #define SD_CS 10    // Chip select for SD card default for Adalogger
-#define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
+// #define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
 #define MAXBUF_REQUIREMENT 48
 
 #if (defined(I2C_BUFFER_LENGTH) && (I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || (defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
@@ -85,7 +85,7 @@ Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED d
 Adafruit_BME280 bme;                                             // the bme tprh sensor
 File logfile;                                                    // the logging file
 SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
+  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
 
 void setup(void) {
@@ -103,6 +103,7 @@ void setup(void) {
   initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
   initializeBME();           // TPRH
   logfile = initializeSD();  // SD card and RTC
+  delay(3000);
 
   //Set Interrupt
   pinMode(BUTTON_A, INPUT_PULLUP);

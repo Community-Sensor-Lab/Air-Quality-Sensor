@@ -65,14 +65,24 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     flash_storage.write(info);
 
     // Print a confirmation of the data inserted.
+    display.clearDisplay();
+    display.setCursor(0, 0);
     SERIAL_PORT_MONITOR.println();
     SERIAL_PORT_MONITOR.print("Your saved_ssid: ");
+    display.print("Your saved ssid: ");
     SERIAL_PORT_MONITOR.println(info.saved_ssid);
+    display.println(info.saved_ssid);
     SERIAL_PORT_MONITOR.print("and your saved_passcode: ");
+    display.print("Your saved passcode: ");
     SERIAL_PORT_MONITOR.println(info.saved_passcode);
+    display.println(info.saved_passcode);
     SERIAL_PORT_MONITOR.print("along with your saved_gsid: ");
+    display.print("Your saved gsid: ");
     SERIAL_PORT_MONITOR.println(info.saved_gsid);
-    SERIAL_PORT_MONITOR.println("have been saved. Thank you!");
+    display.println(info.saved_gsid);
+    SERIAL_PORT_MONITOR.println("have been saved.");
+    display.println("have been saved.");
+    display.display();
 
   } else {
 
@@ -83,7 +93,7 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     display.display();
     delay(2000);
     int i = 0;
-    while (i < 100000){
+    while (i < 50000){
       Serial.print(" ");
       if (force_pro){
         info.valid = false;
@@ -99,6 +109,16 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     ssid = info.saved_ssid;
     passcode = info.saved_passcode;
     gsid = info.saved_gsid;
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("Connecting to previously saved network...");
+    display.print("Saved ssid: ");
+    display.println(info.saved_ssid);
+    display.print("Saved passcode: ");
+    display.println(info.saved_passcode);
+    display.print("Saved gsid: ");
+    display.println(info.saved_gsid);
+    display.display();
     SERIAL_PORT_MONITOR.println(info.saved_ssid);
     SERIAL_PORT_MONITOR.println(info.saved_passcode);
     SERIAL_PORT_MONITOR.println(info.saved_gsid);
