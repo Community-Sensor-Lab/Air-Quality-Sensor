@@ -1,4 +1,4 @@
-# Air Quality Sensor V4 using WiFi to Google Sheets 🌱 
+# Air Quality Sensor V4 with Provisioning and Sen5x 🌱 
 
  Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
