@@ -7,10 +7,10 @@
 
 Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled
 
-<img src="images/CSL-AQS-V4.0 close up.jpg" width="200" height = "300"> <img src="images/CSL-AQS-V4.0 front view.jpg" width="600" height = "400"> 
+<img src="images/CSL-AQS-V4.0 close up.jpg" width="200" height = "300"> <img src="images/CSL-AQS-V4.0 front view.jpg" width="300" height = "225"> 
 <br>
-                  <img src="images/CSL-AQS-V4.0 back view.jpg" width="600" height = "450">
-                  <img src="images/CSL-AQS-V4.0 top view.jpg" width="600" height = "450">
+                  <img src="images/CSL-AQS-V4.0 back view.jpg" width="300" height = "225">
+                  <img src="images/CSL-AQS-V4.0 top view.jpg" width="30" height = "225">
 
 
 <br>
