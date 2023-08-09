@@ -85,7 +85,7 @@ Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED d
 Adafruit_BME280 bme;                                             // the bme tprh sensor
 File logfile;                                                    // the logging file
 SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-  // HSC differential pressure sensor for Met Eric Breunitg
+// TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
 
 void setup(void) {
