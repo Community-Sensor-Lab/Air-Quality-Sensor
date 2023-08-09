@@ -12,7 +12,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
                   <img src="images/CSL-AQS-V4.0 back view.jpg" width="400" height = "300">
                   <img src="images/CSL-AQS-V4.0 top view.jpg" width="400" height = "300">
 <br>
-          <img src="images/sen5x-longboard.PNG" width="600" height = "450">
+          <img src="images/sen5x-longboard.PNG" width="800" height = "450">
 
 <br>
 
