@@ -7,10 +7,10 @@
 
 Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled
 
-<img src="images/csl_aqs_v3.5.jpeg" width="200" height = "300"> <img src="images/WIFI LOGGER CSL-AQS-V2.0.png" width="600" height = "300"> 
+<img src="images/CSL-AQS-V4.0 close up.jpg" width="200" height = "300"> <img src="images/CSL-AQS-V4.0 front view.jpg" width="600" height = "300"> 
 <br>
-                  <img src="images/CSL AQI long board powerboost for battery.png" width="600" height = "450">
-                  <img src="images/CSL AQI long board USB 5v power.png" width="600" height = "450">
+                  <img src="images/CSL-AQS-V4.0 back view.jpg" width="600" height = "450">
+                  <img src="images/CSL-AQS-V4.0 top view.jpg" width="600" height = "450">
 
 
 <br>
