@@ -39,8 +39,8 @@
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
 #include <HoneywellTruStabilitySPI.h>  // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
-//#include "arduino_secrets.h" // wifi name and password in .h file. see tab
 #include <FlashStorage.h>
+#include <Adafruit_MLX90614.h>
 
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
@@ -51,7 +51,9 @@
 // #define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
 #define MAXBUF_REQUIREMENT 48
 
-#if (defined(I2C_BUFFER_LENGTH) && (I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || (defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
+#if (defined(I2C_BUFFER_LENGTH) &&            \
+(I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || \
+(defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
 #define USE_PRODUCT_INFO
 #endif
 
@@ -87,6 +89,7 @@ File logfile;                                                    // the logging 
 SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
 void setup(void) {
   pinMode(VBATPIN, INPUT);
@@ -103,6 +106,7 @@ void setup(void) {
   initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
   initializeBME();           // TPRH
   logfile = initializeSD();  // SD card and RTC
+  initialize_MLX90614(); // IR temp sensor
   delay(3000);
 
   //Set Interrupt
@@ -162,6 +166,7 @@ void loop(void) {
   pinMode(BUTTON_A, INPUT_PULLUP);
 
   delay(5000);  // wait for the sps30 to stabilize
+  String MLX90614String = readMLX90614();
 
   //  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x, ",
   //          now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),
@@ -169,12 +174,12 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
 
   Serial.println(header);
-  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
 
-  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
   logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
