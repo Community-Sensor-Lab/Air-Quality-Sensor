@@ -30,7 +30,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
   * #### [List of Parts](#parts-list)
 
 ### Soldering
-[Guide On How To Solder Air Quality Sensor](https://docs.google.com/document/d/1l6jeO-1NOw7vDZXchC9iGBB8vkmnokzwbz_wixmtFyU/edit?usp=sharing)
+* [Guide On How To Solder Air Quality Sensor](https://docs.google.com/document/d/1l6jeO-1NOw7vDZXchC9iGBB8vkmnokzwbz_wixmtFyU/edit?usp=sharing)
 
 
 
