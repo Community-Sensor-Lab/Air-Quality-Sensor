@@ -2,9 +2,9 @@
 
  Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
- The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, **PM2.5** (dust or smoke), **VOC** (Volitale Organic Compound), and **NOX** (Nitrate). It has an on-board logger and WiFi chip allowing connection to Google Sheets for real time data reporting. 
+ The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, **PM2.5** (dust or smoke), **VOC** (Volitale Organic Compound), and **NOx** (Nitrate). It has an on-board logger and WiFi chip allowing connection to Google Sheets for real time data reporting. 
  
-If you wish to learn more about VOC and NOX, below are some references that can help:
+If you wish to learn more about VOC and NOx, below are some references that can help:
 * [Sensirion VOC Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_VOC_Index.pdf)
 * [Sensirion NOx Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_NOx_Index.pdf)
 <br>
