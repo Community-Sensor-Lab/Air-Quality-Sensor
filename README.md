@@ -24,7 +24,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
       * [Assembly](#assembly)
       * [Arduino IDE](#arduino-ide)
       * [Setting Up Google Spreadsheet](#setting-up-google-spreadsheet)
-      * [How to utilize the provisioning feature](#provisioning-and-saved-state-feature)
+      * [How to Utilize Our Provisioning Feature](#provisioning-and-saved-state-feature)
 
 
 ## Starting From Scratch💡 
