@@ -23,7 +23,7 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
       * [How to utilize the provisioning feature](#Provisioning-and-Saved-State-Feature)
 
 
-## Starting-From-Scratch💡 
+# Starting-From-Scratch💡 
   #### [List of Parts](#Parts-List-)
 
 ### Soldering
@@ -31,13 +31,13 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 
 
 
-## Assembly 
+# Assembly 
 * [Air Quality Sensor Boards Assembly](https://docs.google.com/document/d/1AezJ0XiPEsc3vEHGtJqxCqGEe5GDv0d0T-DoVZDCgCY/edit?usp=sharing)
 
 * [How to Connect Sensors to Boards](https://docs.google.com/document/d/1BrGlBl2Zau5XgyUAorEzxkr_Fa7h0j_XQgn0lQ-tBvw/edit?usp=sharing)
 
 
-## Arduino-IDE
+# Arduino-IDE
 <p> If you are new to Arduino, below is a guide on installing Arduino onto your computer along with the instructions on how to install the required libraries 
  and board managers needed to run our code. There are also additional setup instructions included in the guide for the WiFi and Real-Time-Clock. </p>
  
@@ -56,7 +56,7 @@ Check out our guide:
 If you are new to the process of setting up a sensor, you can check out the guide we made that allows you to test the built sensor to make sure each component of the sensor is working as intended.
 * [Sensor Component Setup Guide](https://docs.google.com/document/d/1QF_vD6cMe2WdAhfrvd5zp7BLdgz92-z4E1pPEGmiRQw/edit?usp=sharing)
 
-## Setting-Up-Google-Spreadsheet
+# Setting-Up-Google-Spreadsheet
 ### HTTP-Request-to-Google-Spreadsheet 🌐
 The Air Quality Sensor can post data in (almost) real-time to a spreadsheet online through HTTP methods!
 For instructions on getting the AQS connected with a Google Spreadsheet, take a look at our guide: [HTTP Posting to Google Spreadsheet](https://docs.google.com/document/d/1yNolfJr7s9rs_ewV7vN-bUsllEiPPxo2xeQbsmszQKE/edit?usp=sharing).
@@ -68,14 +68,14 @@ For instructions on getting the AQS connected with a Google Spreadsheet, take a 
 
 <br>
 
-### Provisioning-and-Saved-State-Feature
+# Provisioning-and-Saved-State-Feature
 Our Air-Quality Sensor allows you to input wifi and google sheet information on the fly!
 For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning](https://docs.google.com/document/d/1_W05p6wplJaqzbf3onyIY-uPkPesUpoJflwmZjv0jfY/edit?usp=sharing)
 
 <br>
 
 
-## Parts-List 🖥 
+# Parts-List 🖥 
 Here are the materials you will need with links of where to find them. 
 
 ### FeatherM0-Microcontroller-Boards
