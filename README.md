@@ -86,15 +86,14 @@ Here are the materials you will need with links of where to find them.
 |Feather M0 WiFi (WINC1500))| <img src="images/Feather-M0-WiFi.jpeg" width="200" height = "200" >  |Connects to WiFi network. Brain of the system|[Adafruit](https://www.adafruit.com/product/3010)
 |Featherwing Logger (RTC microSD)| <img src="images/Featherwing-Logger.jpeg" width="200" height = "200"> |Slot for microSD. Has a real time clock|[Adafruit](https://www.adafruit.com/product/2922)
 |Featherwing OLED  | <img src="images/Featherwing-OLED.jpeg" width="200" height = "200" >|Displays data values and can graph functions|[Adafruit](https://www.adafruit.com/product/4650)
-|Feather Terminal Block | <img src="images/breadboard.png" width="200" height = "200" >|Foundation that connects the components together|[Amazon]([https://www.adafruit.com/product/2926](https://www.amazon.com/Breadboards-Solderless-Breadboard-Distribution-Connecting/dp/B07DL13RZH/ref=sr_1_3?keywords=breadboard&qid=1692199694&sr=8-3))
+|Feather Terminal Block | <img src="images/breadboard.png" width="200" height = "200" >|Foundation that connects the components together|[Adafruit](https://www.adafruit.com/product/239)
 
 ### Sensors
 | Sensor | Sensor Image | Use | Purchase Link |
 |----------------|-------------------------------|----------|:--------------------------:|
-|Sensirion SD30 CO2 NDIR| <img src="images/Sensirion_SD30_CO2_NDIR.jpeg" width="200" height = "200">|Measures CO2 in PPM|[Digi-Key](https://www.digikey.com/en/products/detail/sensirion-ag/SCD30/8445334?s=N4IgTCBcDaIMIHkwAIDKBRAcqhAlZAkmHMgLIIAiAQgKqrIAKA6qSALoC%2bQA)
+|Sensirion SCD30 CO2 NDIR| <img src="images/Sensirion_SD30_CO2_NDIR.jpeg" width="200" height = "200">|Measures CO2 in PPM|[Digi-Key](https://www.digikey.com/en/products/detail/sensirion-ag/SCD30/8445334?s=N4IgTCBcDaIMIHkwAIDKBRAcqhAlZAkmHMgLIIAiAQgKqrIAKA6qSALoC%2bQA)
 |BME280 Temp. Press. Rel Humidity| <img src="images/BME280.jpeg" width="200" height = "200"> | Measures temperature C, pressure hPa and relative humidity %|[Digi-Key](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372)
-|Sensirion SPS380 PM2.5| <img src="images/Sensirion-SPS380-PM25.jpg" width="200" height = "200" >|Measures particulate matter PM2.5+|[Digi-Key](https://www.digikey.com/en/products/detail/sensirion-ag/SPS30/9598990)
-|Differential Pressure| <img src="images/hsc-differential-pressure.jpeg" width="200" height = "200" >|Measures particulate matter PM2.5+|[No Link Available at this time](https://www.digikey.com/en/products/detail/sensirion-ag/SPS30/9598990)
+|Sensirion SEK-SEN5X| <img src="images/SEK=SEN5X.png" width="200" height = "200" >|Measures particulate matter PM2.5+|[Digi-Key](https://www.digikey.ca/en/products/detail/sensirion-ag/SEK-SEN5X/15903862)
 
 ### Additional-Parts
 | Part | Part Image | Use | Purchase Link |
