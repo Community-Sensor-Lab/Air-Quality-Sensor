@@ -6,7 +6,7 @@
 
 For a more in-depth description of what VOC and NOX are, below are some references that can help:
 * [Sensirion VOC Index](https://docs.google.com/viewer?url=)
-* [Sensirion NOx Index](https://docs.google.com/viewer?url=https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_NOx_Index.pdf)
+* [Sensirion NOx Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_NOx_Index.pdf)
 <br>
 
 Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled
