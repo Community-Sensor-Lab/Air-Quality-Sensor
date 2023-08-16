@@ -9,7 +9,7 @@ If you wish to learn more about VOC and NOx, below are some references that can 
 * [Sensirion NOx Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_NOx_Index.pdf)
 <br>
 
-Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled
+Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled to allow the user to update the saved info without the need to reupload our code.
 
 <img src="images/CSL-AQS-V4.0 close up.jpg" width="400" height = "300"> <img src="images/CSL-AQS-V4.0 front view.jpg" width="400" height = "300"> 
 
@@ -74,7 +74,7 @@ For instructions on getting the AQS connected with a Google Spreadsheet, take a 
 
 ## Provisioning and Saved State Feature
 Our Air-Quality Sensor allows you to input wifi and google sheet information on the fly!
-For instructions on how our provisioning feature works and how to utilize it, take a look at the following guide: [Intro to AQS-CSL-V4 Provisioning](https://docs.google.com/document/d/1_W05p6wplJaqzbf3onyIY-uPkPesUpoJflwmZjv0jfY/edit?usp=sharing)
+For instructions on how our provisioning feature works and how to utilize it, take a look at our guide: [Intro to AQS-CSL-V4 Provisioning](https://docs.google.com/document/d/1_W05p6wplJaqzbf3onyIY-uPkPesUpoJflwmZjv0jfY/edit?usp=sharing)
 
 <br>
 
