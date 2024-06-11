@@ -107,7 +107,7 @@ Here are the materials you will need with links of where to find them.
 |Jumper Wires| <img src="images/jumper-wire-kit.jpg" width="200" height = "200">|Connects sensor components using the breadboard|[Sparkfun](https://www.sparkfun.com/products/124)
 
 ### Diagram 🔦          
-<img src="images/sen5x-longboard.PNG" width="800" height = "450">
+<img src="images/Sen5-LongBoard-July2023_bb.png" width="800" height = "450">
 
 
 ### Solar Integration ☀️ 
