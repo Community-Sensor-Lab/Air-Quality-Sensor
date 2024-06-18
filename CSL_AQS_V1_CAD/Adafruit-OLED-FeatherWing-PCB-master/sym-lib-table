@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 0)
+  (lib (name "Adafruit 128x64 OLED FeatherWing-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/Adafruit 128x64 OLED FeatherWing-eagle-import.kicad_sym")(options "")(descr ""))
+)

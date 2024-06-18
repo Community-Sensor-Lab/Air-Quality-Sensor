@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Adafruit 128x64 OLED FeatherWing")(type "KiCad")(uri "$(KIPRJMOD)/Adafruit 128x64 OLED FeatherWing.pretty")(options "")(descr ""))
+)
