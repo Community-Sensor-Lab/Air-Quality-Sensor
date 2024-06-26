@@ -1,4 +1,5 @@
-# Air Quality Sensor V4 with Provisioning and Sen5x 🌱 
+# Air Quality Sensor V4: 
+# Provisioning, Sen55, SCD41, MCAD, ECAD 🌱 
 
  Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
