@@ -31,8 +31,7 @@
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"
-//#include "SparkFun_SCD30_Arduino_Library.h"
-#include "SparkFun_SCD4x_Arduino_Library.h"
+#include "SparkFun_SCD30_Arduino_Library.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  // oled library
 #include <Adafruit_Sensor.h>
@@ -41,6 +40,7 @@
 #include <WiFi101.h>
 #include <HoneywellTruStabilitySPI.h>  // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
 #include <FlashStorage.h>
+#include <Adafruit_MLX90614.h>
 
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
@@ -86,11 +86,10 @@ RTC_PCF8523 rtc;                                                 // Real Time Cl
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
 Adafruit_BME280 bme;                                             // the bme tprh sensor
 File logfile;                                                    // the logging file
-//SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
-
+SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
 void setup(void) {
   pinMode(VBATPIN, INPUT);
@@ -104,10 +103,10 @@ void setup(void) {
 
   initializeOLED();
   initializeSen5x();         // PM sensor
-  initializeSCD41();
-  //initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
+  initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
   initializeBME();           // TPRH
   logfile = initializeSD();  // SD card and RTC
+  initialize_MLX90614(); // IR temp sensor
   delay(3000);
 
   //Set Interrupt
@@ -157,7 +156,7 @@ void loop(void) {
   String sen5xString = readSen5x();
   String sen5x = readBME();
 
-  String co2String = readSCD41();
+  String co2String = readSCD30(Pbme);
 
   DateTime now;
   now = rtc.now();  // fetch the date + time
@@ -167,6 +166,7 @@ void loop(void) {
   pinMode(BUTTON_A, INPUT_PULLUP);
 
   delay(5000);  // wait for the sps30 to stabilize
+  String MLX90614String = readMLX90614();
 
   //  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x, ",
   //          now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),
@@ -174,12 +174,12 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
 
   Serial.println(header);
-  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
 
-  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + MLX90614String);
   logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
