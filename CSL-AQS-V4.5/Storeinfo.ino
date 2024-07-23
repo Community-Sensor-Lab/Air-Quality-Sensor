@@ -94,7 +94,7 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     display.display();
     delay(2000);
     int i = 0;
-    while (i < 50000){
+    while (i < 80000){
       Serial.print(" ");
       if (force_pro){
         info.valid = false;
