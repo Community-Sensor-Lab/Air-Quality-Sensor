@@ -1,15 +1,10 @@
-# Air Quality Sensor V4: 
-# Provisioning, Sen55, SCD41, MCAD, ECAD 🌱 
+#Air Quality Sensor V5 
+### With: provisioning, SEN55 PM and SCD41 CO<sub>2</sub> sensors, PVC enclosure and PCB mounting
 
- Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
+Welcome to our ASRC Community Sensor Lab! We're still building this space but feel free to use the materials available. Contact [kkrueger@gc.cuny.edu](mailto:kkrueger@gc.cuny.edu) if you have any questions. We'll try to answer as soon as possible!
  
- The Air Quaity Sensor (AQS) is a **low-cost**, **low-power** DIY device with sensors for **CO2**, **temp-pressure-relativehumidity**, **PM2.5** (dust or smoke), **VOC** (Volitale Organic Compound), and **NOx** (Nitrate). It has an on-board logger and WiFi chip allowing connection to Google Sheets for real time data reporting. 
- 
-If you wish to learn more about VOC and NOx, below are some references that can help:
-* [Sensirion VOC Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_VOC_Index.pdf)
-* [Sensirion NOx Index](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/blob/master/resources/Info_Note_NOx_Index.pdf)
-<br>
-Air Quality Sensor V4 code contains a provisioning function allowing a more flexible way of providing networking and google sheet information to the sensor without having to upload the code everytime. It currently also have a saved state feature where the last input is saved and will be used on startup allowing it to connect to the most recently connected wifi and google sheet. Forced provisioning is also enabled to allow the user to update the saved info without the need to reupload our code.
+The Air Quaity Sensor (AQS) is a **low-cost, low-power** DIY device with sensors for **CO<sub>2</sub>, temperature, pressure, relative humidity, PM2.5** (dust or smoke), **VOC** (Volitale Organic Compound), and **NOx** (nitric oxide NO and nitrogen dioxide NO2). It has an on-board logger to a memory SD card and a WiFi radio chip to connect to Google Sheets for real time data reporting.<br>
+The Air Quality Sensor V5 has a provisioning function to upload the WiFi name, password and Google Sheets information to the sensor without having to modify and upload the code. It keeps the last input used to connect to the most recently connected WiFi and Google Sheet. Provisioning can be changed or initiated with a button.
 
 <img src="images/CSL-AQS-V4.0 close up.jpg" width="400" height = "300"> <img src="images/CSL-AQS-V4.0 front view.jpg" width="400" height = "300"> 
 
@@ -18,6 +13,57 @@ Air Quality Sensor V4 code contains a provisioning function allowing a more flex
 <br>
 
 ## Contents:
+### 1. Required skills and tools [How to Solder](https://docs.google.com/document/d/1l6jeO-1NOw7vDZXchC9iGBB8vkmnokzwbz_wixmtFyU/edit?usp=sharing)
+* Safety
+* Materials and Tools
+* Practice soldering
+* Stripping Wires
+* Mounting on breadboard
+* Other tools
+* Using multimeter to beep
+
+### 2. Part list
+### 3. Installing Arduino on your computer [arduino install](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing) 
+* Downloading Arduino
+* Libraries & Board Manager
+
+### 4. Adafruit Feather microcontroller and WiFi board set up
+* Soldering Headers [1. How to Solder Air Quality Sensor](https://docs.google.com/document/d/1l6jeO-1NOw7vDZXchC9iGBB8vkmnokzwbz_wixmtFyU/edit?usp=sharing)
+* Placement on breadboard & USB connection 2. How to Assemble Air Quality Sensor Boards 
+* Finding Active Port
+* Upload & compile Blink 2.0 Sensor Component Code Setup
+* Configure SD card
+	* Format with SD formatter
+	* Run SD example (?)
+* Configure Real Time Clock (RTC)
+	* Place coin battery
+	* Run RTC example to set time
+
+### 5. Setting up the sensors [2.0 Sensor component code setup](https://docs.google.com/document/d/1QF_vD6cMe2WdAhfrvd5zp7BLdgz92-z4E1pPEGmiRQw/edit?usp=sharing)
+* Explanation of sensors with datasheets
+* Placement of sensors on breadboard [2. How to Assemble Air Quality Sensor Boards](https://docs.google.com/document/d/1AezJ0XiPEsc3vEHGtJqxCqGEe5GDv0d0T-DoVZDCgCY/edit?usp=sharing) 
+* BME first [2.0 Sensor Component Code Setup](https://docs.google.com/document/d/1QF_vD6cMe2WdAhfrvd5zp7BLdgz92-z4E1pPEGmiRQw/edit?usp=sharing)
+* SCD30 (make anote that BME has to be on the board)
+
+	#### 5.1. Coding practice: Merging two code examples into a single Arduino sketch (program)
+
+### 6. Finding the CSL AQS code and installing on your computer
+* Download from Github
+* Running V4, continue without wifi
+* Troubleshooting sensors through serial monitor and OLED display
+* Setting Up Google Spreadsheet and Graphs 7. Posting to Google Logging Spreadsheet
+* Provisioning wifi and GSID
+
+	#### 6.1. Data visualization practice: How to graph the data on Google Sheets
+
+### 7. Moving to PCB board and PVC enclosure
+* Assembling sensors on PCB
+* 3D printing of PCB mounts
+* Installing PCB mounts and placing in PVC tube
+
+#### 7.1. Mini tutorial: 3D modeling and printing 
+#### 7.2. Mini tutorial: Electronic CAD and PCB manufacturing
+
 
    * Community Sensor Lab 🌱 - Air Quality Sensor
       * [Starting From Scratch](#starting-from-scratch)
