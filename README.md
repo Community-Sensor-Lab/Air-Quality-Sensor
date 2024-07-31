@@ -22,7 +22,7 @@ The Air Quality Sensor V5 has a provisioning function to upload the WiFi name, p
 * Other tools
 * Using multimeter to beep
 
-### 2. Part list [Excel Document]([[https://docs.google.com/document/d/1l6jeO-1NOw7vDZXchC9iGBB8vkmnokzwbz_wixmtFyU/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1TGWcEC6WSEFVkZWzWj3JGiwqsN0nAnGTTTdQC7kgLis/edit?gid=0#gid=0)](https://docs.google.com/spreadsheets/d/1TGWcEC6WSEFVkZWzWj3JGiwqsN0nAnGTTTdQC7kgLis/edit?usp=sharing))
+### 2. Part list [Excel Document](https://docs.google.com/spreadsheets/d/1TGWcEC6WSEFVkZWzWj3JGiwqsN0nAnGTTTdQC7kgLis/edit?gid=0#gid=0)
 ### 3. Installing Arduino on your computer [arduino install](https://docs.google.com/document/d/16o8Np3GaZfSjQlxNWIgi12ycb2CosCJ2blwEGiTplbA/edit?usp=sharing) 
 * Downloading Arduino
 * Libraries & Board Manager
