@@ -77,7 +77,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "Gerber Output/")
+			(outputdirectory "C:/Users/NGENS admin/Graduate Center Dropbox/Ricardo Toledo-Crow/Community Sensor Lab Program/KiCAD/CSL_AQS_V1_spin3/Gerber Output/")
 		)
 	)
 	(net 0 "")
