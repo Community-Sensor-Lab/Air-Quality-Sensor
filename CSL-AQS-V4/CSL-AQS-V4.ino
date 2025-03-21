@@ -153,7 +153,7 @@ void loop(void) {
   String sen5xString = readSen5x();
   String sen5x = readBME();
 
-  String co2String = readSCD30();
+  String co2String = readSCD30(Pbme);
 
   DateTime now;
   now = rtc.now();  // fetch the date + time

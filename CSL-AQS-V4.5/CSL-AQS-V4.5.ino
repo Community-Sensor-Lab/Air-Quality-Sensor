@@ -31,8 +31,8 @@
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"
-//#include "SparkFun_SCD30_Arduino_Library.h"
-#include "SparkFun_SCD4x_Arduino_Library.h"
+#include "SparkFun_SCD30_Arduino_Library.h"
+//#include "SparkFun_SCD4x_Arduino_Library.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  // oled library
 #include <Adafruit_Sensor.h>
@@ -86,8 +86,8 @@ RTC_PCF8523 rtc;                                                 // Real Time Cl
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
 Adafruit_BME280 bme;                                             // the bme tprh sensor
 File logfile;                                                    // the logging file
-//SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
+SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
+//SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
 
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
@@ -104,8 +104,8 @@ void setup(void) {
 
   initializeOLED();
   initializeSen5x();         // PM sensor
-  initializeSCD41();
-  //initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
+  //initializeSCD41();
+  initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
   initializeBME();           // TPRH
   logfile = initializeSD();  // SD card and RTC
   delay(3000);
@@ -157,7 +157,8 @@ void loop(void) {
   String sen5xString = readSen5x();
   String sen5x = readBME();
 
-  String co2String = readSCD41();
+  //String co2String = readSCD41();
+  String co2String = readSCD30(Pbme);
 
   DateTime now;
   now = rtc.now();  // fetch the date + time
@@ -209,7 +210,7 @@ void loop(void) {
       display.clearDisplay();
       display.display();
     };
-    int sleepMS = Watchdog.sleep();// remove comment for low power
-    //delay(16000);  // uncomment to debug because serial communication doesn't come back after sleeping
+    //int sleepMS = Watchdog.sleep();// remove comment for low power
+    delay(16000);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }
