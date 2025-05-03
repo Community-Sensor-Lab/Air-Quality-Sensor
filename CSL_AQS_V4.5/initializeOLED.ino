@@ -17,7 +17,6 @@ void initializeOLED()  {
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
     display.setCursor(0, 0);
-    display.println("Hello World");
     display.display();
   }
    

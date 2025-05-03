@@ -186,24 +186,52 @@ void loop(void) {
   for (int i = 1; i <= 8; i++) {  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) {  // turn display on with data
-      display.clearDisplay();
-      display.setCursor(0, 0);
-      display.print("CO2 ppm ");
-      display.print(CO2);
-      display.print("V ");
-      display.println(measuredvbat);
-      display.print("T C ");
-      display.println(Tbme);
-      display.print("P mBar ");
-      display.println(Pbme);
-      display.print("RH% ");
-      display.println(RHbme);
-      display.print("VOC ");
-      display.println(Voc);
-      display.print("NOX ");
-      display.println(Nox);
-      display.print("NewPM ");
-      display.print(Pmv);
+            display.clearDisplay();
+     
+      display.setCursor(0, 0); 
+      display.print("CO2 ");
+      display.setCursor(40, 0); 
+      display.print(CO2); 
+      display.print(" ppm");
+      display.print("  ");
+      display.print(measuredvbat, 2); 
+      display.print("V");
+
+
+      display.setCursor(0, 8); 
+      display.print("T");
+      display.setCursor(40, 8); 
+      display.print(Tbme, 2); 
+      display.print("C");
+
+      display.setCursor(0, 16);
+      display.print("P");
+      display.setCursor(40, 16);  
+      display.print(Pbme, 2);  
+      display.print(" mBar");
+
+      display.setCursor(0, 24);  
+      display.print("RH");
+      display.setCursor(40, 24); 
+      display.print(RHbme, 0);  
+      display.print("%");
+
+
+      display.setCursor(0, 32);  
+      display.print("VOC");
+      display.setCursor(40, 32); 
+      display.print(Voc, 2);  
+
+      display.setCursor(0, 40); 
+      display.print("NOX");
+      display.setCursor(40, 40); 
+      display.print(Nox, 2); 
+
+      display.setCursor(0, 48); 
+      display.print("Pm 2.5");
+      display.setCursor(40, 48);
+      display.print(Pmv, 2); 
+
       display.display();
     } else {  // turn display off
       display.clearDisplay();
