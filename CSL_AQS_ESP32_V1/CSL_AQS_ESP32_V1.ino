@@ -2,28 +2,18 @@
 /*
    COMMUNITY SENSOR LAB - AIR QUALITY SENSOR
 
-   featherM0-Wifi + featherwing adalogger-SD-RTC + SCD30-CO2 + BME280-TPRH + OLED display + SPS30-PM2.5
+   Adafruit Feather ESP32 V2 + Featherwing Adalogger-SD-RTC + SCD30 OR SCD41 -CO2 + BME280 -TPRH + OLED display + SEN55 -PM2.5 VOC NOX
 
    The SCD30 has a minimum power consumption of 5mA and cannot be stop-started. It's set to 55s (30s nominal)
    sampling period and the featherM0 sleeps for 2 x 16 =32s, wakes and waits for data available.
    Button A toggles display on/off but must be held down for 16s max and then wait 16s to toggle again.
 
-   Logs: date time, co2, t, rh, t2, press, rh2, battery voltage, status
+   Logs: sensor, co2, 3x t, 3x rh, press, battery voltage, pm1, pm 2.5, pm 4.0, pm 10, voc, nox 
 
    https://github.com/Community-Sensor-Lab/Air-Quality-Sensor
 
-   Global status is in uint8_t stat in bit order:
-   0- 0000 0001 0x01 SD card not present
-   1- 0000 0010 0x02 SD could not create file
-   2- 0000 0100 0x04 RTC failed
-   3- 0000 1000 0x08 SCD30 CO2 sensor not available
-   4- 0001 0000 0x10 SCD30 CO2 sensor timeout
-   5- 0010 0000 0x20 SPS30 PM2.5 sensor malfunction
-   6- 0100 0000 0x40 HSC differential pressure sensor absent or malfunction
-   7- 1000 0000 0x80 future: google.com ssl connection error
-
    RICARDO TOLEDO-CROW NGENS, ESI, ASRC, CUNY,
-   AMALIA TORRES, CUNY, July 2021
+   
 
 */
 #include <SPI.h>
@@ -31,7 +21,6 @@
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"
-//#include "SparkFun_SCD30_Arduino_Library.h"
 #include "SparkFun_SCD4x_Arduino_Library.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  // oled library
@@ -39,7 +28,6 @@
 #include <Adafruit_BME280.h>
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
-#include <HoneywellTruStabilitySPI.h>  // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
 #include <FlashStorage.h>
 
 
@@ -48,7 +36,6 @@
 #define BUTTON_B 6  // oled button
 #define BUTTON_C 5  // oled button
 #define SD_CS 10    // Chip select for SD card default for Adalogger
-// #define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
 #define MAXBUF_REQUIREMENT 48
 
 #if (defined(I2C_BUFFER_LENGTH) &&            \
