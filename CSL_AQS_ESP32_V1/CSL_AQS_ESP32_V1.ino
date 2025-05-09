@@ -16,8 +16,9 @@
    
 
 */
+// #include <FS.h>
 #include <SPI.h>
-#include <SD.h>
+// #include <SD.h>
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"
@@ -27,8 +28,11 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <SensirionI2CSen5x.h>
-#include <WiFi101.h>
+// #include <WiFi101.h>
 #include <FlashStorage.h>
+#include <Arduino.h>
+#include <WiFi.h>
+#include <WiFiClientSecure.h>
 
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
@@ -58,8 +62,8 @@ char server[] = "script.google.com";  // name address for Google scripts as we a
 // these are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
 String payload_base = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 String payload = "";
-char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
-int status = WL_IDLE_STATUS;
+char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), OLstatus, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
+int OLstatus = -1;
 String ssidg, passcodeg, gsidg;
 uint16_t CO2;  // for oled display
 float Pmv = 0;
@@ -68,33 +72,34 @@ float Voc = 0;
 bool force_pro = false;
 
 SensirionI2CSen5x sen5x;
-WiFiSSLClient client;                                            // make SSL client
+WiFiClientSecure client;                                            // make SSL client
 RTC_PCF8523 rtc;                                                 // Real Time Clock for RevB Adafruit logger shield
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
 Adafruit_BME280 bme;                                             // the bme tprh sensor
-File logfile;                                                    // the logging file
+//File logfile;                                                    // the logging file
 //SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
 SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
 
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
-uint8_t stat = 0;                                                // status byte
+//uint8_t OLstat = 0;     
+int OLstat = -1;                                           // OLstatus byte
 
 void setup(void) {
   pinMode(VBATPIN, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   delay(5000);
   Serial.println(__FILE__);
-  WiFi.setPins(8, 7, 4, 2);
 
   initializeOLED();
   initializeSen5x();         // PM sensor
   initializeSCD41();
   //initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
+  initializeRTC();
   initializeBME();           // TPRH
-  logfile = initializeSD();  // SD card and RTC
+  //logfile = initializeSD();  // SD card and RTC
   delay(3000);
 
   //Set Interrupt
@@ -120,15 +125,15 @@ void A() {
 
 char outstr[160];
 int32_t Tsleep = 0;
-bool displayState = true;
-bool buttonAstate = true;
+bool displayOLstate = true;
+bool buttonAOLstate = true;
 int lastTimeToggle = 0;
 int timeDebounce = 100;
 
 void loop(void) {
 
   uint8_t ctr = 0;
-  stat = stat & 0xEF;  // clear bit 4 for CO2 sensor
+  //OLstat = OLstat & 0xEF;  // clear bit 4 for CO2 sensor
 
   String bmeString = readBME();  // get data string from BME280 "T, P, RH, "
   String bme = readBME();
@@ -157,40 +162,68 @@ void loop(void) {
 
   //  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x, ",
   //          now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),
-  //          CO2, Tco2, RHco2, Tbme, Pbme, RHbme, measuredvbat, stat);
+  //          CO2, Tco2, RHco2, Tbme, Pbme, RHbme, measuredvbat, OLstat);
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(OLstat) + String(", ") + sen5xString);
 
   Serial.println(header);
-  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  //Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(OLstat) + String(", ") + sen5xString);
 
-  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  //logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(OLstat) + String(", ") + sen5xString);
+  //logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
   for (int i = 1; i <= 8; i++) {  // 124s = 8x16s sleep, only toggle display
-    displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) {  // turn display on with data
+    displayOLstate = toggleButton(BUTTON_A, displayOLstate, buttonAOLstate, lastTimeToggle, timeDebounce);
+    if (displayOLstate) {  // turn display on with data
       display.clearDisplay();
-      display.setCursor(0, 0);
-      display.print("CO2 ppm ");
-      display.print(CO2);
-      display.print("V ");
-      display.println(measuredvbat);
-      display.print("T C ");
-      display.println(Tbme);
-      display.print("P mBar ");
-      display.println(Pbme);
-      display.print("RH% ");
-      display.println(RHbme);
-      display.print("VOC ");
-      display.println(Voc);
-      display.print("NOX ");
-      display.println(Nox);
-      display.print("NewPM ");
-      display.print(Pmv);
+     
+      display.setCursor(0, 0); 
+      display.print("CO2 ");
+      display.setCursor(40, 0); 
+      display.print(CO2); 
+      display.print(" ppm");
+      display.print("  ");
+      display.print(measuredvbat, 2); 
+      display.print("V");
+
+
+      display.setCursor(0, 8); 
+      display.print("T");
+      display.setCursor(40, 8); 
+      display.print(Tbme, 2); 
+      display.print("C");
+
+      display.setCursor(0, 16);
+      display.print("P");
+      display.setCursor(40, 16);  
+      display.print(Pbme, 2);  
+      display.print(" mBar");
+
+      display.setCursor(0, 24);  
+      display.print("RH");
+      display.setCursor(40, 24); 
+      display.print(RHbme, 0);  
+      display.print("%");
+
+
+      display.setCursor(0, 32);  
+      display.print("VOC");
+      display.setCursor(40, 32); 
+      display.print(Voc, 2);  
+
+      display.setCursor(0, 40); 
+      display.print("NOX");
+      display.setCursor(40, 40); 
+      display.print(Nox, 2); 
+
+      display.setCursor(0, 48); 
+      display.print("Pm 2.5");
+      display.setCursor(40, 48);
+      display.print(Pmv, 2); 
+
       display.display();
     } else {  // turn display off
       display.clearDisplay();

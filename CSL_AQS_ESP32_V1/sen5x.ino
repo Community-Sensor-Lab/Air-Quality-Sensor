@@ -9,6 +9,12 @@ String readSen5x(){
     float massConcentrationPm2p5;
     float massConcentrationPm4p0;
     float massConcentrationPm10p0;
+     float numberConcentrationPm0p5;
+    float numberConcentrationPm1p0;
+    float numberConcentrationPm2p5;
+    float numberConcentrationPm4p0;
+    float numberConcentrationPm10p0;
+    float typicalParticleSize;
     float ambientHumidity;
     float ambientTemperature;
     float vocIndex;
@@ -25,9 +31,24 @@ String readSen5x(){
         Serial.println(errorMessage);
     }
 
-    String sen5xString = String(massConcentrationPm1p0) + String(", ") + String(massConcentrationPm2p5) + String(", ") + String(massConcentrationPm4p0) + String(", ") 
-    + String(massConcentrationPm10p0) + String(", ") + String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") + String(vocIndex) + String(", ")
-    + String(noxIndex)+ String(", ");
+      error = sen5x.readMeasuredPmValues(
+    massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
+    massConcentrationPm10p0, numberConcentrationPm0p5, numberConcentrationPm1p0,
+    numberConcentrationPm2p5, numberConcentrationPm4p0, numberConcentrationPm10p0,
+    typicalParticleSize);
+
+    if (error) {
+    Serial.print("Error trying to execute readMeasuredValues(): ");
+    errorToString(error, errorMessage, 256);
+    Serial.println(errorMessage);
+    } 
+
+    String sen5xString = String(massConcentrationPm1p0) + String(", ") + String(massConcentrationPm2p5) + String(", ") + 
+    String(massConcentrationPm4p0) + String(", ") + String(massConcentrationPm10p0) + String(", ") + String(numberConcentrationPm0p5) + 
+    String(",") + String(numberConcentrationPm1p0) + String(",") + String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + 
+    String (",") + String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
+    String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") + String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
+
     Pmv = massConcentrationPm2p5;
     Voc = vocIndex;
     Nox = noxIndex;

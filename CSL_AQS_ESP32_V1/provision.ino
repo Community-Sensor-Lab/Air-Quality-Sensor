@@ -1,6 +1,4 @@
 //WiFiServer server(80);
-/* this is the simple webpage with three fields to enter and
-send info */
 
 const char webpage_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html><head>
@@ -22,7 +20,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
 </body></html>)rawliteral";
 
 /**
-* print wifi relevant info to Serial
+* Print Access Point Information to r
 *
 */
 void printWiFiStatus() {
@@ -49,7 +47,7 @@ void printWiFiStatus() {
 }
 
 /**
-* print formatted MAC address to Serial
+* Print formatted MAC address to Serial
 *
 */
 void printMacAddress(byte mac[]) {
@@ -210,9 +208,10 @@ void makeMACssidAP(String startString) {
   Serial.print(F("Creating access point: "));
   Serial.println(ssid);
 
-  status = WiFi.beginAP(ssid.c_str());
-
-  if (status != WL_AP_LISTENING) {
+  //status = WiFi.beginAP(ssid.c_str());
+  WiFi.mode(WIFI_AP);
+  status = WiFi.getMode()
+  if (status != WIFI_MODE_AP) {
     Serial.println(F("Creating access point failed"));
     while (true)
       ;
