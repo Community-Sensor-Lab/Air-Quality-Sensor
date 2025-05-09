@@ -7,6 +7,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   <title>Community Sensor Lab provisioning page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
+  <h1>NGENS Air Quality Sensor</h1>
   <form action="/get">
     ssid: <input type="text" name="SSID"><br>
     <!-- <input type="submit" value="Submit">
@@ -107,6 +108,7 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
         // print where to go in a browser:
         IPAddress ip = WiFi.localIP();
         Serial.print(F("To provide provisioning info, open a browser at http://"));
+        Serial.println(ip);
         Serial.println(ip);
 
         display.clearDisplay();

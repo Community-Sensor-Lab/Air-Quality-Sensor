@@ -2,8 +2,8 @@
   Write to Google Sheets through a Wifi  HTTP1.1 request to a Google script.
 */
 void payloadUpload(String payload) {
-  for (int i = 1; i < 4; i++) { // allways try to connect to wifi
-    if (passcodeg != "") // if password is not empty
+  for (int i = 1; i < 4; i++) { 
+    if (passcodeg != "") 
       status = WiFi.begin(ssidg, passcodeg);
     else
       status = WiFi.begin(ssidg);

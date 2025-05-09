@@ -33,23 +33,15 @@ bool check_valid(){
 
 
 void storeinfo(String &ssid, String &passcode, String &gsid) {
-  // SERIAL_PORT_MONITOR.begin(9600);
-  // while (!SERIAL_PORT_MONITOR) {}
-
-  // Create a "Secrets" variable and call it "info"
+ 
   Secrets info;
-
-  // Read the content of "flash_storage" into the "info" variable
   info = flash_storage.read();
 
   // If this is the first run the "valid" value should be "false"...
   if (info.valid == false) {
 
     // ...in this case we ask for user data.
-    //SERIAL_PORT_MONITOR.setTimeout(30000);
-    //SERIAL_PORT_MONITOR.println("Insert your saved_ssid:");
     String saved_ssid = ssid;
-    //SERIAL_PORT_MONITOR.println("Insert your saved_passcode:");
     String saved_passcode = passcode;
     String saved_gsid = gsid;
 

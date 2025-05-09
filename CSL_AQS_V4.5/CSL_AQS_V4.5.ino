@@ -34,21 +34,21 @@
 //#include "SparkFun_SCD30_Arduino_Library.h"
 #include "SparkFun_SCD4x_Arduino_Library.h"
 #include <Adafruit_GFX.h>
-#include <Adafruit_SH110X.h>  // oled library
+#include <Adafruit_SH110X.h>  
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
-#include <HoneywellTruStabilitySPI.h>  // for differential pressure sensor for Met https://github.com/huilab/HoneywellTruStabilitySPI.git
+#include <HoneywellTruStabilitySPI.h>                           // Differential Pressure Sensor: https://github.com/huilab/HoneywellTruStabilitySPI.git
 #include <FlashStorage.h>
 
 
-#define VBATPIN A7  // this is also D9 button A disable pullup to read analog
-#define BUTTON_A 9  // Oled button also A7 enable pullup to read button
-#define BUTTON_B 6  // oled button
-#define BUTTON_C 5  // oled button
-#define SD_CS 10    // Chip select for SD card default for Adalogger
-// #define HSC_CS 12   // Chip select for Honeywell HSC diff press sensor
+#define VBATPIN A7                                              // this is also D9 button A disable pullup to read analog
+#define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
+#define BUTTON_B 6                                              // oled button
+#define BUTTON_C 5                                              // oled button
+#define SD_CS 10                                                // Chip select for SD card default for Adalogger
+// #define HSC_CS 12                                            // Chip select for Honeywell HSC diff press sensor
 #define MAXBUF_REQUIREMENT 48
 
 #if (defined(I2C_BUFFER_LENGTH) &&            \
@@ -67,30 +67,33 @@ typedef struct {
 FlashStorage(flash_storage, Secrets);
 
 
-char server[] = "script.google.com";  // name address for Google scripts as we are communicationg with the scripg (using DNS)
-// these are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
+char server[] = "script.google.com";                          // name address for Google scripts as we are communicationg with the scripg (using DNS)
+
+
+// These are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
 String payload_base = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 String payload = "";
 char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
-uint16_t CO2;  // for oled display
+
+uint16_t CO2; 
 float Pmv = 0;
 float Nox = 0;
 float Voc = 0;
 bool force_pro = false;
 
 SensirionI2CSen5x sen5x;
-WiFiSSLClient client;                                            // make SSL client
-RTC_PCF8523 rtc;                                                 // Real Time Clock for RevB Adafruit logger shield
-Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
-Adafruit_BME280 bme;                                             // the bme tprh sensor
-File logfile;                                                    // the logging file
-//SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
+WiFiSSLClient client;                                           // Create SSL client
+RTC_PCF8523 rtc;                                                // Real Time Clock for RevB Adafruit logger shield
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      // OLED display
+Adafruit_BME280 bme;                                            // BME280 sensor
+File logfile;                                                   // Log file
+//SCD30 CO2sensor;                                              // Sensirion SCD30 CO2 NDIR
+SCD4x CO2sensor(SCD4x_SENSOR_SCD41);                            // Tell the library we have a SCD41 connected;
 
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
-uint8_t stat = 0;                                                // status byte
+uint8_t stat = 0;                                               // status byte
 
 void setup(void) {
   pinMode(VBATPIN, INPUT);
@@ -103,11 +106,11 @@ void setup(void) {
   WiFi.setPins(8, 7, 4, 2);
 
   initializeOLED();
-  initializeSen5x();         // PM sensor
-  initializeSCD41();
-  //initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
-  initializeBME();           // TPRH
-  logfile = initializeSD();  // SD card and RTC
+  initializeSen5x();                                          
+  initializeSCD41();                                      
+  //initializeSCD30(25);                                       
+  initializeBME();                                             
+  logfile = initialize_SD_RTC();  
   delay(3000);
 
   //Set Interrupt
@@ -141,9 +144,9 @@ int timeDebounce = 100;
 void loop(void) {
 
   uint8_t ctr = 0;
-  stat = stat & 0xEF;  // clear bit 4 for CO2 sensor
+  stat = stat & 0xEF;                                             // clear bit 4 for CO2 sensor
 
-  String bmeString = readBME();  // get data string from BME280 "T, P, RH, "
+  String bmeString = readBME();                                   // get data string from BME280 "T, P, RH, "
   String bme = readBME();
 
   // parsing out the t p rh float values
@@ -160,7 +163,7 @@ void loop(void) {
   String co2String = readSCD41();
 
   DateTime now;
-  now = rtc.now();  // fetch the date + time
+  now = rtc.now();                                                 // fetch RTC datetime
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
@@ -168,9 +171,11 @@ void loop(void) {
 
   delay(5000);  // wait for the sps30 to stabilize
 
-  //  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x, ",
-  //          now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),
-  //          CO2, Tco2, RHco2, Tbme, Pbme, RHbme, measuredvbat, stat);
+  /**
+    Payload Format: 
+    outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x"
+    "now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),CO2, Tco2, RHco2, Tbme, Pbme, RHbme, measuredvbat, stat";
+  **/
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
@@ -180,13 +185,13 @@ void loop(void) {
   Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
 
   logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
-  for (int i = 1; i <= 8; i++) {  // 124s = 8x16s sleep, only toggle display
+  for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) {  // turn display on with data
-            display.clearDisplay();
+    if (displayState) { // On
+      display.clearDisplay();
      
       display.setCursor(0, 0); 
       display.print("CO2 ");
@@ -233,7 +238,7 @@ void loop(void) {
       display.print(Pmv, 2); 
 
       display.display();
-    } else {  // turn display off
+    } else {        // Off
       display.clearDisplay();
       display.display();
     };

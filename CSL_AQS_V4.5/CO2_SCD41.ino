@@ -40,9 +40,6 @@ void initializeSCD41() {
       ;
   }
 
-  //Let's call measureSingleShot to start the first conversion
-  //bool success = mySensor.measureSingleShot();
-  //if (success == false)
   if (!CO2sensor.measureSingleShot()) {
     Serial.println(F("measureSingleShot failed. Are you sure you have a SCD41 connected? Freezing..."));
     while (1)
@@ -64,33 +61,4 @@ String readSCD41()
 
   return (String(CO2) + String(", ") + String(Tco2) + String(", ") + String(RHco2) + String(", "));
 
-  // Serial.print(F("CO2(ppm):"));
-  // Serial.print(CO2);
-
-  // Serial.print(F("\tTemperature(C):"));
-  // Serial.print(CO2sensor.getTemperature(), 1);
-
-  // Serial.print(F("\tHumidity(%RH):"));
-  // Serial.print(CO2sensor.getHumidity(), 1);
-
-  // Serial.println();
-
-
-  // mySensor.measureSingleShotRHTOnly(); // Request just the RH and the Temperature (should take 50ms)
-
-  // while (mySensor.readMeasurement() == false) // readMeasurement will return true when fresh data is available
-  // {
-  //   Serial.print(F("."));
-  //   delay(5);
-  // }
-
-  // Serial.println();
-
-  // Serial.print(F("Temperature(C):"));
-  // Serial.print(mySensor.getTemperature(), 1);
-
-  // Serial.print(F("\tHumidity(%RH):"));
-  // Serial.print(mySensor.getHumidity(), 1);
-
-  // Serial.println();
 }
