@@ -30,9 +30,8 @@
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"                              
-// Is 1 present are both present?
-#include "SparkFun_SCD30_Arduino_Library.h"                    // https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/blob/main/src/SparkFun_SCD30_Arduino_Library.cpp
-#include "SparkFun_SCD4x_Arduino_Library.h"                    // https://github.com/sparkfun/SparkFun_SCD4x_Arduino_Library/blob/main/src/SparkFun_SCD4x_Arduino_Library.h
+#include "SparkFun_SCD30_Arduino_Library.h"                    
+#include "SparkFun_SCD4x_Arduino_Library.h"                    
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  
 #include <Adafruit_Sensor.h>
@@ -47,7 +46,6 @@
 #define BUTTON_B 6                                              // oled button
 #define BUTTON_C 5                                              // oled button
 #define SD_CS 10                                                // Chip select for SD card default for Adalogger
-// #define HSC_CS 12                                            // Chip select for Honeywell HSC diff press sensor
 #define MAXBUF_REQUIREMENT 48
 
 #if (defined(I2C_BUFFER_LENGTH) &&            \
@@ -58,9 +56,11 @@
 
 
 // Function prototypes
-
 void initializeOLED();
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
+
+void initializeSCD30();
+String readSCD30();
 
 void initializeSCD41(); 
 String readSCD41();
@@ -74,9 +74,7 @@ String readSen5x();
 File initializeSD(); 
   
 
-
 // Global Variables
-
 typedef struct {
   boolean valid;
   char saved_ssid[64];
@@ -86,7 +84,7 @@ typedef struct {
 
 FlashStorage(flash_storage, Secrets);
 
-char server[] = "script.google.com";                            // name address for Google scripts as we are communicationg with the scripg (using DNS)
+char server[] = "script.google.com"; 
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
@@ -103,37 +101,36 @@ float Pbme = 0;
 float RHbme= 0;
 
 //SEN 55
-float massConcentrationPm1p0 = 0;
+// float massConcentrationPm1p0 = 0;
 float massConcentrationPm2p5 = 0;
-float massConcentrationPm4p0 = 0;
-float massConcentrationPm10p0 = 0;
-float numberConcentrationPm0p5 = 0;
-float numberConcentrationPm1p0 = 0;
-float numberConcentrationPm2p5 = 0;
-float numberConcentrationPm4p0 = 0;
-float numberConcentrationPm10p0 = 0;
-float typicalParticleSize = 0;
-float ambientHumidity = 0;
-float ambientTemperature = 0;
+// float massConcentrationPm4p0 = 0;
+// float massConcentrationPm10p0 = 0;
+// float numberConcentrationPm0p5 = 0;
+// float numberConcentrationPm1p0 = 0;
+// float numberConcentrationPm2p5 = 0;
+// float numberConcentrationPm4p0 = 0;
+// float numberConcentrationPm10p0 = 0;
+// float typicalParticleSize = 0;
+// float ambientHumidity = 0;
+// float ambientTemperature = 0;
 float vocIndex = 0;
 float noxIndex = 0;
 
 // Force Provisioning
 bool force_pro = false;
 
-SensirionI2CSen5x sen5x;
-WiFiSSLClient client;                                           
-RTC_PCF8523 rtc;                                                
+// Sensor Componentns                                                                 
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
-Adafruit_BME280 bme280;                                           
+Adafruit_BME280 bme280;  
+SensirionI2CSen5x sen5x; 
+RTC_PCF8523 rtc; 
+WiFiSSLClient client;                                          
 File logfile;                                                  
 SCD30 scd30;                                             
 SCD4x scd41(SCD4x_SENSOR_SCD41);                          
 
-// TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
-uint8_t stat = 0;                                               // status byte
 
-void setup(void) {
+void setup() {
   pinMode(VBATPIN, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
@@ -144,10 +141,10 @@ void setup(void) {
   WiFi.setPins(8, 7, 4, 2);
 
   initializeOLED();
-  initializeSen5x();                                          
   initializeSCD41();                                      
-  //initializeSCD30(25);                                       
+  initializeSCD30(25);                                                                          
   initializeBME280();  
+  initializeSen5x(); 
   initializeRTC();                                          
   logfile = initializeSD();
 
@@ -184,14 +181,12 @@ int timeDebounce = 100;
 void loop(void) {
 
   uint8_t ctr = 0;
-  stat = stat & 0xEF;                                             // clear bit 4 for CO2 sensor
-
-  String bmeString = readBME280();                                   // get data string from BME280 "T, P, RH, "
+  String bmeString   = readBME280();                                   
   String sen5xString = readSen5x();
-  String co2String = readSCD41();
-
+  String scd41String = readSCD41();
+  String scd30String = readSCD30(100);
   DateTime now;
-  now = rtc.now();                                                 // fetch RTC datetime
+  now = rtc.now();                                                    
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
@@ -207,12 +202,12 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload( payload + String("\"") + String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
 
   Serial.println(header);
-  Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
 
-  logfile.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
   logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
@@ -266,7 +261,7 @@ void loop(void) {
       display.print(massConcentrationPm2p5, 2); 
 
       display.display();
-    } else {        // Off
+    } else {       
       display.clearDisplay();
       display.display();
     };

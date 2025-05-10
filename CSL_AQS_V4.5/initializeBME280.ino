@@ -13,8 +13,6 @@
 void initializeBME280()  {
   Serial.print("starting BME280... ");
   unsigned bmeStatus = bme280.begin();
-  // You can also pass in a Wire library object like &Wire2
-  // bmeStatus = bme.begin(0x76, &Wire2)
   if (!bmeStatus) {
     Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
     Serial.print("SensorID was: 0x"); Serial.println(bme280.sensorID(), 16);
@@ -24,14 +22,12 @@ void initializeBME280()  {
     Serial.print("        ID of 0x61 represents a BME 680.\n");
     display.println("BME280 Not Detected");
     display.display();
-    // SHOULD IT LOOP HERE?
   }
   else{
     Serial.println("BME Connected");
     display.println("BME280 Connected");display.display();
   }
 }
-
 
 String readBME280(){
   Tbme = bme280.readTemperature();

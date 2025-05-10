@@ -4,7 +4,6 @@ void initializeRTC(){
   Wire.begin();  
   if (!rtc.begin()) {
     Serial.println("RTC Failed");
-    stat = stat | 0x04; // 3rd bit set 'rtc not started'
     display.println("RTC Not Started..");
     display.display();
   }

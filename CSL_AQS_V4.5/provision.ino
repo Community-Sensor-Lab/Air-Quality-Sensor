@@ -22,21 +22,15 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   </form>
 </body></html>)rawliteral";
 
-/**
-* print wifi relevant info to Serial
-*
-*/
+
 void printWiFiStatus() {
-  // print the SSID of the network you're attached to:
   Serial.print(F("SSID: "));
   Serial.println(WiFi.SSID());
 
-  // print your WiFi shield's IP address:
   IPAddress ip = WiFi.localIP();
   Serial.print(F("IP Address: "));
   Serial.println(ip);
 
-  // print the received signal strength:
   long rssi = WiFi.RSSI();
   Serial.print(F("signal strength (RSSI):"));
   Serial.print(rssi);
@@ -49,10 +43,7 @@ void printWiFiStatus() {
   display.display();
 }
 
-/**
-* print formatted MAC address to Serial
-*
-*/
+
 void printMacAddress(byte mac[]) {
   for (int i = 5; i >= 0; i--) {
     if (mac[i] < 16)
@@ -69,9 +60,9 @@ void printMacAddress(byte mac[]) {
 *   web page with entry fields. The fields are 
 *   returned in the parameters.
 *   
-*   @param ssid, a String to place the ssid
-*   @param passcode, a String to place the
-*   @param gsid, a String to place the gsid
+*   @param ssid     - a String to place the ssid
+*   @param passcode - a String to place the passcode
+*   @param gsid     - a String to place the gsid
 */
 void AP_getInfo(String &ssid, String &passcode, String &gsid) {
   WiFiServer server(80);
@@ -93,10 +84,9 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
   delay(1000);
   printWiFiStatus();
 
-  while (true) {  // loop to poll connections etc.
-    // compare the previous status to the current status
-    if (status != WiFi.status()) {  // someone joined AP or left
-      // it has changed update the variable
+  while (true) {  
+   
+    if (status != WiFi.status()) { 
       status = WiFi.status();
       if (status == WL_AP_CONNECTED) {
         byte remoteMac[6];
@@ -173,15 +163,15 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
                 delay(5000);
                 status = WiFi.status();
                 storeinfo(ssid, passcode, gsid);
-                return;  // info will be in global vars ssidg, passcodeg, gsidg. TODO Move to local vars
+                return; 
               }
-              currentLine = "";  // if not 'GET' just start new line
+              currentLine = ""; 
             }
-          } else if (c != '\r') {  // if you got anything else but a carriage return character,
-            currentLine += c;      // add it to the end of the currentLine
+          } else if (c != '\r') {  
+            currentLine += c;     
           }
-        }  // if(client.available())
-      }    // while(client.connected())
+        }  
+      }    
       client.stop();
       Serial.println(F("Client disconnected"));
 

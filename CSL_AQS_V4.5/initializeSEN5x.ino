@@ -8,6 +8,18 @@
 
 
 String readSen5x(){
+    float massConcentrationPm1p0 = 0;
+    float massConcentrationPm4p0 = 0;
+    float massConcentrationPm10p0 = 0;
+    float numberConcentrationPm0p5 = 0;
+    float numberConcentrationPm1p0 = 0;
+    float numberConcentrationPm2p5 = 0;
+    float numberConcentrationPm4p0 = 0;
+    float numberConcentrationPm10p0 = 0;
+    float typicalParticleSize = 0;
+    float ambientHumidity = 0;
+    float ambientTemperature = 0;
+
     uint16_t error;
     char errorMessage[256];
 
