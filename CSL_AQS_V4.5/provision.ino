@@ -86,6 +86,7 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
   }
 
   // make AP with string+MAC address
+
   makeMACssidAP("csl");
 
   // wait 10 seconds for connection:

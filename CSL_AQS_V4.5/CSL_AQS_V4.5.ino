@@ -1,4 +1,3 @@
-
 /*
    COMMUNITY SENSOR LAB - AIR QUALITY SENSOR
 
@@ -30,16 +29,16 @@
 #include <SD.h>
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
-#include "RTClib.h"
-//#include "SparkFun_SCD30_Arduino_Library.h"
-#include "SparkFun_SCD4x_Arduino_Library.h"
+#include "RTClib.h"                              
+// Is 1 present are both present?
+#include "SparkFun_SCD30_Arduino_Library.h"                    // https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/blob/main/src/SparkFun_SCD30_Arduino_Library.cpp
+#include "SparkFun_SCD4x_Arduino_Library.h"                    // https://github.com/sparkfun/SparkFun_SCD4x_Arduino_Library/blob/main/src/SparkFun_SCD4x_Arduino_Library.h
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
-#include <HoneywellTruStabilitySPI.h>                           // Differential Pressure Sensor: https://github.com/huilab/HoneywellTruStabilitySPI.git
 #include <FlashStorage.h>
 
 
@@ -64,33 +63,51 @@ typedef struct {
   char saved_gsid[128];
 } Secrets;
 
+
 FlashStorage(flash_storage, Secrets);
 
 
-char server[] = "script.google.com";                          // name address for Google scripts as we are communicationg with the scripg (using DNS)
+char server[] = "script.google.com";                            // name address for Google scripts as we are communicationg with the scripg (using DNS)
 
-
-// These are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
-String payload_base = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
-String payload = "";
+String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 
+
+// SCD
 uint16_t CO2; 
+
+// BME
+float Tbme = 0;
+float Pbme = 0;
+float RHbme= 0;
+
+//SEN 55
 float Pmv = 0;
 float Nox = 0;
 float Voc = 0;
+float massConcentrationPm1p0;
+float massConcentrationPm2p5;
+float massConcentrationPm4p0;
+float massConcentrationPm10p0;
+float ambientHumidity;
+float ambientTemperature;
+float vocIndex;
+float noxIndex;
+
+
+
 bool force_pro = false;
 
 SensirionI2CSen5x sen5x;
-WiFiSSLClient client;                                           // Create SSL client
-RTC_PCF8523 rtc;                                                // Real Time Clock for RevB Adafruit logger shield
-Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      // OLED display
-Adafruit_BME280 bme;                                            // BME280 sensor
-File logfile;                                                   // Log file
-//SCD30 CO2sensor;                                              // Sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41);                            // Tell the library we have a SCD41 connected;
+WiFiSSLClient client;                                           
+RTC_PCF8523 rtc;                                                
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
+Adafruit_BME280 bme280;                                           
+File logfile;                                                  
+SCD30 scd30;                                             
+SCD4x scd41(SCD4x_SENSOR_SCD41);                          
 
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                               // status byte
@@ -109,8 +126,8 @@ void setup(void) {
   initializeSen5x();                                          
   initializeSCD41();                                      
   //initializeSCD30(25);                                       
-  initializeBME();                                             
-  logfile = initialize_SD_RTC();  
+  initializeBME280();                                             
+  logfile = initializeSD();  
   delay(3000);
 
   //Set Interrupt
@@ -146,20 +163,8 @@ void loop(void) {
   uint8_t ctr = 0;
   stat = stat & 0xEF;                                             // clear bit 4 for CO2 sensor
 
-  String bmeString = readBME();                                   // get data string from BME280 "T, P, RH, "
-  String bme = readBME();
-
-  // parsing out the t p rh float values
-  float Tbme = bme.toFloat();
-  bme = bme.substring(bme.indexOf(", ") + 2);
-  float Pbme = bme.toFloat();
-  bme = bme.substring(bme.indexOf(", ") + 2);
-  float RHbme = bme.toFloat();
-
-
+  String bmeString = readBME280();                                   // get data string from BME280 "T, P, RH, "
   String sen5xString = readSen5x();
-  String sen5x = readBME();
-
   String co2String = readSCD41();
 
   DateTime now;
@@ -243,6 +248,6 @@ void loop(void) {
       display.display();
     };
     //int sleepMS = Watchdog.sleep();// remove comment for low power
-    delay(16000);  // uncomment to debug because serial communication doesn't come back after sleeping
+    delay(6000);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }

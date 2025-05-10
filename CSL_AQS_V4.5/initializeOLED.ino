@@ -1,4 +1,10 @@
-// Adafruit OLED display
+/*  Sensirion SPS20 PM sensor.
+      functions:
+      - void initializeSCD30()
+      - String readSCD30(float Pbme) where Pbme is the ambient pressure from bme sensor
+      It returns a string with the CO2 ppm, T C, 
+     concentration for 0.5um, 1um, 2.5um, 10um and average particle size in um
+*/
 
 void initializeOLED()  {
   Serial.print("starting 128x64 OLED... ");

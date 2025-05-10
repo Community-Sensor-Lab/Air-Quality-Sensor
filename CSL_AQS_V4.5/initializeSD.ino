@@ -1,5 +1,5 @@
 
-File initialize_SD_RTC()  {
+File initializeSD()  {
   File logFile;
   if (!SD.begin(SD_CS)) { 
     Serial.println("Card failed, or not present.");
@@ -29,25 +29,6 @@ File initialize_SD_RTC()  {
       logFile.flush();
     }
   }
-
-  Serial.print("starting RTC... ");
-  Wire.begin();  
-  if (!rtc.begin()) {
-    Serial.println("RTC Failed");
-    stat = stat | 0x04; // 3rd bit set 'rtc not started'
-    display.println("RTC Not Started..");
-    display.display();
-  }
-  else
-    Serial.println("RTC Connected");
-    display.println("RTC Connected");
-    display.display();
-
-  /***
-  TO SET TIME at compile: run once to syncro then run again with line commented out.
-
-  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  ***/
 
   return logFile;
 }

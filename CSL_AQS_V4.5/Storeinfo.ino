@@ -1,9 +1,5 @@
 /*
-  Store and retrieve structured data in Flash memory.
-
-  This example code is in the public domain.
-
-  Written 30 Apr 2015 by Cristian Maglie
+ ADD DOCUMENTATION
 */
 
 // #include <FlashStorage.h>
