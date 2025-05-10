@@ -13,27 +13,39 @@ String readSen5x(){
 
     delay(1000);
 
-    error = sen5x.readMeasuredPmValues(
-    massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
-    massConcentrationPm10p0, numberConcentrationPm0p5, numberConcentrationPm1p0,
-    numberConcentrationPm2p5, numberConcentrationPm4p0, numberConcentrationPm10p0,
-    typicalParticleSize);
+
+    // MAKE A PULL REQUEST TO EDIT READMEASSUMENT OPTIONS
+    error = sen5x.readMeasuredValues(
+        massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
+        massConcentrationPm10p0, ambientHumidity, ambientTemperature, vocIndex,
+        noxIndex);
 
     if (error) {
         Serial.print("Error trying to execute readMeasuredValues(): ");
         errorToString(error, errorMessage, 256);
         Serial.println(errorMessage);
-        
-        return "";
-    } 
-    else{
-        String sen5xString = String(massConcentrationPm1p0) + String(", ") + String(massConcentrationPm2p5) + String(", ") + 
-        String(massConcentrationPm4p0) + String(", ") + String(massConcentrationPm10p0) + String(", ") + String(numberConcentrationPm0p5) + 
-        String(",") + String(numberConcentrationPm1p0) + String(",") + String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + 
-        String (",") + String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
-        String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") + String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
-        return sen5xString;
     }
+
+    error = sen5x.readMeasuredPmValues(
+        massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
+        massConcentrationPm10p0, numberConcentrationPm0p5, numberConcentrationPm1p0,
+        numberConcentrationPm2p5, numberConcentrationPm4p0, numberConcentrationPm10p0,
+        typicalParticleSize);
+
+    if (error) {
+    Serial.print("Error trying to execute readMeasuredValues(): ");
+    errorToString(error, errorMessage, 256);
+    Serial.println(errorMessage);
+    } 
+
+    
+    String sen5xString = String(massConcentrationPm1p0) + String(", ") + String(massConcentrationPm2p5) + String(", ") + 
+    String(massConcentrationPm4p0) + String(", ") + String(massConcentrationPm10p0) + String(", ") + String(numberConcentrationPm0p5) + 
+    String(",") + String(numberConcentrationPm1p0) + String(",") + String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + 
+    String (",") + String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
+    String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") + String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
+    return sen5xString;
+    
 }
 
 void initializeSen5x(){

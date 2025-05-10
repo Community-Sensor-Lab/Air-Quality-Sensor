@@ -18,7 +18,7 @@ void payloadUpload(String payload) {
         initializeClient();
       }
       Serial.print("payload: ");
-      payload = payload_base + String("\"") + payload + String("\"}");
+      payload = payload + String("\"}");
       Serial.println(payload);
       // Make a HTTP request:
       client.println(String("POST /macros/s/") + String(gsidg) + String("/exec?value=Hello HTTP/1.1"));

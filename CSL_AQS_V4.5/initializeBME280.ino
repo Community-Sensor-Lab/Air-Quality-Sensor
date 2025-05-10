@@ -33,10 +33,10 @@ void initializeBME280()  {
 }
 
 
-String readBME280();
-  Tbme = bme.readTemperature();
-  Pbme = bme.readPressure() / 100; // for hPa
-  RHbme = bme.readHumidity();
+String readBME280(){
+  Tbme = bme280.readTemperature();
+  Pbme = bme280.readPressure() / 100; // for hPa
+  RHbme = bme280.readHumidity();
 
   String bmeString = String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) + String(", ");
   return bmeString;

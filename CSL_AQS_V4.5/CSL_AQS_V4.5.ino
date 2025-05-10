@@ -56,6 +56,27 @@
 #define USE_PRODUCT_INFO
 #endif
 
+
+// Function prototypes
+
+void initializeOLED();
+bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
+
+void initializeSCD41(); 
+String readSCD41();
+
+void initializeBME280(); 
+String readBME280();
+
+void initializeSen5x();
+String readSen5x();   
+
+File initializeSD(); 
+  
+
+
+// Global Variables
+
 typedef struct {
   boolean valid;
   char saved_ssid[64];
@@ -63,9 +84,7 @@ typedef struct {
   char saved_gsid[128];
 } Secrets;
 
-
 FlashStorage(flash_storage, Secrets);
-
 
 char server[] = "script.google.com";                            // name address for Google scripts as we are communicationg with the scripg (using DNS)
 
@@ -84,20 +103,22 @@ float Pbme = 0;
 float RHbme= 0;
 
 //SEN 55
-float Pmv = 0;
-float Nox = 0;
-float Voc = 0;
-float massConcentrationPm1p0;
-float massConcentrationPm2p5;
-float massConcentrationPm4p0;
-float massConcentrationPm10p0;
-float ambientHumidity;
-float ambientTemperature;
-float vocIndex;
-float noxIndex;
+float massConcentrationPm1p0 = 0;
+float massConcentrationPm2p5 = 0;
+float massConcentrationPm4p0 = 0;
+float massConcentrationPm10p0 = 0;
+float numberConcentrationPm0p5 = 0;
+float numberConcentrationPm1p0 = 0;
+float numberConcentrationPm2p5 = 0;
+float numberConcentrationPm4p0 = 0;
+float numberConcentrationPm10p0 = 0;
+float typicalParticleSize = 0;
+float ambientHumidity = 0;
+float ambientTemperature = 0;
+float vocIndex = 0;
+float noxIndex = 0;
 
-
-
+// Force Provisioning
 bool force_pro = false;
 
 SensirionI2CSen5x sen5x;
@@ -126,8 +147,10 @@ void setup(void) {
   initializeSen5x();                                          
   initializeSCD41();                                      
   //initializeSCD30(25);                                       
-  initializeBME280();                                             
-  logfile = initializeSD();  
+  initializeBME280();  
+  initializeRTC();                                          
+  logfile = initializeSD();
+
   delay(3000);
 
   //Set Interrupt
@@ -184,7 +207,7 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload( payload + String("\"") + String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
 
   Serial.println(header);
   Serial.println(String(outstr) + co2String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
@@ -230,17 +253,17 @@ void loop(void) {
       display.setCursor(0, 32);  
       display.print("VOC");
       display.setCursor(40, 32); 
-      display.print(Voc, 2);  
+      display.print(vocIndex, 2);  
 
       display.setCursor(0, 40); 
       display.print("NOX");
       display.setCursor(40, 40); 
-      display.print(Nox, 2); 
+      display.print(noxIndex, 2); 
 
       display.setCursor(0, 48); 
       display.print("Pm 2.5");
       display.setCursor(40, 48);
-      display.print(Pmv, 2); 
+      display.print(massConcentrationPm2p5, 2); 
 
       display.display();
     } else {        // Off
