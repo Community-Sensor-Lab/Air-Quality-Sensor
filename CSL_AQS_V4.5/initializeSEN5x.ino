@@ -26,7 +26,7 @@ String readSen5x(){
     delay(1000);
 
 
-    // MAKE A PULL REQUEST TO EDIT READMEASSUMENT OPTIONS
+    // TODO: MAKE A PULL REQUEST TO EDIT READMEASSUMENT OPTIONS
     error = sen5x.readMeasuredValues(
         massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
         massConcentrationPm10p0, ambientHumidity, ambientTemperature, vocIndex,
@@ -50,12 +50,20 @@ String readSen5x(){
     Serial.println(errorMessage);
     } 
 
+    // massConcentrationPm1p0, massConcentrationPm2p5,
+    // massConcentrationPm4p0,massConcentrationPm10p0, 
+    // numberConcentrationPm0p5, numberConcentrationPm1p0,
+    // numberConcentrationPm2p5, numberConcentrationPm4p0 
+    // numberConcentrationPm10p0, typicalParticleSize,
+    // ambientHumidity, ambientTemperature, vocIndex, noxIndex,
     
     String sen5xString = String(massConcentrationPm1p0) + String(", ") + String(massConcentrationPm2p5) + String(", ") + 
-    String(massConcentrationPm4p0) + String(", ") + String(massConcentrationPm10p0) + String(", ") + String(numberConcentrationPm0p5) + 
-    String(",") + String(numberConcentrationPm1p0) + String(",") + String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + 
-    String (",") + String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
-    String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") + String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
+                         String(massConcentrationPm4p0) + String(", ") + String(massConcentrationPm10p0) + String(", ") +
+                         String(numberConcentrationPm0p5) +  String(",") + String(numberConcentrationPm1p0) + String(",") +
+                         String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + String (",") + 
+                         String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
+                         String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") +
+                         String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
     return sen5xString;
     
 }
@@ -63,13 +71,7 @@ String readSen5x(){
 void initializeSen5x(){
     Serial.print("starting Sen5x... ");
     Serial.begin(115200);
-    
-    // while (!Serial) {
-    //     delay(100);
-    // }
-
     Wire.begin();
-
     sen5x.begin(Wire);
 
     uint16_t error;
@@ -82,6 +84,7 @@ void initializeSen5x(){
     }
 
     float tempOffset = 0.0;
+
     error = sen5x.setTemperatureOffsetSimple(tempOffset);
     if (error) {
         Serial.print("Error trying to execute setTemperatureOffsetSimple(): ");
@@ -93,12 +96,17 @@ void initializeSen5x(){
         Serial.println(" deg. Celsius (SEN54/SEN55 only");
     }
 
-    // Start Measurement
     error = sen5x.startMeasurement();
     if (error) {
         Serial.print("Error trying to execute startMeasurement(): ");
         errorToString(error, errorMessage, 256);
         Serial.println(errorMessage);
     }
+
+    Serial.println(F("SEN5X Connected"));
+    display.println("SEN5X Connected");
+    display.display();
+
+
 
 }

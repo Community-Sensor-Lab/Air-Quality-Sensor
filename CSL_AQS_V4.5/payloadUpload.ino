@@ -1,25 +1,5 @@
 /*
   Write to Google Sheets via Wi-Fi using an HTTP 1.1 request to a Google Apps Script.
-
-  Functions:
-  - void payloadUpload(String payload):
-    Uploads data to Google Sheets using a POST request to a Google Apps Script endpoint.
-    - payload (String): The data to be uploaded, formatted as a string.
-    - The function tries to connect to Wi-Fi, then sends a POST request with the data as the payload.
-    - The request is sent to a Google Apps Script (GSID) using SSL on port 443.
-    - The response from the server is printed to the Serial Monitor.
-
-  - void initializeClient():
-    Establishes a secure connection to the Google Apps Script server using SSL.
-    - The client connects to the server (`script.google.com`) and listens for a response.
-
-  Notes:
-  - `ssidg` and `passcodeg` are Wi-Fi credentials (SSID and password).
-  - `gsidg` is the Google Apps Script ID used in the URL to access your script.
-  - The script is expected to accept HTTP POST requests, and `value=Hello` is just an example.
-  - The code tries to connect to Wi-Fi three times. If successful, it uploads the payload and prints the server response.
-  - The client uses SSL (port 443) for secure communication.
-
 */
 
 void payloadUpload(String payload) {

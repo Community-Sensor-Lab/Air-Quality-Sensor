@@ -12,6 +12,7 @@ void initializeOLED()  {
     Serial.println(F("SH110X  allocation failed"));
   else  {
     Serial.println("OLED Connected");
+    display.print("OLED Connected");
     display.display();
     display.setRotation(1);
 

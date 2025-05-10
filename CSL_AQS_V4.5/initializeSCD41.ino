@@ -3,28 +3,20 @@
   Edited by: 
   Originally written by: Paul Clark (SparkFun Electronics)
   License: MIT
-
-  Functions:
-  - void initializeSCD41(): 
-    Initializes the SCD41 sensor for a single-shot CO2 reading. If the sensor is not connected or fails to measure, it will print an error.
-
-  - String readSCD41(): 
-    Requests and retrieves a CO2 reading, temperature, and humidity from the sensor. Returns this data as a string in the format:
-      "CO2 ppm, Temperature (°C), Humidity (%)"
 */
 
 void initializeSCD41() {
-  if (!scd41.begin(false, false, false))                                              // Do not start periodic measurements
-  {
+  if (!scd41.begin(false, false, false)){                                              // Do not start periodic measurements
     Serial.println(F("SCD41 not detected. Please check wiring. Freezing..."));
-    display.println("SCD41 Not Detected");
+    display.println("SCD41 not detected");
     display.display();
   }
-  else  
-  {
-    display.println("SCD30 Connected");
+  else {
+    Serial.println(F("SCD41 Connected"));
+    display.println("SCD41 Connected");
     display.display();
   }
+}
 
 String readSCD41() {
   int counter = 0;

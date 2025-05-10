@@ -72,6 +72,14 @@ void initializeSen5x();
 String readSen5x();   
 
 File initializeSD(); 
+
+void payloadUpload(String payload);
+void printMacAddress(byte mac[]); 
+void AP_getInfo(String &ssid, String &passcode, String &gsid);
+void makeMACssidAP(String startString);
+
+void payloadUpload(String payload);
+void initializeClient();
   
 
 // Global Variables
