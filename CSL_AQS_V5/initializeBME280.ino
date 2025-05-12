@@ -1,4 +1,6 @@
-
+/*!
+* @brief initialize BME280 sensor
+*/
 
 void initializeBME280()  {
   Serial.println("starting BME280... ");
@@ -29,6 +31,11 @@ void initializeBME280()  {
   }
 }
 
+
+/*!
+* @brief read temperature, pressure and relative humidity from BME280 sensor 
+* @return String with readings 
+**/
 String readBME280(){
   if (bme280.takeForcedMeasurement()){
     Tbme = bme280.readTemperature();

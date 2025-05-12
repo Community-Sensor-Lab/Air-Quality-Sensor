@@ -1,5 +1,5 @@
 /*!
-/* @brief starts a simple webpage with three fields to enter and send info
+/* @brief   starts a simple webpage with three fields to enter and send info
 */
 
 const char webpage_html[] PROGMEM = R"rawliteral(
@@ -24,7 +24,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
 
 
 /*!
-*   @brief Prints SSID the micro contrller connected to 
+*   @brief  prints information of the wifi the micro controller is connected to. 
 */
 
 void printWiFiStatus() {
@@ -48,7 +48,7 @@ void printWiFiStatus() {
 }
 
 /*!
-*   @brief Prints the micro controllers mac address
+*   Prints the micro controllers mac address
 * 
 *   @param mac     - an array containing the microcontrollers mac address
 */

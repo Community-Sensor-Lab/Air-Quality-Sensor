@@ -1,3 +1,6 @@
+/*!
+* @brief 
+**/
 void initializeSCD41() {
   Serial.println("starting SCD41... ");
   if (!scd41.begin(false, false, false)){                                                 // Do not start periodic measurements
@@ -13,6 +16,12 @@ void initializeSCD41() {
   }
 }
 
+
+/*!
+* @brief read CO2, temperature and relative humidity from SCD41 sensor 
+* @return String with readings 
+**/
+
 String readSCD41() {
   int counter = 0;
   if(scd41.measureSingleShot()){                                                          // Request fresh data (should take 5 seconds)
@@ -27,9 +36,9 @@ String readSCD41() {
     }
 
     CO2scd41 = scd41.getCO2();
-    float Tco2 = scd41.getTemperature();
-    float RHco2 = scd41.getHumidity();
-    return (String(CO2scd41) + String(", ") + String(Tco2) + String(", ") + String(RHco2) + String(", "));
+    float Tscd41 = scd41.getTemperature();
+    float RHscd41 = scd41.getHumidity();
+    return (String(CO2scd41) + String(", ") + String(Tscd41) + String(", ") + String(RHscd41) + String(", "));
   }
   else {
     return ("None,None,None,");

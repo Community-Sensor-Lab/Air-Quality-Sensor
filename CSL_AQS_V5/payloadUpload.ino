@@ -1,3 +1,8 @@
+
+/*!
+* @brief
+* @param
+*/
 void payloadUpload(String payload) {
   for (int i = 1; i < 4; i++) { 
     if (passcodeg != "") 
@@ -45,6 +50,11 @@ void payloadUpload(String payload) {
     Serial.println("Continuing without WiFi");
 }
 
+
+/*!
+* @brief
+* @param
+*/
 void initializeClient() {
   Serial.println("\nStarting connection to server... ");
   if (client.connectSSL(server, 443)) {     

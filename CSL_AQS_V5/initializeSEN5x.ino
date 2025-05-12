@@ -1,3 +1,54 @@
+/*!
+* @brief
+* @param
+*/
+
+void initializeSen5x(){
+    Serial.println("starting Sen5x... ");
+    Serial.begin(115200);
+    Wire.begin();
+    sen5x.begin(Wire);
+
+    uint16_t error;
+    char errorMessage[256];
+    error = sen5x.deviceReset();
+    if (error) {
+        Serial.print("Error trying to execute deviceReset(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    }
+
+    float tempOffset = 0.0;
+
+    error = sen5x.setTemperatureOffsetSimple(tempOffset);
+    if (error) {
+        Serial.print("Error trying to execute setTemperatureOffsetSimple(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    } else {
+        Serial.print("Temperature Offset set to ");
+        Serial.print(tempOffset);
+        Serial.println(" deg. Celsius (SEN54/SEN55 only");
+    }
+
+    error = sen5x.startMeasurement();
+    if (error) {
+        Serial.print("Error trying to execute startMeasurement(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    }
+
+    Serial.println(F("SEN5X Connected"));
+    display.println("SEN5X Connected");
+    display.display();
+}
+
+
+/*!
+* @brief
+* @param
+*/
+
 String readSen5x(){
     float massConcentrationPm1p0 = 0;
     float massConcentrationPm4p0 = 0;
@@ -58,45 +109,3 @@ String readSen5x(){
     
 }
 
-void initializeSen5x(){
-    Serial.println("starting Sen5x... ");
-    Serial.begin(115200);
-    Wire.begin();
-    sen5x.begin(Wire);
-
-    uint16_t error;
-    char errorMessage[256];
-    error = sen5x.deviceReset();
-    if (error) {
-        Serial.print("Error trying to execute deviceReset(): ");
-        errorToString(error, errorMessage, 256);
-        Serial.println(errorMessage);
-    }
-
-    float tempOffset = 0.0;
-
-    error = sen5x.setTemperatureOffsetSimple(tempOffset);
-    if (error) {
-        Serial.print("Error trying to execute setTemperatureOffsetSimple(): ");
-        errorToString(error, errorMessage, 256);
-        Serial.println(errorMessage);
-    } else {
-        Serial.print("Temperature Offset set to ");
-        Serial.print(tempOffset);
-        Serial.println(" deg. Celsius (SEN54/SEN55 only");
-    }
-
-    error = sen5x.startMeasurement();
-    if (error) {
-        Serial.print("Error trying to execute startMeasurement(): ");
-        errorToString(error, errorMessage, 256);
-        Serial.println(errorMessage);
-    }
-
-    Serial.println(F("SEN5X Connected"));
-    display.println("SEN5X Connected");
-    display.display();
-
-
-
-}

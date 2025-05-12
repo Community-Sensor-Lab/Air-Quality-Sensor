@@ -1,4 +1,6 @@
-
+/*!
+* @brief struct to store wifi credentials
+*/
 
 typedef struct {
   boolean valid;
@@ -10,14 +12,18 @@ typedef struct {
 
 FlashStorage(flash_storage, Secrets);
 
-
+/*!
+* @brief check if there are credentials in flash memory
+*/
 bool check_valid(){
   Secrets info;
   info = flash_storage.read();
   return info.valid;
 }
 
-
+/*!
+* @brief store the wifi and gsid credentials 
+*/
 void storeinfo(String &ssid, String &passcode, String &gsid) {
  
   Secrets info;
@@ -59,7 +65,7 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
 
   } else {
 
-    //Allow User to force provisioning if they want to update the wifi information or if they have moved to a different location
+    //Allow user to force provisioning if they want to update the wifi information or if they have moved to a different location
     display.clearDisplay();
     display.setCursor(0, 0);
     display.println("If you would like to force provisioning, press button a");
