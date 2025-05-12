@@ -1,19 +1,10 @@
-/*  Adafruit BME280 PM sensor
-    Functions:
-    - void initializeSCD30()
-    - String readBME280() where Pbme is the ambient pressure from bme sensor
 
-    return [
-      temparature,
-      pressure, 
-      relative humidity
-    ]
-*/
 
 void initializeBME280()  {
-  Serial.print("starting BME280... ");
+  Serial.println("starting BME280... ");
   unsigned bmeStatus = bme280.begin();
   if (!bmeStatus) {
+    stat |= 0x08;
     Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
     Serial.print("SensorID was: 0x"); Serial.println(bme280.sensorID(), 16);
     Serial.print("        ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
@@ -24,16 +15,29 @@ void initializeBME280()  {
     display.display();
   }
   else{
+    // void Adafruit_BME280::setSampling(sensor_mode mode, sensor_sampling tempSampling, sensor_sampling pressSampling, sensor_sampling humSampling, sensor_filter filter, standby_duration duration)
+    bme280.setSampling(
+    Adafruit_BME280::MODE_FORCED,          
+    Adafruit_BME280::SAMPLING_X1,         
+    Adafruit_BME280::SAMPLING_X1,         
+    Adafruit_BME280::SAMPLING_X1,          
+    Adafruit_BME280::FILTER_OFF,           
+    Adafruit_BME280::STANDBY_MS_1000       
+    );
     Serial.println("BME Connected");
     display.println("BME280 Connected");display.display();
   }
 }
 
 String readBME280(){
-  Tbme = bme280.readTemperature();
-  Pbme = bme280.readPressure() / 100; // for hPa
-  RHbme = bme280.readHumidity();
-
-  String bmeString = String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) + String(", ");
-  return bmeString;
+  if (bme280.takeForcedMeasurement()){
+    Tbme = bme280.readTemperature();
+    Pbme = bme280.readPressure() / 100; // for hPa
+    RHbme = bme280.readHumidity();
+  return (String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) + String(", "));
+  }
+  else{
+  stat |= 0x09;
+  return "None, None, None,";
+  }
 }

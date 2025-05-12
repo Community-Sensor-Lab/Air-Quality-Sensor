@@ -1,26 +1,43 @@
 /*
    COMMUNITY SENSOR LAB - AIR QUALITY SENSOR
 
-   featherM0-Wifi + featherwing adalogger-SD-RTC + SCD30-CO2 + BME280-TPRH + OLED display + SPS30-PM2.5
+   featherM0-Wifi + featherwing adalogger-SD-RTC +  OLED display 
 
    The SCD30 has a minimum power consumption of 5mA and cannot be stop-started. It's set to 55s (30s nominal)
    sampling period and the featherM0 sleeps for 2 x 16 =32s, wakes and waits for data available.
    Button A toggles display on/off but must be held down for 16s max and then wait 16s to toggle again.
 
-   Logs: date time, co2, t, rh, t2, press, rh2, battery voltage, status
+   Logs: 
+   RTC - DateTime,
+   SCD30 - Carbon Dioxide Concentration , Temperature , Relative Humidity, 
+   SCD41 - Carbon Dioxide Concentration, Temperature , Relative Humidity, 
+   BME 280 - Temperature , Pressure, Relative Humidity, 
+   Microcontroller, Program  - Battery Voltage mV, stat
+   Sen5X - Mass Concentration Pm1, Mass Concentration Pm2.5, Mass Concentration Pm4, Mass Concentration Pm10,
+   Number Concentration Pm0.5, Number Concentration Pm1, Number Concentration Pm2.5, Number Concentration Pm4, Number Concentration Pm10,
+   Typical Particle Size, Ambient Relative Humidity, Ambient Temperature, 
+   VOC Index, NOx Index
 
    https://github.com/Community-Sensor-Lab/Air-Quality-Sensor
 
    Global status is in uint8_t stat in bit order:
-   0- 0000 0001 0x01 SD card not present
-   1- 0000 0010 0x02 SD could not create file
-   2- 0000 0100 0x04 RTC failed
-   3- 0000 1000 0x08 SCD30 CO2 sensor not available
-   4- 0001 0000 0x10 SCD30 CO2 sensor timeout
-   5- 0010 0000 0x20 SPS30 PM2.5 sensor malfunction
-   6- 0100 0000 0x40 HSC differential pressure sensor absent or malfunction
-   7- 1000 0000 0x80 future: google.com ssl connection error
-
+   0-  0000 0000 0x00Starting state 
+   1-  0000 0001 0x01 SD card not present
+   2-  0000 0010 0x02 SD could not create file
+   3-  0000 0011 0x03 RTC failed
+   4-  0000 0100 0x04 SCD30 sensor not available
+   5-  0000 0101 0x05 SCD30 sensor timeout
+   6-  0000 0110 0x06 SCD41 sensor not available
+   7-  0000 0111 0x07 SCD41 sensor timeout
+   8-  0010 1000 0x08 BME280 sensor malfunction
+   9-  0100 1001 0x09 BME280 sensor timeout
+   10- 0000 1010 0x0A SEN5X sensor malfunction
+   11- 0000 1011 0x0B SEN5X sensor timeout
+   12- 0000 1100 0x0C SSL Connection: google.com ssl connection error
+   13- 0000 1101 0x0D Provisioning error 
+   14- 0000 1110 0x0E
+   15- 0000 1111 0x0F
+ 
    RICARDO TOLEDO-CROW NGENS, ESI, ASRC, CUNY,
    AMALIA TORRES, CUNY, July 2021
 
@@ -83,6 +100,7 @@ void initializeClient();
   
 
 // Global Variables
+
 typedef struct {
   boolean valid;
   char saved_ssid[64];
@@ -95,13 +113,17 @@ FlashStorage(flash_storage, Secrets);
 char server[] = "script.google.com"; 
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
-char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
+char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
+ mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
+ ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
+uint8_t stat = 0; 
 
+// SCD30 & SCD40
+uint16_t CO2scd30;
+uint16_t CO2scd41;  
 
-// SCD
-uint16_t CO2; 
 
 // BME
 float Tbme = 0;
@@ -109,18 +131,7 @@ float Pbme = 0;
 float RHbme= 0;
 
 //SEN 55
-// float massConcentrationPm1p0 = 0;
 float massConcentrationPm2p5 = 0;
-// float massConcentrationPm4p0 = 0;
-// float massConcentrationPm10p0 = 0;
-// float numberConcentrationPm0p5 = 0;
-// float numberConcentrationPm1p0 = 0;
-// float numberConcentrationPm2p5 = 0;
-// float numberConcentrationPm4p0 = 0;
-// float numberConcentrationPm10p0 = 0;
-// float typicalParticleSize = 0;
-// float ambientHumidity = 0;
-// float ambientTemperature = 0;
 float vocIndex = 0;
 float noxIndex = 0;
 
@@ -189,10 +200,12 @@ int timeDebounce = 100;
 void loop(void) {
 
   uint8_t ctr = 0;
-  String bmeString   = readBME280();                                   
-  String sen5xString = readSen5x();
-  String scd41String = readSCD41();
+                                  
+ 
   String scd30String = readSCD30(100);
+  String scd41String = readSCD41();
+  String bmeString   = readBME280();  
+  String sen5xString  = readSen5x();
   DateTime now;
   now = rtc.now();                                                    
 
@@ -202,20 +215,14 @@ void loop(void) {
 
   delay(5000);  // wait for the sps30 to stabilize
 
-  /**
-    Payload Format: 
-    outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x"
-    "now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),CO2, Tco2, RHco2, Tbme, Pbme, RHbme, measuredvbat, stat";
-  **/
-
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
+  payloadUpload( payload + String("\"") + String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
 
   Serial.println(header);
-  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
 
-  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(1) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
@@ -225,9 +232,9 @@ void loop(void) {
       display.clearDisplay();
      
       display.setCursor(0, 0); 
-      display.print("CO2 ");
+      display.print("CO2");
       display.setCursor(40, 0); 
-      display.print(CO2); 
+      display.print(CO2scd41); 
       display.print(" ppm");
       display.print("  ");
       display.print(measuredvbat, 2); 
@@ -251,7 +258,6 @@ void loop(void) {
       display.setCursor(40, 24); 
       display.print(RHbme, 0);  
       display.print("%");
-
 
       display.setCursor(0, 32);  
       display.print("VOC");

@@ -3,6 +3,7 @@ File initializeSD()  {
   File logFile;
   if (!SD.begin(SD_CS)) { 
     Serial.println("Card failed, or not present.");
+    stat |= 0x01;
   }
   else  {
     Serial.print("starting SD card... ");
@@ -19,6 +20,7 @@ File initializeSD()  {
     }
     if (!logFile) {
       Serial.println("Couldn't create file");
+      stat |= 0x02;
     }
     else  {
       Serial.print("logging to file: ");

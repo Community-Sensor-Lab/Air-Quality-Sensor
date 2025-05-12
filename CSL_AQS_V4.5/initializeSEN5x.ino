@@ -1,12 +1,3 @@
-/*  Sensirion SPS20 PM sensor.
-      functions:
-      - void initializeSCD30()
-      - String readSCD30(float Pbme) where Pbme is the ambient pressure from bme sensor
-      It returns a string with the CO2 ppm, T C, 
-     concentration for 0.5um, 1um, 2.5um, 10um and average particle size in um
-*/
-
-
 String readSen5x(){
     float massConcentrationPm1p0 = 0;
     float massConcentrationPm4p0 = 0;
@@ -24,7 +15,6 @@ String readSen5x(){
     char errorMessage[256];
 
     delay(1000);
-
 
     // TODO: MAKE A PULL REQUEST TO EDIT READMEASSUMENT OPTIONS
     error = sen5x.readMeasuredValues(
@@ -69,7 +59,7 @@ String readSen5x(){
 }
 
 void initializeSen5x(){
-    Serial.print("starting Sen5x... ");
+    Serial.println("starting Sen5x... ");
     Serial.begin(115200);
     Wire.begin();
     sen5x.begin(Wire);

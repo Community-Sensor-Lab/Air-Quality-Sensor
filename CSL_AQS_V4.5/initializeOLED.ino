@@ -7,12 +7,12 @@
 */
 
 void initializeOLED()  {
-  Serial.print("starting 128x64 OLED... ");
+  Serial.println("starting 128x64 OLED... ");
   if (!display.begin(0x3C, true)) // Address 0x3C for 128x32
     Serial.println(F("SH110X  allocation failed"));
   else  {
     Serial.println("OLED Connected");
-    display.print("OLED Connected");
+    display.println("OLED Connected");
     display.display();
     display.setRotation(1);
 

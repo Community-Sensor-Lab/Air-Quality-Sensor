@@ -1,7 +1,3 @@
-/*
-  Write to Google Sheets via Wi-Fi using an HTTP 1.1 request to a Google Apps Script.
-*/
-
 void payloadUpload(String payload) {
   for (int i = 1; i < 4; i++) { 
     if (passcodeg != "") 
@@ -17,12 +13,9 @@ void payloadUpload(String payload) {
       Serial.print("payload: ");
       payload = payload + String("\"}");
       Serial.println(payload);
-
-      // Make a HTTP request:
       client.println(String("POST /macros/s/") + String(gsidg) + String("/exec HTTP/1.1"));
       client.println("Host: script.google.com");
       client.println("Content-Type: application/x-www-form-urlencoded");
-      //client.println("Connection: close");
       client.print("Content-Length: ");
       client.println(payload.length());
       client.println();
@@ -54,8 +47,8 @@ void payloadUpload(String payload) {
 
 void initializeClient() {
   Serial.println("\nStarting connection to server... ");
-  if (client.connectSSL(server, 443)) {      // if you get a connection, report back via serial:
-    Serial.print("Connected to ");
+  if (client.connectSSL(server, 443)) {     
+    Serial.println("Connected to ");
     Serial.println(server);
     while (client.available()) {
       char c = client.read();

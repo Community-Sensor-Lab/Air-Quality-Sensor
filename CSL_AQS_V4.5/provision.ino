@@ -78,7 +78,7 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
 
   // make AP with string+MAC address
 
-  makeMACssidAP("csl");
+  makeMACssidAP("ngens_sensor");
 
   // wait 10 seconds for connection:
   delay(1000);
@@ -202,7 +202,7 @@ void makeMACssidAP(String startString) {
 
   Serial.print(F("Creating access point: "));
   Serial.println(ssid);
-
+  // EDIT LOCAL SERVER NAME BY CHANGING SSID
   status = WiFi.beginAP(ssid.c_str());
 
   if (status != WL_AP_LISTENING) {
