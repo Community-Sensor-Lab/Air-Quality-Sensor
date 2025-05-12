@@ -1,6 +1,6 @@
 void initializeSCD41() {
   Serial.println("starting SCD41... ");
-  if (!scd41.begin(false, false, false)){                                              // Do not start periodic measurements
+  if (!scd41.begin(false, false, false)){                                                 // Do not start periodic measurements
     stat |= 0x06;
     Serial.println(F("SCD41 not detected. Please check wiring. Freezing..."));
     display.println("SCD41 not detected");

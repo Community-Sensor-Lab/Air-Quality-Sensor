@@ -1,22 +1,15 @@
 
-// #include <FlashStorage.h>
 
-// Create a structure that is big enough to contain a saved_ssid
-// and a saved_passcode. The "valid" variable is set to "true" once
-// the structure is filled with actual data for the first time.
-// typedef struct {
-//   boolean valid;
-//   char saved_ssid[64];
-//   char saved_passcode[64];
-//   char saved_gsid[128];
-// } Secrets;
+typedef struct {
+  boolean valid;
+  char saved_ssid[64];
+  char saved_passcode[64];
+  char saved_gsid[128];
+} Secrets;
 
-// Reserve a portion of flash memory to store a "Secrets" and
-// call it "flash_storage".
-// FlashStorage(flash_storage, Secrets);
 
-// Note: the area of flash memory reserved lost every time
-// the sketch is uploaded on the board.
+FlashStorage(flash_storage, Secrets);
+
 
 bool check_valid(){
   Secrets info;
@@ -30,26 +23,19 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
   Secrets info;
   info = flash_storage.read();
 
-  // If this is the first run the "valid" value should be "false"...
+ 
   if (info.valid == false) {
 
-    // ...in this case we ask for user data.
     String saved_ssid = ssid;
     String saved_passcode = passcode;
     String saved_gsid = gsid;
 
-    // Fill the "info" structure with the data entered by the user...
+    
     saved_ssid.toCharArray(info.saved_ssid, 64);
     saved_passcode.toCharArray(info.saved_passcode, 64);
     saved_gsid.toCharArray(info.saved_gsid, 128);
-    // set "valid" to true, so the next time we know that we
-    // have valid data inside
     info.valid = true;
-
-    // ...and finally save everything into "flash_storage"
     flash_storage.write(info);
-
-    // Print a confirmation of the data inserted.
     display.clearDisplay();
     display.setCursor(0, 0);
     SERIAL_PORT_MONITOR.println();
@@ -91,9 +77,6 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
       i++;
     }
 
-
-    //Since the variables in the parameter are passed by reference we are able to modify the global variables value directly
-    //As such we can assign the saved values to the global variable that will then be used to connect to the wifi and the google sheet
     ssid = info.saved_ssid;
     passcode = info.saved_passcode;
     gsid = info.saved_gsid;

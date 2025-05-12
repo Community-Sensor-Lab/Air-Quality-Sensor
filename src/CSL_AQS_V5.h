@@ -1,5 +1,5 @@
-#ifndef CSL_AQS_V4p5_h
-#define CSL_AQS_V4p5_h
+#ifndef CSL_AQS_V5_h
+#define CSL_AQS_V5_h
 
 #include "Arduino.h"
 #include <SPI.h>
@@ -59,6 +59,9 @@ public:
 
   void initializeClient();
   void payloadUpload(String payload);
+
+private
+  const char webpage_html[] PROGMEM;
 
 }
 

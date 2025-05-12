@@ -98,17 +98,7 @@ void makeMACssidAP(String startString);
 void payloadUpload(String payload);
 void initializeClient();
   
-
 // Global Variables
-
-typedef struct {
-  boolean valid;
-  char saved_ssid[64];
-  char saved_passcode[64];
-  char saved_gsid[128];
-} Secrets;
-
-FlashStorage(flash_storage, Secrets);
 
 char server[] = "script.google.com"; 
 

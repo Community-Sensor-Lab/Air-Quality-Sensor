@@ -76,11 +76,7 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
       ;
   }
 
-  // make AP with string+MAC address
-
   makeMACssidAP("ngens_sensor");
-
-  // wait 10 seconds for connection:
   delay(1000);
   printWiFiStatus();
 
@@ -119,35 +115,28 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
       }
     }
 
-    client = server.available();  // listen for incoming clients
+    client = server.available();  
 
-    if (client) {                    // if you get a client,
-      Serial.println(F("new client"));  // print a message out the serial port
-      String currentLine = "";       // make a String to hold incoming data from the client
-      while (client.connected()) {   // loop while the client's connected
+    if (client) {                   
+      Serial.println(F("new client")); 
+      String currentLine = "";      
+      while (client.connected()) {  
 
-        if (client.available()) {  // if there's bytes to read from the client,
-          char c = client.read();  // read a byte, then
-          Serial.write(c);         // print it out the serial monitor
+        if (client.available()) { 
+          char c = client.read();  
+          Serial.write(c);         
 
-          if (c == '\n') {  // if the byte is a newline character
-            // if the current line is blank, you got two newline characters in a row.
-            // that's the end of the client HTTP request, so send a response:
+          if (c == '\n') {  
+           
             if (currentLine.length() == 0) {
-              // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-              // and a content-type so the client knows what's coming, then a blank line:
               client.println(F("HTTP/1.1 200 OK"));
               client.println(F("Content-type:text/html"));
               client.println();
-              client.print(webpage_html);  // The HTTP response ends with another blank line:
+              client.print(webpage_html);  
               client.println();
-              // break out of the while loop:
               break;                   
-            } else {
-              // if you got a newline, then check and parse currentLine and clear
-              // if current line starts with 'GET' it has the info so parse                                      
+            } else {                                   
               if (currentLine.startsWith("GET /get?")) {  
-
                 int ssidIndx = currentLine.indexOf("SSID=");
                 int passcodeIndx = currentLine.indexOf("passcode=");
                 int gsidIndx = currentLine.indexOf("GSID=");
@@ -156,7 +145,6 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
                 passcode = currentLine.substring(passcodeIndx + 9, gsidIndx - 1);
                 gsid = currentLine.substring(gsidIndx + 5, httpIndx);
 
-                // close the connection:
                 client.stop();
                 Serial.println("client disconnected\n");
                 WiFi.end();
@@ -175,8 +163,8 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
       client.stop();
       Serial.println(F("Client disconnected"));
 
-    }  // if(client)
-  }    // while(true)
+    }  
+  }    
 }
 
 /**
@@ -198,11 +186,11 @@ void makeMACssidAP(String startString) {
 
   char myHexString[3];
   sprintf(myHexString, "%02X%02X", localMac[1], localMac[0]);
+  // EDIT LOCAL SERVER NAME BY CHANGING SSID
   String ssid = startString + String((char *)myHexString);
 
   Serial.print(F("Creating access point: "));
   Serial.println(ssid);
-  // EDIT LOCAL SERVER NAME BY CHANGING SSID
   status = WiFi.beginAP(ssid.c_str());
 
   if (status != WL_AP_LISTENING) {
