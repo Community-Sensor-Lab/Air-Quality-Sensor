@@ -1,6 +1,6 @@
-//WiFiServer server(80);
-/* this is the simple webpage with three fields to enter and
-send info */
+/*!
+/* @brief starts a simple webpage with three fields to enter and send info
+*/
 
 const char webpage_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html><head>
@@ -23,6 +23,10 @@ const char webpage_html[] PROGMEM = R"rawliteral(
 </body></html>)rawliteral";
 
 
+/*!
+*   @brief Prints SSID the micro contrller connected to 
+*/
+
 void printWiFiStatus() {
   Serial.print(F("SSID: "));
   Serial.println(WiFi.SSID());
@@ -43,6 +47,11 @@ void printWiFiStatus() {
   display.display();
 }
 
+/*!
+*   @brief Prints the micro controllers mac address
+* 
+*   @param mac     - an array containing the microcontrollers mac address
+*/
 
 void printMacAddress(byte mac[]) {
   for (int i = 5; i >= 0; i--) {
