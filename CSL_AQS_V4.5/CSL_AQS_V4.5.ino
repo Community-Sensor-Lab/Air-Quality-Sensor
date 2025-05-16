@@ -190,7 +190,7 @@ void loop(void) {
       display.setCursor(0, 0);
       display.print("CO2 ppm ");
       display.print(CO2);
-      display.print("V ");
+      display.print(" V");
       display.println(measuredvbat);
       display.print("T C ");
       display.println(Tbme);

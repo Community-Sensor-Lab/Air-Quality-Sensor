@@ -25,6 +25,32 @@ const char webpage_html[] PROGMEM = R"rawliteral(
 * print wifi relevant info to Serial
 *
 */
+
+/*!
+*   @brief decodes url encoded values
+*   
+*/
+String urlDecode(String input) {
+  String decoded = "";
+  char temp[] = "0x00"; // to hold the hex value
+
+  for (unsigned int i = 0; i < input.length(); i++) {
+    if (input[i] == '%') { // If a '%' is found, decode the following two hex characters
+      if (i + 2 < input.length()) {
+        temp[2] = input[i + 1];
+        temp[3] = input[i + 2];
+        decoded += (char) strtol(temp, NULL, 16); // Convert hex to character
+        i += 2;
+      }
+    } else if (input[i] == '+') { // Convert '+' to space
+      decoded += ' ';
+    } else {
+      decoded += input[i]; // Append normal characters
+    }
+  }
+  return decoded;
+}
+
 void printWiFiStatus() {
   // print the SSID of the network you're attached to:
   Serial.print(F("SSID: "));
@@ -155,13 +181,10 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
               // if current line starts with 'GET' it has the info so parse                                      
               if (currentLine.startsWith("GET /get?")) {  
 
-                int ssidIndx = currentLine.indexOf("SSID=");
-                int passcodeIndx = currentLine.indexOf("passcode=");
-                int gsidIndx = currentLine.indexOf("GSID=");
-                int httpIndx = currentLine.indexOf(" HTTP");
-                ssid = currentLine.substring(ssidIndx + 5, passcodeIndx - 1);
-                passcode = currentLine.substring(passcodeIndx + 9, gsidIndx - 1);
-                gsid = currentLine.substring(gsidIndx + 5, httpIndx);
+                 ssid = urlDecode(currentLine.substring(currentLine.indexOf("SSID=") + 5, currentLine.indexOf("passcode=") - 1));
+                passcode = urlDecode(currentLine.substring(currentLine.indexOf("passcode=") + 9, currentLine.indexOf("GSID=") - 1));
+                gsid = urlDecode(currentLine.substring(currentLine.indexOf("GSID=") + 5, currentLine.indexOf(" HTTP")));
+
 
                 // close the connection:
                 client.stop();
