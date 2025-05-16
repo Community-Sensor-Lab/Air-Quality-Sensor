@@ -9,13 +9,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   </head><body>
   <form action="/get">
     ssid: <input type="text" name="SSID"><br>
-    <!-- <input type="submit" value="Submit">
-  </form><br>
-  <form action="/get"> -->
     passcode: <input type="password" name="passcode"><br>
-    <!-- <input type="submit" value="Submit">
-   </form><br>
- <form action="/get"> -->
     gsid: <input type="text" name="GSID"><br>
     <input type="submit" value="Submit">
   </form>
