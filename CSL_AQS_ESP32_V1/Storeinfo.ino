@@ -49,17 +49,17 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     display.print("Your saved ssid: ");
     SERIAL_PORT_MONITOR.println(info.saved_ssid);
     display.println(info.saved_ssid);
-    //Uncomment when debugging
-    SERIAL_PORT_MONITOR.print("and your saved_passcode: ");
-    display.print("Your saved passcode: ");
-    SERIAL_PORT_MONITOR.println(info.saved_passcode);
-    display.println(info.saved_passcode);
-    SERIAL_PORT_MONITOR.print("along with your saved_gsid: ");
-    display.print("Your saved gsid: ");
-    SERIAL_PORT_MONITOR.println(info.saved_gsid);
-    display.println(info.saved_gsid);
-    SERIAL_PORT_MONITOR.println("have been saved.");
-    display.println("have been saved.");
+    // Uncomment when debugging
+    // SERIAL_PORT_MONITOR.print("and your saved_passcode: ");
+    // display.print("Your saved passcode: ");
+    // SERIAL_PORT_MONITOR.println(info.saved_passcode);
+    // display.println(info.saved_passcode);
+    // SERIAL_PORT_MONITOR.print("along with your saved_gsid: ");
+    // display.print("Your saved gsid: ");
+    // SERIAL_PORT_MONITOR.println(info.saved_gsid);
+    // display.println(info.saved_gsid);
+    // SERIAL_PORT_MONITOR.println("have been saved.");
+    // display.println("have been saved.");
     display.display();
     return;
 
@@ -91,17 +91,17 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     display.println("Connecting to previously saved network...");
     display.print("Saved ssid: ");
     display.println(info.saved_ssid);
-    //Uncommend during debug
-    display.print("Saved passcode: ");
-    display.println(info.saved_passcode);
-    display.print("Saved gsid: ");
-    display.println(info.saved_gsid);
+    // Uncommend during debug
+    // display.print("Saved passcode: ");
+    // display.println(info.saved_passcode);
+    // display.print("Saved gsid: ");
+    // display.println(info.saved_gsid);
     display.display();
     SERIAL_PORT_MONITOR.print("Your saved_ssid: ");
     SERIAL_PORT_MONITOR.println(info.saved_ssid);
     // Uncommend during debug
-    SERIAL_PORT_MONITOR.println(info.saved_passcode);
-    SERIAL_PORT_MONITOR.println(info.saved_gsid);
+    // SERIAL_PORT_MONITOR.println(info.saved_passcode);
+    // SERIAL_PORT_MONITOR.println(info.saved_gsid);
     delay(5000);
     return;
   }

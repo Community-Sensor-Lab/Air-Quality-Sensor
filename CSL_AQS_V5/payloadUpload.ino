@@ -43,7 +43,8 @@ void payloadUpload(String payload) {
       break;
     }
     else {
-      Serial.print("Trying to connect to Wifi : "); Serial.println(i);
+      Serial.print("Trying to connect to Wifi : "); 
+      Serial.println(i);
     }
   }
   if (status != WL_CONNECTED)
