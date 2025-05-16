@@ -1,0 +1,5 @@
+# Ignore all .log files
+*.DS_STORE
+
+# Ignore node_modules directory
+node_modules/
