@@ -1,6 +1,8 @@
 //WiFiServer server(80);
-/* this is the simple webpage with three fields to enter and
-send info */
+/*!
+*   @brief this is the simple webpage with three fields to enter and send info
+*
+*/
 
 const char webpage_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html><head>
@@ -14,7 +16,6 @@ const char webpage_html[] PROGMEM = R"rawliteral(
     <input type="submit" value="Submit">
   </form>
 </body></html>)rawliteral";
-
 
 
 /*!
