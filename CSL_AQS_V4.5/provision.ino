@@ -21,10 +21,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   </form>
 </body></html>)rawliteral";
 
-/**
-* print wifi relevant info to Serial
-*
-*/
+
 
 /*!
 *   @brief decodes url encoded values
@@ -51,6 +48,11 @@ String urlDecode(String input) {
   return decoded;
 }
 
+
+/*!
+*   @brief print wifi relevant info to Serial
+*
+*/
 void printWiFiStatus() {
   // print the SSID of the network you're attached to:
   Serial.print(F("SSID: "));
@@ -74,8 +76,8 @@ void printWiFiStatus() {
   display.display();
 }
 
-/**
-* print formatted MAC address to Serial
+/*!
+*  @brief print formatted MAC address to Serial
 *
 */
 void printMacAddress(byte mac[]) {
