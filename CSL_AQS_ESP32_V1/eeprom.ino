@@ -1,14 +1,6 @@
 
 #include "EEPROM.h"
-
-typedef struct {
-  boolean valid;
-  char ssid[64];
-  char passcode[64];
-  char gsid[128];
-} Secrets;
-
-Secrets provisionInfo;
+#include "CSL_AQS_ESP32_V1.h"
 
 void initializeEEPROM() {
 
@@ -18,26 +10,19 @@ void initializeEEPROM() {
     delay(1000);
     ESP.restart();
   }
+
   uint8_t val = EEPROM.readByte(0);
-
-  if (val != 0xAA) {  // never been initialized
+  if (!val) {  // never been initialized
     memset(&provisionInfo, 0, sizeof(provisionInfo));
-    EEPROM.writeByte(0, 0xAA);
+    //EEPROM.writeByte(0, 0xAA);
     EEPROM.commit();
-    Serial.printf("EEPROM initialized. value %x\n", val);
+    Serial.printf("EEPROM zeroed. Check value: 0x%X\n", val);
+    return;
+  } else  {
+    Serial.printf("Reading EEPROM provisioning info that may work. Check value: 0x%X\n", val);
+    EEPROM.readBytes(0, &provisionInfo, sizeof(provisionInfo));
     return;
   }
-  if (val == 0xAA) {
-    Serial.printf("EEPROM has provisioning info that may work. value %x\n", val);
-    return;
-  }
-}
-
-bool check_valid() {
-  if (EEPROM.readByte(0) == 0xAA) {
-    return true;
-  }
-  return false;
 }
 
 void readProvisionInfo() {
@@ -46,13 +31,17 @@ void readProvisionInfo() {
 }
 
 void storeProvisionInfo() {
-  EEPROM.writeBytes(0, &provisionInfo, sizeof(provsionInfo));
+  EEPROM.writeBytes(0, &provisionInfo, sizeof(provisionInfo));
   EEPROM.commit();
+  EEPROM.readBytes(0, &provisionInfo, sizeof(provisionInfo));
+  Serial.printf("storeProvisionInfo: valid %u, ssid %s, psscd %s, gsid %s, nowifi %u\n",
+                  provisionInfo.valid,provisionInfo.ssid,provisionInfo.passcode,
+                  provisionInfo.gsid,provisionInfo.noWifi);
   return;
 }
 
 
-
+/*
 
 
 {
@@ -78,3 +67,5 @@ void storeProvisionInfo() {
   delay(5000);
   return;
 }
+
+*/

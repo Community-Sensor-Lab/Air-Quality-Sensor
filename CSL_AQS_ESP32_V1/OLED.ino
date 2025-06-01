@@ -1,4 +1,4 @@
-// Adafruit OLED display
+#include "CSL_AQS_ESP32_V1.h"
 
 void initializeOLED()  {
   Serial.print("starting 128x64 OLED ... ");
@@ -35,10 +35,4 @@ bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, 
   }
   else
     return state;
-}
-
-/*  DISPLAY TO OLED */
-void displayOLED() {
-
-
 }

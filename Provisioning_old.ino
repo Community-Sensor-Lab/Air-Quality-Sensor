@@ -21,47 +21,6 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   </form>
 </body></html>)rawliteral";
 
-/**
-* print wifi relevant info to Serial
-*
-*/
-void printWiFiStatus() {
-  // print the SSID of the network you're attached to:
-  Serial.print(F("SSID: "));
-  Serial.println(WiFi.SSID());
-
-  // print your WiFi shield's IP address:
-  IPAddress ip = WiFi.localIP();
-  Serial.print(F("IP Address: "));
-  Serial.println(ip);
-
-  // print the received signal strength:
-  long rssi = WiFi.RSSI();
-  Serial.print(F("signal strength (RSSI):"));
-  Serial.print(rssi);
-  Serial.println(F(" dBm"));
-
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.println("Connect to SSID: ");
-  display.println(WiFi.SSID());
-  display.display();
-}
-
-/**
-* print formatted MAC address to Serial
-*
-*/
-void printMacAddress(byte mac[]) {
-  for (int i = 5; i >= 0; i--) {
-    if (mac[i] < 16)
-      Serial.print("0");
-    Serial.print(mac[i], HEX);
-    if (i > 0)
-      Serial.print(":");
-  }
-  Serial.println();
-}
 
 /**
 *   Makes AP and, when client connected, serves the 
@@ -217,4 +176,46 @@ void makeMACssidAP(String startString) {
     while (true)
       ;
   }
+}
+
+/**
+* print wifi relevant info to Serial
+*
+*/
+void printWiFiStatus() {
+  // print the SSID of the network you're attached to:
+  Serial.print(F("SSID: "));
+  Serial.println(WiFi.SSID());
+
+  // print your WiFi shield's IP address:
+  IPAddress ip = WiFi.localIP();
+  Serial.print(F("IP Address: "));
+  Serial.println(ip);
+
+  // print the received signal strength:
+  long rssi = WiFi.RSSI();
+  Serial.print(F("signal strength (RSSI):"));
+  Serial.print(rssi);
+  Serial.println(F(" dBm"));
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.println("Connect to SSID: ");
+  display.println(WiFi.SSID());
+  display.display();
+}
+
+/**
+* print formatted MAC address to Serial
+*
+*/
+void printMacAddress(byte mac[]) {
+  for (int i = 5; i >= 0; i--) {
+    if (mac[i] < 16)
+      Serial.print("0");
+    Serial.print(mac[i], HEX);
+    if (i > 0)
+      Serial.print(":");
+  }
+  Serial.println();
 }

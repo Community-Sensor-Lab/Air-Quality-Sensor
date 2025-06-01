@@ -5,20 +5,14 @@
 #include <SD.h>
 #include <FS.h>
 #include <Wire.h>
-//#include <Adafruit_SleepyDog.h>
+#include <WiFi.h>
 #include <RTClib.h>
-#include "SparkFun_SCD4x_Arduino_Library.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  // OLED library
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
-#include <SensirionI2CSen5x.h> 
-//#include <WiFi101.h>
-//#include "Storeinfo.h"
-//#include <FlashStorage.h>
 
 #define VBATPIN A13  // this is also D9 button A disable pullup to read analog
 #define BUTTON_A 15  // for the adafruit Feather ESP32 v2 (ABC, 15 32 14) Oled button also A7 enable pullup to read button
+#define BUTTON_B 32  // for the adafruit Feather ESP32 v2 (ABC, 15 32 14) Oled button also A7 enable pullup to read button
 //#define SD_CS 10    // Chip select for SD card default for Adalogger
 
 /* STRUCT TO STORE ALL SENSOR DATA */
@@ -40,21 +34,48 @@ typedef struct {
   float NOx; // SEN55 NOx index [1..500]
   float Vbat;
 } data;
-
 data sensorData; // instantiate a sensor data structure
-
-bool force_provisioning = false; 
 
 char header[] = "DateTime, Tbme, Pbme, RHbme, CO2, Tco2, RHco2, mPm1.0, mPm2.5, mPm4.0, mPm10, RHsen, Tsen, VOCs, NOx, Vbat";
 
-SensirionI2CSen5x SEN55;
-//WiFiSSLClient client;                                            // make SSL client
-RTC_PCF8523 rtc;                                                 // Real Time Clock for RevB Adafruit logger shield
+// Oled display
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
-Adafruit_BME280 bme;                                             // the bme tprh sensor
+
+// Clock and SD card
+RTC_PCF8523 rtc;                                                 // Real Time Clock for RevB Adafruit logger shield
 File logfile;                                                    // the logging file
-//SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
+
+// wifi and google sheets provisioning 
+typedef struct {
+  boolean valid;
+  char ssid[64];
+  char passcode[64];
+  char gsid[128];
+  boolean noWifi;
+} Secrets;
+Secrets provisionInfo;
+
+bool force_provisioning = false; 
+
+static const char provisioningPage[] = R"===(
+<!DOCTYPE HTML><html><head>
+  <title>Community Sensor Lab provisioning page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+  <form action="/get">
+    ssid: <input type="text" name="SSID"><br>
+    <!-- <input type="submit" value="Submit">
+  </form><br>
+  <form action="/get"> -->
+    passcode: <input type="password" name="passcode"><br>
+    <!-- <input type="submit" value="Submit">
+   </form><br>
+ <form action="/get"> -->
+    gsid: <input type="text" name="GSID"><br>
+    <input type="submit" value="Submit">
+  </form>
+</body></html>
+)===";
 
 /*
 char server[] = "script.google.com";  // name address for Google scripts as we are communicationg with the scripg (using DNS)

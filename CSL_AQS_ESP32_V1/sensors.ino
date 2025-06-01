@@ -1,4 +1,15 @@
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME280.h>
+#include <SensirionI2CSen5x.h> 
+#include "SparkFun_SCD4x_Arduino_Library.h"
+
 #include "CSL_AQS_ESP32_V1.h"
+
+// Sensors
+SensirionI2CSen5x SEN55;
+Adafruit_BME280 bme;
+//SCD30 CO2sensor;
+SCD4x CO2sensor(SCD4x_SENSOR_SCD41);
 
 /* BME280 TEMP, PRESS, RH BOARD FROM ADAFRUIT USING 'Adafruit_BME280.h' */
 
@@ -52,7 +63,7 @@ String readSCD41() {
   CO2sensor.measureSingleShot();        // Request fresh data (should take 5 seconds)
   while (!CO2sensor.readMeasurement())  // readMeasurement will return true when fresh data is available
   {
-    Serial.print(".");
+    Serial.print("+");
     delay(500);
   }
   Serial.println();
@@ -94,8 +105,6 @@ void initializeSEN55() {
   } else {
     Serial.printf("Temp Offset set to %f C... ", tempOffset);
   }
-
-  // Start Measurement
   error = SEN55.startMeasurement();
   if (error) {
     Serial.print("Error trying to execute startMeasurement(): ");

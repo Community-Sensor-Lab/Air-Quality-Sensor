@@ -18,20 +18,78 @@
 
 #include "CSL_AQS_ESP32_V1.h"
 
+//Interrupt Handlers
+void buttonA() {
+  provisionInfo.valid = false;
+}
+
+void buttonB() {
+  provisionInfo.noWifi = true;
+}
+
+void connectToWiFi() {
+  // try to connect to wifi or continue without wifi
+  Serial.printf("Trying to connect to wifi: %s\n", provisionInfo.ssid);
+  Serial.printf("To force provisioning press button A\n");
+  Serial.printf("To continue without wifi press button B\n");
+  display.setCursor(0, 0);
+  display.clearDisplay();
+  display.printf("Connecting to wifi: \n%s\n", provisionInfo.ssid);
+  display.printf("Provisioning: bttn A\n");
+  display.printf("No wifi: bttn B\n");
+  display.display();
+
+  while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi) {
+    delay(10000);  // wait 10 in case forced provisioning
+
+    if (!provisionInfo.valid) { // someone pressed button A
+      Serial.println("\nGoing into provisioning mode");
+      display.println("provisioning mode");
+      display.display();
+      
+      softAPprovision();
+    }
+
+    if (provisionInfo.noWifi) { // someone pressed button B
+      Serial.println("\nContinuing without wifi connection");
+      display.println("no wifi mode");
+      display.display();
+      break;
+    }
+
+    // connect to wifi
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(provisionInfo.ssid, provisionInfo.passcode);
+    Serial.println("Waiting to connect... ");
+    display.println("Waiting to connect... ");
+    display.display();
+
+    while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi && provisionInfo.valid) {
+      Serial.print(".");
+      delay(400);
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.printf("Connected to wifi %s\n", provisionInfo.ssid);
+      display.printf("wifi %s\n", provisionInfo.ssid);
+      display.display();
+      break;
+    }
+  }
+}
+
 void setup() {
 
   Serial.begin(115200);
   delay(5000);
   Serial.println(__FILE__);
 
-  initializeSD();    // initializeSD has to come before initializeOLED or it'll crash
-  initializeOLED();  // display
-
+  initializeSD();     // initializeSD has to come before initializeOLED or it'll crash
+  initializeOLED();   // display
   initializeSEN55();  // PM VOC NOX sensor
   initializeSCD41();  // CO2
   //initializeSCD30(25);       // CO2 sensor to 30s more stable (1 min max recommended)
   initializeBME();  // TPRH
-
   initializeRTC();  // clock
 
   logfile.println(header);
@@ -40,27 +98,61 @@ void setup() {
   // Set Interrupt on button A to force provisioning
   pinMode(BUTTON_A, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(BUTTON_A), buttonA, CHANGE);
+  pinMode(BUTTON_B, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_B), buttonB, CHANGE);
 
+  initializeEEPROM();
+  provisionInfo.noWifi = false;  // we assume we will have wifi
+  delay(5000);
 
-  /*if (!check_valid()) {
-    AP_getInfo(ssidg, passcodeg, gsidg);
-  } else {
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.println("Connecting to previously saved network");
-    display.display();
-    storeinfo(ssidg, passcodeg, gsidg);
-  } */
-  
-  display.setCursor(0, 0);
-  delay(3000);
-  display.clearDisplay();
-  display.display();
-}
+  connectToWiFi();
+  // // try to connect to wifi or continue without wifi
+  // Serial.printf("Trying to connect to wifi: %s\n", provisionInfo.ssid);
+  // Serial.printf("To force provisioning press button A\n");
+  // Serial.printf("To continue without wifi press button B\n");
+  // display.setCursor(0, 0);
+  // display.clearDisplay();
+  // display.printf("Connecting to wifi: \n%s\n", provisionInfo.ssid);
+  // display.printf("Provisioning: bttn A\n");
+  // display.printf("No wifi: bttn B\n");
+  // display.display();
 
-//Interrupt Handler
-void buttonA() {
-  force_provisioning = true;
+  // while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi) {
+  //   delay(10000);  // wait 10 in case forced provisioning
+
+  //   if (!provisionInfo.valid) {
+  //     Serial.println("\nGoing into provisioning mode");
+  //     display.println("provisioning mode");
+  //     display.display();
+  //     softAPprovision();
+  //   }
+
+  //   if (provisionInfo.noWifi) {
+  //     Serial.println("\nContinuing without wifi connection");
+  //     display.println("no wifi mode");
+  //     display.display();
+  //     break;
+  //   }
+
+  //   WiFi.mode(WIFI_STA);
+  //   WiFi.begin(provisionInfo.ssid, provisionInfo.passcode);
+  //   Serial.println("Waiting to connect... ");
+  //   display.println("Waiting to connect... ");
+  //   display.display();
+
+  //   while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi && provisionInfo.valid) {
+  //     Serial.print(".");
+  //     delay(400);
+  //   }
+
+  //   if (WiFi.status() == WL_CONNECTED) {
+  //     Serial.printf("Connected to wifi %s\n", provisionInfo.ssid);
+  //     display.printf("wifi %s\n", provisionInfo.ssid);
+  //     display.display();
+  //     break;
+  //   }
+  // }
+  delay(5000);
 }
 
 void loop() {
@@ -91,16 +183,15 @@ void loop() {
   // Serial.printf("tbme: %f, pbme: %f, rhbme %f\n", Tbme,Pbme,RHbme);
   display.clearDisplay();
   display.setCursor(0, 0);
-  if (force_provisioning) {
-    display.printf("forced provisioning\n");
-    delay(5000);
-    force_provisioning = false;
-  } else {
-    display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", sensorData.Tbme, sensorData.Pbme, sensorData.RHbme);
-    display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\n", sensorData.CO2, sensorData.mPm2_5, sensorData.VOCs);
-    display.printf("Bat: %.2f V\n", sensorData.Vbat);
-  }
+  display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", sensorData.Tbme, sensorData.Pbme, sensorData.RHbme);
+  display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\n", sensorData.CO2, sensorData.mPm2_5, sensorData.VOCs);
+  display.printf("Bat: %.2f V\n", sensorData.Vbat);
   display.display();
+
+  if (!provisionInfo.valid) {
+    softAPprovision();
+    connectToWiFi();
+  }
 
   delay(5000);
 }
