@@ -103,15 +103,20 @@ void initializeClient();
 char server[] = "script.google.com"; 
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
-char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
+
+// char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
+ mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
+ ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x"; 
+char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
+
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 uint8_t stat = 0; 
 
 // SCD30 & SCD40
-uint16_t CO2scd30;
+//uint16_t CO2scd30;
 uint16_t CO2scd41;  
 
 
@@ -135,7 +140,8 @@ SensirionI2CSen5x sen5x;
 RTC_PCF8523 rtc; 
 WiFiSSLClient client;                                          
 File logfile;                                                  
-SCD30 scd30;                                             
+
+// SCD30 scd30;                                             
 SCD4x scd41(SCD4x_SENSOR_SCD41);                          
 
 
@@ -151,7 +157,7 @@ void setup() {
 
   initializeOLED();
   initializeSCD41();                                      
-  initializeSCD30(25);                                                                          
+  // initializeSCD30(25);                                                                          
   initializeBME280();  
   initializeSen5x(); 
   initializeRTC();                                          
@@ -192,7 +198,7 @@ void loop(void) {
   uint8_t ctr = 0;
                                   
  
-  String scd30String = readSCD30(100);
+  // String scd30String = readSCD30(100);
   String scd41String = readSCD41();
   String bmeString   = readBME280();  
   String sen5xString  = readSen5x();
@@ -207,12 +213,15 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  payloadUpload( payload + String("\"") + String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
+  // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
+  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
 
   Serial.println(header);
-  Serial.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-
-  logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  // Serial.println(String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  
+  // logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle

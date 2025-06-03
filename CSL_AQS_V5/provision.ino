@@ -10,13 +10,7 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   <h1>NGENS Air Quality Sensor</h1>
   <form action="/get">
     ssid: <input type="text" name="SSID"><br>
-    <!-- <input type="submit" value="Submit">
-  </form><br>
-  <form action="/get"> -->
     passcode: <input type="password" name="passcode"><br>
-    <!-- <input type="submit" value="Submit">
-   </form><br>
- <form action="/get"> -->
     gsid: <input type="text" name="GSID"><br>
     <input type="submit" value="Submit">
   </form>
@@ -171,16 +165,7 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
               break;                   
             } else {                                   
               if (currentLine.startsWith("GET /get?")) {  
-                // int ssidIndx = currentLine.indexOf("SSID=");
-                // int passcodeIndx = currentLine.indexOf("passcode=");
-                // int gsidIndx = currentLine.indexOf("GSID=");
-                // int httpIndx = currentLine.indexOf(" HTTP");
-                // ssid = currentLine.substring(ssidIndx + 5, passcodeIndx - 1);
-                // passcode = currentLine.substring(passcodeIndx + 9, gsidIndx - 1);
-                // Serial.println("PASSCODE ERROR:");
-                // Serial.println(passcode);
-                // gsid = currentLine.substring(gsidIndx + 5, httpIndx);
-                // Extract SSID, passcode, and GSID from the GET request
+              
                 ssid = urlDecode(currentLine.substring(currentLine.indexOf("SSID=") + 5, currentLine.indexOf("passcode=") - 1));
                 passcode = urlDecode(currentLine.substring(currentLine.indexOf("passcode=") + 9, currentLine.indexOf("GSID=") - 1));
                 gsid = urlDecode(currentLine.substring(currentLine.indexOf("GSID=") + 5, currentLine.indexOf(" HTTP")));

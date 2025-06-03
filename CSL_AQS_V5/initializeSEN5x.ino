@@ -104,7 +104,7 @@ String readSen5x(){
                          String(numberConcentrationPm2p5) + String(",") + String(numberConcentrationPm4p0) + String (",") + 
                          String(numberConcentrationPm10p0) + String(",") + String(typicalParticleSize) + String(",") +
                          String(ambientHumidity) + String(", ") + String(ambientTemperature) + String(", ") +
-                         String(vocIndex) + String(", ") + String(noxIndex)+ String(", ");
+                         String(vocIndex) + String(", ") + String(noxIndex);
     return sen5xString;
     
 }
