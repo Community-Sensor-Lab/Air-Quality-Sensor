@@ -15,68 +15,7 @@
    RICARDO TOLEDO-CROW NGENS, ESI, ASRC, CUNY, May 2025
 
 */
-
 #include "CSL_AQS_ESP32_V1.h"
-
-//Interrupt Handlers
-void buttonA() {
-  provisionInfo.valid = false;
-}
-
-void buttonB() {
-  provisionInfo.noWifi = true;
-}
-
-void connectToWiFi() {
-  // try to connect to wifi or continue without wifi
-  Serial.printf("Trying to connect to wifi: %s\n", provisionInfo.ssid);
-  Serial.printf("To force provisioning press button A\n");
-  Serial.printf("To continue without wifi press button B\n");
-  display.setCursor(0, 0);
-  display.clearDisplay();
-  display.printf("Connecting to wifi: \n%s\n", provisionInfo.ssid);
-  display.printf("Provisioning: bttn A\n");
-  display.printf("No wifi: bttn B\n");
-  display.display();
-
-  while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi) {
-    delay(10000);  // wait 10 in case forced provisioning
-
-    if (!provisionInfo.valid) { // someone pressed button A
-      Serial.println("\nGoing into provisioning mode");
-      display.println("provisioning mode");
-      display.display();
-      
-      softAPprovision();
-    }
-
-    if (provisionInfo.noWifi) { // someone pressed button B
-      Serial.println("\nContinuing without wifi connection");
-      display.println("no wifi mode");
-      display.display();
-      break;
-    }
-
-    // connect to wifi
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(provisionInfo.ssid, provisionInfo.passcode);
-    Serial.println("Waiting to connect... ");
-    display.println("Waiting to connect... ");
-    display.display();
-
-    while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi && provisionInfo.valid) {
-      Serial.print(".");
-      delay(400);
-    }
-
-    if (WiFi.status() == WL_CONNECTED) {
-      Serial.printf("Connected to wifi %s\n", provisionInfo.ssid);
-      display.printf("wifi %s\n", provisionInfo.ssid);
-      display.display();
-      break;
-    }
-  }
-}
 
 void setup() {
 
@@ -95,63 +34,20 @@ void setup() {
   logfile.println(header);
   logfile.flush();
 
-  // Set Interrupt on button A to force provisioning
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_A), buttonA, CHANGE);
-  pinMode(BUTTON_B, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_B), buttonB, CHANGE);
-
   initializeEEPROM();
   provisionInfo.noWifi = false;  // we assume we will have wifi
   delay(5000);
 
   connectToWiFi();
-  // // try to connect to wifi or continue without wifi
-  // Serial.printf("Trying to connect to wifi: %s\n", provisionInfo.ssid);
-  // Serial.printf("To force provisioning press button A\n");
-  // Serial.printf("To continue without wifi press button B\n");
-  // display.setCursor(0, 0);
-  // display.clearDisplay();
-  // display.printf("Connecting to wifi: \n%s\n", provisionInfo.ssid);
-  // display.printf("Provisioning: bttn A\n");
-  // display.printf("No wifi: bttn B\n");
-  // display.display();
 
-  // while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi) {
-  //   delay(10000);  // wait 10 in case forced provisioning
+  initializeClient();
+  Serial.println("Adding header to google sheet");
+  //Serial.println(PRE_PAYLOAD_ADD_HEADER + header);
 
-  //   if (!provisionInfo.valid) {
-  //     Serial.println("\nGoing into provisioning mode");
-  //     display.println("provisioning mode");
-  //     display.display();
-  //     softAPprovision();
-  //   }
+  doPost(PRE_PAYLOAD_ADD_HEADER + header);
 
-  //   if (provisionInfo.noWifi) {
-  //     Serial.println("\nContinuing without wifi connection");
-  //     display.println("no wifi mode");
-  //     display.display();
-  //     break;
-  //   }
+  Serial.println("\nDone adding header to google sheet");
 
-  //   WiFi.mode(WIFI_STA);
-  //   WiFi.begin(provisionInfo.ssid, provisionInfo.passcode);
-  //   Serial.println("Waiting to connect... ");
-  //   display.println("Waiting to connect... ");
-  //   display.display();
-
-  //   while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi && provisionInfo.valid) {
-  //     Serial.print(".");
-  //     delay(400);
-  //   }
-
-  //   if (WiFi.status() == WL_CONNECTED) {
-  //     Serial.printf("Connected to wifi %s\n", provisionInfo.ssid);
-  //     display.printf("wifi %s\n", provisionInfo.ssid);
-  //     display.display();
-  //     break;
-  //   }
-  // }
   delay(5000);
 }
 
@@ -177,10 +73,18 @@ void loop() {
   Serial.println(header);
   Serial.println(tempString);
 
+  // if button B pressed then continue without wifi
+  if(provisionInfo.noWifi) {
+    Serial.println("No WiFi connection");
+    display.println("No WiFi mode");
+    display.display();
+  } else {
+    doPost(PRE_PAYLOAD_APPEND_ROW + tempString);
+  }
+
   logfile.println(tempString);
   logfile.flush();
 
-  // Serial.printf("tbme: %f, pbme: %f, rhbme %f\n", Tbme,Pbme,RHbme);
   display.clearDisplay();
   display.setCursor(0, 0);
   display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", sensorData.Tbme, sensorData.Pbme, sensorData.RHbme);
@@ -188,10 +92,11 @@ void loop() {
   display.printf("Bat: %.2f V\n", sensorData.Vbat);
   display.display();
 
+  // If button A pressed re-provision wifi creds
   if (!provisionInfo.valid) {
     softAPprovision();
     connectToWiFi();
   }
 
-  delay(5000);
+  delay(60000); // 1 minute
 }

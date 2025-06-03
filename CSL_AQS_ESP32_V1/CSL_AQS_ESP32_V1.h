@@ -7,7 +7,7 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <RTClib.h>
-#include <Adafruit_GFX.h>
+// #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  // OLED library
 
 #define VBATPIN A13  // this is also D9 button A disable pullup to read analog
@@ -36,10 +36,10 @@ typedef struct {
 } data;
 data sensorData; // instantiate a sensor data structure
 
-char header[] = "DateTime, Tbme, Pbme, RHbme, CO2, Tco2, RHco2, mPm1.0, mPm2.5, mPm4.0, mPm10, RHsen, Tsen, VOCs, NOx, Vbat";
+String header = "DateTime, Tbme, Pbme, RHbme, CO2, Tco2, RHco2, mPm1.0, mPm2.5, mPm4.0, mPm10, RHsen, Tsen, VOCs, NOx, Vbat";
 
-// Oled display
-Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED display
+// large Oled display
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 
 // Clock and SD card
 RTC_PCF8523 rtc;                                                 // Real Time Clock for RevB Adafruit logger shield
@@ -55,7 +55,8 @@ typedef struct {
 } Secrets;
 Secrets provisionInfo;
 
-bool force_provisioning = false; 
+#define PRE_PAYLOAD_APPEND_ROW "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\""
+#define PRE_PAYLOAD_ADD_HEADER "{\"command\":\"addHeader\",\"sheet_name\":\"Sheet1\",\"values\":\""
 
 static const char provisioningPage[] = R"===(
 <!DOCTYPE HTML><html><head>
@@ -76,15 +77,5 @@ static const char provisioningPage[] = R"===(
   </form>
 </body></html>
 )===";
-
-/*
-char server[] = "script.google.com";  // name address for Google scripts as we are communicationg with the scripg (using DNS)
-
-// these are the commands to be sent to the google script: namely add a row to last in Sheet1 with the values TBD
-String payload_base = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
-String payload = "";
-char header[] = "DateTime, CO2, Tco2, RHco2, Tbme, Pbme, RHbme, vbat(mV), status, mP1.0, mP2.5, mP4.0, mP10, ncP0.5, ncP1.0, ncP2.5, ncP4.0, ncP10, avgPartSize, Thsc, dPhsc";
-int status = WL_IDLE_STATUS;
-String ssidg, passcodeg, gsidg; */
 
 #endif

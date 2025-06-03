@@ -1,3 +1,5 @@
+#include <Adafruit_GFX.h>
+#include <Adafruit_SH110X.h>  // OLED library
 #include "CSL_AQS_ESP32_V1.h"
 
 void initializeOLED()  {
@@ -18,21 +20,20 @@ void initializeOLED()  {
     display.println("Hello World");
     display.display();
   }
-   
+  
+  // Set Interrupt on button A to force provisioning
+  pinMode(BUTTON_A, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_A), buttonA, CHANGE);
+  pinMode(BUTTON_B, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_B), buttonB, CHANGE);
+
 }
 
-bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce )  {
-  if (digitalRead(button))  {
-    buttonState = true;
-//    Serial.print("buttonState "); Serial.println(buttonState);
-    return state;
-  }
-  else if (buttonState && millis() - prevTime > debounce) {
-    buttonState = false;
-    prevTime = millis();
-//    Serial.print("buttonState "); Serial.println(buttonState);
-    return !state;
-  }
-  else
-    return state;
+//Interrupt Handlers
+void buttonA() {
+  provisionInfo.valid = false;
+}
+
+void buttonB() {
+  provisionInfo.noWifi = true;
 }

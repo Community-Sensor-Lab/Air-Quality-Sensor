@@ -136,3 +136,54 @@ String decodeUrl(const String& encoded) {
   }
   return decoded;
 }
+
+void connectToWiFi() {
+  // try to connect to wifi or continue without wifi
+  Serial.printf("Trying to connect to wifi: %s\n", provisionInfo.ssid);
+  Serial.printf("To force provisioning press button A\n");
+  Serial.printf("To continue without wifi press button B\n");
+  display.setCursor(0, 0);
+  display.clearDisplay();
+  display.printf("Connecting to wifi: \n%s\n", provisionInfo.ssid);
+  display.printf("Provisioning: bttn A\n");
+  display.printf("No wifi: bttn B\n");
+  display.display();
+
+  while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi) {
+    delay(10000);  // wait 10 in case forced provisioning
+
+    if (!provisionInfo.valid) { // someone pressed button A
+      Serial.println("\nGoing into provisioning mode");
+      display.println("provisioning mode");
+      display.display();
+      
+      softAPprovision();
+    }
+
+    if (provisionInfo.noWifi) { // someone pressed button B
+      Serial.println("\nContinuing without wifi connection");
+      display.println("no wifi mode");
+      display.display();
+      break;
+    }
+
+    // connect to wifi
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(provisionInfo.ssid, provisionInfo.passcode);
+    Serial.println("Waiting to connect... ");
+    display.println("Waiting to connect... ");
+    display.display();
+
+    while (WiFi.status() != WL_CONNECTED && !provisionInfo.noWifi && provisionInfo.valid) {
+      Serial.print(".");
+      delay(400);
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.printf("Connected to wifi %s\n", provisionInfo.ssid);
+      display.printf("wifi %s\n", provisionInfo.ssid);
+      display.display();
+      break;
+    }
+  }
+}
