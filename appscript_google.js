@@ -26,8 +26,6 @@ function onOpen() {
 *****************************************************************************/
 // Handle POST request
 function doPost(e) {
-  // Debugging Tool 
-//Logger = BetterLog.useSpreadsheet("1zbIFxD2dzRtrH7vNxGl8583tnQ2Efnosfq1xjhusaPQ");
   let parsedData;
   try {
     parsedData = JSON.parse(e.postData.contents);
