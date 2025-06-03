@@ -7,8 +7,8 @@
 #include <WiFiClientSecure.h>
 #include "CSL_AQS_ESP32_V1.h"
 
-#define PRE_PAYLOAD_APPEND_ROW "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\""
-#define PRE_PAYLOAD_ADD_HEADER "{\"command\":\"addHeader\",\"sheet_name\":\"Sheet1\",\"values\":\""
+// #define PRE_PAYLOAD_APPEND_ROW "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\""
+// #define PRE_PAYLOAD_ADD_HEADER "{\"command\":\"addHeader\",\"sheet_name\":\"Sheet1\",\"values\":\""
 #define POST_PAYLOAD "\"}"
 #define SERVER "script.google.com"  // Server URL
 
