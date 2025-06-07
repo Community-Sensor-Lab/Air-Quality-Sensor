@@ -12,6 +12,8 @@ This project is designed for students and educators in STEM programs, requiring 
 
 **Prerequisites:** Basic familiarity with computers and willingness to learn electronics fundamentals
 
+> 📋 **Need more detail?** See our [comprehensive guide](README-DETAILED.md) with step-by-step breakdowns of each section.
+
 ## Contents
 
 **0.** [Parts List](https://docs.google.com/document/d/1eruTOVNQ70D9B6PCWNkDp4wKfiiPEReuvoAi7Rmay4g/edit?usp=drive_link) *(Mark)*
