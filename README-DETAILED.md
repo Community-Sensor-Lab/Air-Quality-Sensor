@@ -12,7 +12,7 @@ This project is designed for students and educators in STEM programs, requiring 
 
 **Prerequisites:** Basic familiarity with computers and willingness to learn electronics fundamentals
 
-> 🚀 **Looking for a quick overview?** Check out our [streamlined guide](Readme.md) for experienced users.
+> 🚀 **Looking for a quick overview?** Check out the [streamlined guide](Readme.md).
 
 ## Detailed Contents
 
