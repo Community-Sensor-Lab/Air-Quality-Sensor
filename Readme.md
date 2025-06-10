@@ -18,27 +18,27 @@ This project is designed for students and educators in STEM programs, requiring 
 
 **0.** [Parts List](/Contents/Parts-List.md) *(Mark)*
 
-**1.** [Required Skills and Tools](/Contents/1.%20Required-Skills-and-Tools.mdRequired-Skills-and-Tools.md) *(Lorena)*
+**1.** [Required Skills and Tools](/Contents/1.%20Required-Skills-and-Tools.md) *(Lorena)*
 
-**2.** [Installing Arduino and Getting Started](/Contents/2.%20Installing-Arduino-and-Getting-Started.mdInstalling-Arduino-and-Getting-Started.md) *(Vincent)*
+**2.** [Installing Arduino and Getting Started](/Contents/2.%20Installing-Arduino-and-Getting-Started.md) *(Vincent)*
 
-**3.** [Sensor Boards Soldering and Cables](/Contents/3.%20Soldering-Pins-and-Headers-on-Boards.mdSoldering-Pins-and-Headers-on-Boards.md)
+**3.** [Sensor Boards Soldering and Cables](/Contents/3.%20Soldering-Pins-and-Headers-on-Boards.md)
 
-**3.5.** [Feather M0 WiFi Setup Procedure](/Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.mdFeather-M0-WiFi-Setup-Procedure.md)
+**3.5.** [Feather M0 WiFi Setup Procedure](/Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md)
 
-**4.** [Setting Up Components](/Contents/4%20Breadboard-Assembly-and-Component-Code-Testing.mdBreadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
+**4.** [Setting Up Components](/Contents/4%20Breadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
 
-**5.** [Code Activity](/Contents/5.%20Code-Activity.mdCode-Activity.md) *(Lorena)*
+**5.** [Code Activity](/Contents/5.%20Code-Activity.md) *(Lorena)*
 
-**6.** [Downloading CSL AQS Code from GitHub](/Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.mdDownloading-CSL-AQS-Code-from-GitHub.md) *(Mark)*
+**6.** [Downloading CSL AQS Code from GitHub](/Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.md) *(Mark)*
 
-**7.** [Posting to Google Logging Spreadsheet](/Contents/7.%20Posting-to-Google-Logging-Spreadsheet.mdPosting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
+**7.** [Posting to Google Logging Spreadsheet](/Contents/7.%20Posting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
 
-**8.** [How to Make Data Graphs - Lines and Time Series](/Contents/8.%20How-to-Make-Data-Graphs-Lines-and-Time-Series.mdHow-to-Make-Data-Graphs-Lines-and-Time-Series.md) *(Ricardo)*
+**8.** [How to Make Data Graphs - Lines and Time Series](/Contents/8.%20How-to-Make-Data-Graphs-Lines-and-Time-Series.md) *(Ricardo)*
 
-**9.** [Design and Assembly of PCB](/Contents/9.%20Design-and-Assembly-of-PCB.mdDesign-and-Assembly-of-PCB.md) *(Mark)*
+**9.** [Design and Assembly of PCB](/Contents/9.%20Design-and-Assembly-of-PCB.md) *(Mark)*
 
-**10.** [AQS PCB Mount](/Contents/10.%20AQS-PCB-Mount.mdAQS-PCB-Mount.md) *(Vincent)*
+**10.** [AQS PCB Mount](/Contents/10.%20AQS-PCB-Mount.md) *(Vincent)*
 
 <!-- Internal Notes:
 -make doc headers smaller
