@@ -16,10 +16,10 @@ This project is designed for students and educators in STEM programs, requiring 
 
 ## Detailed Contents
 
-**0.** [Parts List](https://docs.google.com/document/d/1eruTOVNQ70D9B6PCWNkDp4wKfiiPEReuvoAi7Rmay4g/edit?usp=drive_link) *(Mark)*
+**0.** [Parts List](/Contents/Parts-List.md) *(Mark)*
 - Students assemble all the parts in their own boxes
 
-**1.** [Required Skills and Tools](https://docs.google.com/document/d/1mvQsTc32bjuC7l7ijtVF-_ARMnHwnhWfpPXzsSneSdQ/edit?usp=drive_link) *(Lorena)*
+**1.** [Required Skills and Tools](/Contents/1.%20Required-Skills-and-Tools.md) *(Lorena)*
 - Safety procedures and guidelines
 - Materials and Tools overview
 - Practice soldering techniques:
@@ -30,7 +30,7 @@ This project is designed for students and educators in STEM programs, requiring 
 - Other essential tool usage
 - Using multimeter for continuity testing (beep function)
 
-**2.** [Installing Arduino and Getting Started](https://docs.google.com/document/d/1yBIu31yoNl-S-uk0izQ7rGxLrPd03uEbaEyvdvf0bEY/edit?usp=drive_link) *(Vincent)*
+**2.** [Installing Arduino and Getting Started](/Contents/2.%20Installing-Arduino-and-Getting-Started.md) *(Vincent)*
 - Downloading and installing Arduino IDE
 - Managing libraries and board packages
 - Connecting Feather M0 and running Blink example:
@@ -38,7 +38,7 @@ This project is designed for students and educators in STEM programs, requiring 
   - Finding the correct port
   - Running example Blink code to test connection
 
-**3.** [Sensor Boards Soldering and Cables](https://docs.google.com/document/d/1qe-Vhb9ftH12_VpeKCsfD-ODc87dPtZxIyc3WNPK15M/edit?usp=drive_link)
+**3.** [Sensor Boards Soldering and Cables](/Contents/3.%20Soldering-Pins-and-Headers-on-Boards.md)
 - BME280 sensor header pin soldering
 - SCD41 sensor header pin installation
 - Rewiring JST connector cable for SEN5x sensor
@@ -50,11 +50,11 @@ This project is designed for students and educators in STEM programs, requiring 
   - Soldering best practices
   - Pin trimming for proper fit
 
-**3.5.** [Feather M0 WiFi Setup Procedure](https://docs.google.com/document/d/1W8ZJhmlNl1G_N5n0yRctXMS5erIFklMhOZFekRmV0GQ/edit?usp=sharing)
+**3.5.** [Feather M0 WiFi Setup Procedure](/Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md)
 - WiFi provisioning procedures
 - Network configuration setup
 
-**4.** [Setting Up Components](https://docs.google.com/document/d/1WFvF_7xLqt54y61l6RR8TfNEejDlFR1TU_Uz_Xx3njM/edit?usp=drive_link) *(Lorena)*
+**4.** [Setting Up Components](/Contents/4%20Breadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
 - Component placement on breadboard and USB connection
 - Finding and selecting the active communication port
 - Uploading and compiling the Blink test program
@@ -69,11 +69,11 @@ This project is designed for students and educators in STEM programs, requiring 
   - BME280 temperature/humidity sensor installation (must be installed first)
   - SCD30 CO2 sensor placement (note: BME280 dependency)
 
-**5.** [Code Activity](https://docs.google.com/document/d/18pwJ7u2U9X6tMacqrYKDeCemcAeE9zQeEivDSDVQ8Qs/edit?usp=drive_link) *(Lorena)*
+**5.** [Code Activity](/Contents/5.%20Code-Activity.md) *(Lorena)*
 - Learning exercise: merging two example code bases
 - Understanding code integration principles
 
-**6.** [Downloading CSL AQS Code from Github](https://docs.google.com/document/d/1TifAqv9jKfEEz7CfKPhilbDQkyi2U0I-H0AbGaviCVQ/edit?usp=drive_link) *(Mark)*
+**6.** [Downloading CSL AQS Code from GitHub](/Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.md) *(Mark)*
 - Step-by-step GitHub download process
 - Running V4 firmware with offline capabilities
 - Sensor troubleshooting using:
@@ -81,22 +81,22 @@ This project is designed for students and educators in STEM programs, requiring 
   - OLED display diagnostic information
 - WiFi and network ID (SSID) provisioning through hotspot setup
 
-**7.** [Posting to Google Logging Spreadsheet](https://docs.google.com/document/d/1lNlVMkligkhTjbFhVWIEB8BZCj9COPIhkLUQ6nwG8GI/edit?usp=drive_link) *(Vincent)*
+**7.** [Posting to Google Logging Spreadsheet](/Contents/7.%20Posting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
 - Setting up Google Sheets integration
 - Configuring automatic data logging
 - Troubleshooting cloud connectivity issues
 
-**8.** [How to Make Data Graphs - Lines and Time Series](https://docs.google.com/document/d/1v4I3emiJqDPMkTu0Ljfq2Lmtf5U1SFGffgOTqIotLh8/edit?usp=drive_link) *(Ricardo)*
+**8.** [How to Make Data Graphs - Lines and Time Series](/Contents/8.%20How-to-Make-Data-Graphs-Lines-and-Time-Series.md) *(Ricardo)*
 - Creating effective data visualizations
 - Time series graph configuration
 - Analyzing air quality trends over time
 
-**9.** [Design and Assembly of PCB](https://docs.google.com/document/d/1sCKWZlnZ-L1BZDOygIV_YUr5N8475Aq2Q2YT3bVnMBQ/edit?usp=drive_link) *(Mark)*
+**9.** [Design and Assembly of PCB](/Contents/9.%20Design-and-Assembly-of-PCB.md) *(Mark)*
 - PCB design file access and required software
 - PCB ordering process and specifications
 - Professional sensor assembly on custom PCB
 
-**10.** [AQS PCB Mount](https://docs.google.com/document/d/1UT8rh22DokDd82nWzjSlzTCdgBBu4pW-yA3CvoBYW14/edit?usp=drive_link) *(Vincent)*
+**10.** [AQS PCB Mount](/Contents/10.%20AQS-PCB-Mount.md) *(Vincent)*
 - 3D printing PCB mounting components
 - Installing PCB mounts and housing in PVC tube enclosure
 
