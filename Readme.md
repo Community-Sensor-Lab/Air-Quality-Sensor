@@ -16,7 +16,7 @@ This project is designed for students and educators in STEM programs, requiring 
 
 ## Contents
 
-**0.** [Parts-List](Parts-List.md) *(Mark)*
+**0.** [Parts List](Parts-List.md) *(Mark)*
 
 **1.** [Required Skills and Tools](1.Required-Skills-and-Tools.md) *(Lorena)*
 
