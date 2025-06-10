@@ -16,29 +16,29 @@ This project is designed for students and educators in STEM programs, requiring 
 
 ## Contents
 
-**0.** [Parts List](./Parts-List.md) *(Mark)*
+**0.** [Parts List](Parts-List.md) *(Mark)*
 
-**1.** [Required Skills and Tools](./1_Required-Skills-and-Tools.md) *(Lorena)*
+**1.** [Required Skills and Tools](1_Required-Skills-and-Tools.md) *(Lorena)*
 
-**2.** [Installing Arduino and Getting Started](./2_Installing-Arduino-and-Getting-Started.md) *(Vincent)*
+**2.** [Installing Arduino and Getting Started](2_Installing-Arduino-and-Getting-Started.md) *(Vincent)*
 
-**3.** [Sensor Boards Soldering and Cables](./3_Soldering-Pins-and-Headers-on-Boards.md)
+**3.** [Sensor Boards Soldering and Cables](3_Soldering-Pins-and-Headers-on-Boards.md)
 
-**3.5.** [Feather M0 WiFi Setup Procedure](./3.5_Feather-M0-WiFi-Setup-Procedure.md)
+**3.5.** [Feather M0 WiFi Setup Procedure](3.5_Feather-M0-WiFi-Setup-Procedure.md)
 
-**4.** [Setting Up Components](./4_Breadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
+**4.** [Setting Up Components](4_Breadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
 
-**5.** [Code Activity](./5_Code-Activity.md) *(Lorena)*
+**5.** [Code Activity](5_Code-Activity.md) *(Lorena)*
 
-**6.** [Downloading CSL AQS Code from GitHub](./6_Downloading-CSL-AQS-Code-from-GitHub.md) *(Mark)*
+**6.** [Downloading CSL AQS Code from GitHub](6_Downloading-CSL-AQS-Code-from-GitHub.md) *(Mark)*
 
-**7.** [Posting to Google Logging Spreadsheet](./7_Posting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
+**7.** [Posting to Google Logging Spreadsheet](7_Posting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
 
-**8.** [How to Make Data Graphs - Lines and Time Series](./8_How-to-Make-Data-Graphs-Lines-and-Time-Series.md) *(Ricardo)*
+**8.** [How to Make Data Graphs - Lines and Time Series](8_How-to-Make-Data-Graphs-Lines-and-Time-Series.md) *(Ricardo)*
 
-**9.** [Design and Assembly of PCB](./9_Design-and-Assembly-of-PCB.md) *(Mark)*
+**9.** [Design and Assembly of PCB](9_Design-and-Assembly-of-PCB.md) *(Mark)*
 
-**10.** [AQS PCB Mount](./10_AQS-PCB-Mount.md) *(Vincent)*
+**10.** [AQS PCB Mount](10_AQS-PCB-Mount.md) *(Vincent)*
 
 <!-- Internal Notes:
 -make doc headers smaller
