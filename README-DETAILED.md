@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This step-by-step guide walks you through building an air quality monitoring system using Arduino-compatible components. The finished device will measure temperature, humidity, CO2, and particulate matter, log data to an SD card, display readings on an OLED screen, and optionally upload data to Google Sheets via WiFi.
+This step-by-step guide walks you through building an air quality monitoring system using Arduino-compatible components. The finished device will measure temperature, humidity, CO2, VOC/NOX, and particulate matter, log data to an SD card, display readings on an OLED screen, and optionally upload data to Google Sheets via WiFi.
 
 This project is designed for students and educators in STEM programs, requiring basic electronics skills that will be developed throughout the assembly process. By completion, you'll have hands-on experience with soldering, Arduino programming, sensor integration, and data visualization.
 
