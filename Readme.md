@@ -16,29 +16,29 @@ This project is designed for students and educators in STEM programs, requiring 
 
 ## Contents
 
-**0.** [Parts List](https://docs.google.com/document/d/1eruTOVNQ70D9B6PCWNkDp4wKfiiPEReuvoAi7Rmay4g/edit?usp=drive_link) *(Mark)*
+**0.** [Parts List](Parts-List.md) *(Mark)*
 
-**1.** [Required Skills and Tools](https://docs.google.com/document/d/1mvQsTc32bjuC7l7ijtVF-_ARMnHwnhWfpPXzsSneSdQ/edit?usp=drive_link) *(Lorena)*
+**1.** [Required Skills and Tools](1.Required-Skills-and-Tools.md) *(Lorena)*
 
-**2.** [Installing Arduino and Getting Started](https://docs.google.com/document/d/1yBIu31yoNl-S-uk0izQ7rGxLrPd03uEbaEyvdvf0bEY/edit?usp=drive_link) *(Vincent)*
+**2.** [Installing Arduino and Getting Started](2.Installing-Arduino-and-Getting-Started.md) *(Vincent)*
 
-**3.** [Sensor Boards Soldering and Cables](https://docs.google.com/document/d/1qe-Vhb9ftH12_VpeKCsfD-ODc87dPtZxIyc3WNPK15M/edit?usp=drive_link)
+**3.** [Sensor Boards Soldering and Cables](3.Soldering-pins-and-headers-on-boards.md)
 
-**3.5.** [Feather M0 WiFi Setup Procedure](https://docs.google.com/document/d/1W8ZJhmlNl1G_N5n0yRctXMS5erIFklMhOZFekRmV0GQ/edit?usp=sharing)
+**3.5.** [Feather M0 WiFi Setup Procedure](3.5-Feather-M0-WiFi-setup-procedure.md)
 
-**4.** [Setting Up Components](https://docs.google.com/document/d/1WFvF_7xLqt54y61l6RR8TfNEejDlFR1TU_Uz_Xx3njM/edit?usp=drive_link) *(Lorena)*
+**4.** [Setting Up Components](4.Breadboard-Assembly-and-Component-Code-Testing.md) *(Lorena)*
 
-**5.** [Code Activity](https://docs.google.com/document/d/18pwJ7u2U9X6tMacqrYKDeCemcAeE9zQeEivDSDVQ8Qs/edit?usp=drive_link) *(Lorena)*
+**5.** [Code Activity](5.Code-Activity.md) *(Lorena)*
 
-**6.** [Downloading CSL AQS Code from Github](https://docs.google.com/document/d/1TifAqv9jKfEEz7CfKPhilbDQkyi2U0I-H0AbGaviCVQ/edit?usp=drive_link) *(Mark)*
+**6.** [Downloading CSL AQS Code from Github](6.Downloading-CSL-AQS-code-from-Github.md) *(Mark)*
 
-**7.** [Posting to Google Logging Spreadsheet](https://docs.google.com/document/d/1lNlVMkligkhTjbFhVWIEB8BZCj9COPIhkLUQ6nwG8GI/edit?usp=drive_link) *(Vincent)*
+**7.** [Posting to Google Logging Spreadsheet](7.Posting-to-Google-Logging-Spreadsheet.md) *(Vincent)*
 
-**8.** [How to Make Data Graphs - Lines and Time Series](https://docs.google.com/document/d/1v4I3emiJqDPMkTu0Ljfq2Lmtf5U1SFGffgOTqIotLh8/edit?usp=drive_link) *(Ricardo)*
+**8.** [How to Make Data Graphs - Lines and Time Series](8.How-to-make-data-graphs-lines-and-time-series.md) *(Ricardo)*
 
-**9.** [Design and Assembly of PCB](https://docs.google.com/document/d/1sCKWZlnZ-L1BZDOygIV_YUr5N8475Aq2Q2YT3bVnMBQ/edit?usp=drive_link) *(Mark)*
+**9.** [Design and Assembly of PCB](9.Design-and-Assembly-of-PCB.md) *(Mark)*
 
-**10.** [AQS PCB Mount](https://docs.google.com/document/d/1UT8rh22DokDd82nWzjSlzTCdgBBu4pW-yA3CvoBYW14/edit?usp=drive_link) *(Vincent)*
+**10.** [AQS PCB Mount](10.AQS-PCB-Mount.md) *(Vincent)*
 
 <!-- Internal Notes:
 -make doc headers smaller
