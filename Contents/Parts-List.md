@@ -1,10 +1,10 @@
-**Featherwing Components**
+**Adafruit Feather (Arduino) Components**
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Feather M0 WiFi (WINC1500) | ![Feather M0 Wifi](images/Feather_M0_Wifi.png "Feather_M0_Wifi") | Microcontroller and Wifi Radio It is equivalent to the CPU of a computer. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
-| Featherwing Logger (RTC microSD) | ![Addalogger_Featherwing](images/Addalogger_FeatherWing.png "Addalogger Featherwing") | Real-time Clock and MicroSD Reader It works like the memory and data storage of a computer.  | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
-| Featherwing OLED 128x64 | ![FeatherWing_OLED](images/FeatherWing_OLED.png "FeatherWing OLED") | Display It is equivalent to the computer screen. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
+| Feather M0 WiFi (WINC1500) | ![Feather M0 Wifi](images/Feather_M0_Wifi.png "Feather_M0_Wifi") | Microcontroller CPU, battery charger and WiFi Radio. The 'brains' of the system. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
+| Addalogger Featherwing: RTC & MicroSD | ![Addalogger_Featherwing](images/Addalogger_FeatherWing.png "Addalogger Featherwing") | Real-time Clock and MicroSD Read/Write. It is the 'hard drive' data storage of the system. It also has a Real Time Clock (RTC) to keep date and time even when turned off. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
+| Featherwing OLED 128x64 | ![FeatherWing_OLED](images/FeatherWing_OLED.png "FeatherWing OLED") | The Organic Light Emmitting Diode (OLED) Display provides visual information from the system. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
 
 **Sensors**
 
