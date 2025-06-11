@@ -22,7 +22,7 @@ This is the first part of assembling your air quality sensor, which focuses on a
 1. Have a clear breadboard in front of you. For the time being this will be your breadboard for the following set up.   
 2. Be sure to have your FeatherM0 CPU & WiFi board nearby, we will be using this board to attach each of our sensors too.
 
-![][image1]
+![breadboard setup](../images/Assemble_Air_Quality_Sensor_Boards1.JPG)
 
 **Setting Time and Date on Arduino Real Time Clock (RTC)**
 
@@ -30,7 +30,7 @@ This is the first part of assembling your air quality sensor, which focuses on a
   * Under examples, RTCLib Open up pcf8523   
   * Comment out lines 21, 22, 34 (type // behind)
 
-![][image2]
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards2.JPG)
 
 * Upload this code to the sensor  
   * To upload be sure to select the correct board and port  
@@ -47,7 +47,7 @@ This is the first part of assembling your air quality sensor, which focuses on a
 * Connect the sd card to the computer and open up the sd card formatter  
   * You may need to use a sd card reader
 
-![][image3]  
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards3.JPG)  
 **BME 280 Sensor**  
 	Datasheet:
 
@@ -58,14 +58,14 @@ Explanation:
 * The BME 280 sensor is an environmental sensor that provides temperature, barometric pressure and humidity. 
 
 Placement:  
-![][image4]  
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards4.JPG) 
 Wiring:
 
 * When wiring be sure to have the voltage connecting to the red line (+) and the ground connecting to the blue line (-)  
   * For convenience follow the pictures below with the red line at the very bottom.  
 * Wire the BME 280 and Feather M0 WiFi as indicated on the photo below. Follow the color coding of each wire to be sure you are placing them in the right spot. 
 
-![][image5]
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards5.JPG)
 
 * As shown in the image we will be connecting SCK/SCL to the top row of the breadboard, SDI/SDA to the second row of the breadboard, VIN/3V to the last row of the breadboard and GND to the second to last row of the breadboard. 
 
@@ -73,14 +73,14 @@ Example Code:
 
 1. The example code we will be running is the BME280 test
 
-![][image6]
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards6.JPG)
 
 2. Once you have the code open after void setup () and Seiral.begin(); type in:  
    1. delay(5000);  
    2. Serial.println(\_\_FILE\_\_);  
    3. Doing so will ensure that you’re able to see if the code ran successfully 
 
-![][image7]
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards7.JPG)
 
 3. Now that your code and board are both ready, connect your board with a usb data cord.   
 4. You will now be able to select the board, verify and upload the code.   
@@ -99,7 +99,7 @@ Example Code:
 
 	  
 	Placement:  
-![][image8]  
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards8.JPG) 
 	Wiring: 
 
 * We will now be adding the SCD 41 to the board along with the BME 280 and the Feather M0 WiFi.  
@@ -109,11 +109,11 @@ Example Code:
 
 Example Code:
 
-*  The example code we will be running is the Example8\_SCD41SingleShot under Sparkfun SCD4x Arduino Library.![][image9]  
-* Once the code is open change line 35 to false false false![][image10]  
+*  The example code we will be running is the Example8\_SCD41SingleShot under Sparkfun SCD4x Arduino Library.![alt text](../images/Assemble_Air_Quality_Sensor_Boards9.JPG)  
+* Once the code is open change line 35 to false false false!![alt text](../images/Assemble_Air_Quality_Sensor_Boards10.JPG)  
 * And comment out lines 76-92 
 
-![][image11]
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards11.JPG)
 
 * Repeat steps 2-5 under BME 280: Example Code.  
 * Once you see the part is working successfully, disconnect USB before adding or removing parts and wires.
@@ -130,7 +130,7 @@ Example Code:
 	
 
 Placement:  
-![][image12]  
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards12.JPG)  
 Wiring:
 
 * For the SEN 55 we will want to keep the BME 280 on the board again for the same reason prior.   
@@ -143,7 +143,7 @@ Example Code:
 * Please repeat steps 2-5 under BME 280: Example Code.  
 * Once you see the part is working successfully, disconnect USB before adding or removing parts and wires.
 
-**![][image13]**
+**![alt text](../images/Assemble_Air_Quality_Sensor_Boards13.JPG)**
 
 **Final Assembly**   
 	Now that you’ve completed all the example codes and all parts are running smoothly and successfully, it’s time to put all the parts together on the breadboard as shown below.
