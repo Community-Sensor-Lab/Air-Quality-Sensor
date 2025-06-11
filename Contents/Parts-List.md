@@ -2,18 +2,17 @@
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Feather M0 WiFi (WINC1500) | ![Feather M0 Wifi]("Feather_M0_Wifi") | Microcontroller CPU, battery charger and WiFi Radio. The 'brains' of the system. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
-| Addalogger Featherwing: RTC & MicroSD | ![Addalogger_Featherwing](images/Addalogger_FeatherWing.png "Addalogger Featherwing") | Real-time Clock and MicroSD Read/Write. It is the 'hard drive' data storage of the system. It also has a Real Time Clock (RTC) to keep date and time even when turned off. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
-| Featherwing OLED 128x64 | ![FeatherWing_OLED](images/FeatherWing_OLED.png "FeatherWing OLED") | The Organic Light Emmitting Diode (OLED) Display provides visual information from the system. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
+| Feather M0 WiFi (WINC1500) | ![Feather M0 Wifi](../images/Feather-M0-WiFi.jpeg "Feather_M0_Wifi") | Microcontroller CPU, battery charger and WiFi Radio. The 'brains' of the system. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
+| Addalogger Featherwing: RTC & MicroSD | ![Addalogger_Featherwing](../images/Addalogger_FeatherWing.png "Addalogger Featherwing") | Real-time Clock and MicroSD Read/Write. It is the 'hard drive' data storage of the system. It also has a Real Time Clock (RTC) to keep date and time even when turned off. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
+| Featherwing OLED 128x64 | ![FeatherWing_OLED](../images/FeatherWing_OLED.png "FeatherWing OLED") | The Organic Light Emmitting Diode (OLED) Display provides visual information from the system. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
 
 **Sensors**
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Adafruit SCD41 CO2 | ![Adafruit_SCD41-CO2](images/Adafruit_SCD-41.png "Adafruit SCD-41") | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
-| BME280 Temp. Press. Rel Humidity | ![Adafruit_BME280](images/Adafruit%20BME280.png "Adafruit BME280") | Temp. Pressure Humidity Sensor | [https://www.adafruit.com/product/2652](https://www.adafruit.com/product/2652) |
-| Sensirion SEK-SEN5X | ![SEN55_PM-AQS](images/SEN55_PM-AQS.png "SEN55_PM-AQS") | Particulapngte Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
-
+| Adafruit SCD41 CO2 | ![Adafruit_SCD41-CO2](../images/Adafruit_SCD-41.png "Adafruit SCD-41") | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
+| BME280 Temp. Press. Rel Humidity | ![Adafruit_BME280](../images/Adafruit%20BME280.png "Adafruit BME280") | Temp. Pressure Humidity Sensor | [https://www.adafruit.com/product/2652](https://www.adafruit.com/product/2652) |
+| Sensirion SEK-SEN5X | ![SEN55_PM-AQS](../images/SEN55_PM-AQS.png "SEN55_PM-AQS") | Particulapngte Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
 **Additional Parts**
 
 | Part | Image | Description | Link |
