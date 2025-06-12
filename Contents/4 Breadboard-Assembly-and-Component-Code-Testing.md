@@ -133,13 +133,15 @@ Placement:
 ![alt text](../images/Assemble_Air_Quality_Sensor_Boards12.JPG)  
 Wiring:
 
-* For the SEN 55 we will want to keep the BME 280 on the board again for the same reason prior.   
-  * Again feel free to use the OLED instead. 
+* For the SEN 55 we will want to keep the BME 280 on the board again for the same reason prior.
+   
+  * Again feel free to use the OLED instead.
+
 ![alt text](../images/Assemble_Air_Quality_Sensor_Boards14.JPG)
 
 * The example code we will be running is exampleusage under Sensirion I2C SEN5x.  
 * Please repeat steps 2-5 under BME 280: Example Code.  
-* <span style="background-color: light-yellow;"><strong>Once you see the part is working successfully, disconnect USB before adding or removing parts and wires.</strong></span>
+* Once you see the part is working successfully, disconnect USB before adding or removing parts and wires.
 
 **![alt text](../images/Assemble_Air_Quality_Sensor_Boards13.JPG)**
 
