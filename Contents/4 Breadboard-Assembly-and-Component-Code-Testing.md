@@ -120,22 +120,20 @@ Example Code:
 
 **SEN 55 Sensor**  
 	Datasheet:
-
 * [https://sensirion.com/media/documents/6791EFA0/62A1F68F/Sensirion\_Datasheet\_Environmental\_Node\_SEN5x.pdf](https://sensirion.com/media/documents/6791EFA0/62A1F68F/Sensirion_Datasheet_Environmental_Node_SEN5x.pdf)
 
 	Explanation:
-
 * The Sen5x is an all in one sensor. It measures particulate matter, volatile organic compounds (VOCs), humidity, temperature and, oxidizing gasses, such as nitrogen oxides(NOx).
 
 	
 
 Placement:  
-![alt text](../images/Assemble_Air_Quality_Sensor_Boards12.JPG)  
+![alt text](../images/Assemble_Air_Quality_Sensor_Boards12.JPG) 
+
 Wiring:
+ * For the SEN 55 we will want to keep the BME 280 on the board again for the same reason prior.
 
-* For the SEN 55 we will want to keep the BME 280 on the board again for the same reason prior.
-
-  * Again feel free to use the OLED instead.
+ * Again feel free to use the OLED instead.
 
 ![alt text](../images/Assemble_Air_Quality_Sensor_Boards14.JPG)
 
