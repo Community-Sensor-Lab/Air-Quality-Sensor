@@ -20,7 +20,7 @@ This project is designed for students and educators in STEM programs, requiring 
 
 **1.** [Required Skills and Tools](Contents/1.%20Required-Skills-and-Tools.md) *(Lorena)*
 
-**2.** [Installing Arduino and Getting Started](Contents/2.%20Installing-Arduino-and-Getting-Started.md) *(Vincent)*
+**2.** [Installing Arduino and Getting Started](Contents/2.%20Installing-Arduino-and-Getting-Started-2.3.6.md) *(Vincent)*
 
 **3.** [Sensor Boards Soldering and Cables](Contents/3.%20Soldering-Pins-and-Headers-on-Boards.md)
 
