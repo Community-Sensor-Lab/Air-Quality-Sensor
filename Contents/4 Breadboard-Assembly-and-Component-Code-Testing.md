@@ -17,7 +17,7 @@ This is the first part of assembling your air quality sensor, which focuses on a
 
 **Starting** 
 
-	Setting Up
+Setting Up
 
 1. Have a clear breadboard in front of you. For the time being this will be your breadboard for the following set up.   
 2. Be sure to have your FeatherM0 CPU & WiFi board nearby, we will be using this board to attach each of our sensors too.
