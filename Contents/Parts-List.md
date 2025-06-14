@@ -10,9 +10,9 @@
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Adafruit SCD41 CO2 | <a href="https://www.adafruit.com/product/5190"><img src="image-24.png" alt="Adafruit SCD41 CO2" width="300"></a> | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
-| BME280 Temp. Press. Rel Humidity | <a href="https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372"><img src="image-25.png" alt="BME280 Sensor" width="300"></a> | Temp. Pressure Humidity Sensor | [https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
-| Sensirion SEK-SEN5X | <a href="https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756"><img src="image-26.png" alt="Sensirion SEK-SEN5X" width="300"></a> | Particulate Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
+| Adafruit SCD41 CO2 | <a href="https://www.adafruit.com/product/5190"><img src="image-24.png" alt="Adafruit SCD41 CO2" width="400"></a> | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
+| BME280 Temp. Press. Rel Humidity | <a href="https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372"><img src="image-25.png" alt="BME280 Sensor" width="400"></a> | Temp. Pressure Humidity Sensor | [https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
+| Sensirion SEK-SEN5X | <a href="https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756"><img src="image-26.png" alt="Sensirion SEK-SEN5X" width="400"></a> | Particulate Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
 
 **Additional Parts**
 
