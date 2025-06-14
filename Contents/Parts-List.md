@@ -18,7 +18,7 @@
 
 | Part | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| MiniBoost 5V | <a href="https://www.adafruit.com/product/4654"><img src="image-27.png" alt="MiniBoost 5V" style="width:700px; max-width:100%;"></a> | 3.3 to 5 Voltage Converter | [https://www.adafruit.com/product/4654](https://www.adafruit.com/product/4654) |
+| MiniBoost 5V | <a href="https://www.adafruit.com/product/4654"><img src="image-27.png" alt="MiniBoost 5V" style="width:700px; width="100%"></a> | 3.3 to 5 Voltage Converter | [https://www.adafruit.com/product/4654](https://www.adafruit.com/product/4654) |
 | Battery Coin cr1220 | <a href="https://www.digikey.com/en/products/detail/renata-batteries/RENATA-CR1220-TS-1/13283109"><img src="image-28.png" alt="Battery Coin cr1220" width="700"></a> | Battery (Coin) | [https://www.digikey.com/en/products/detail/renata-batteries/RENATA-CR1220-TS-1/13283109](https://www.digikey.com/en/products/detail/renata-batteries/RENATA-CR1220-TS-1/13283109) |
 | Micro SD | <a href="https://www.digikey.com/en/products/detail/delkin-devices-inc/USDCOEM-16GB/13882332"><img src="image-29.png" alt="Micro SD" width="700"></a> | (Physical) Data Storage | [https://www.digikey.com/en/products/detail/delkin-devices-inc/USDCOEM-16GB/13882332](https://www.digikey.com/en/products/detail/delkin-devices-inc/USDCOEM-16GB/13882332) |
 | 4 Pin Headers | <a href="https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC041LFBN-RC/810144"><img src="image-30.png" alt="4 Pin Headers" width="700"></a> | 4 Pin Header for 3.3 to 5 Volt. Converter | [https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC041LFBN-RC/810144](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC041LFBN-RC/810144) |
