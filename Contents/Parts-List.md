@@ -2,9 +2,9 @@
 
 | Component | Image | Description | Link |
 | ---- | ---- | ---- | ---- |
-| Feather M0 WiFi (WINC1500) | <img src="image-21.png" alt="Feather M0 WiFi"> | Microcontroller and Wifi Radio <br> It is equivalent to the CPU of a computer. | [Adafruit Store](https://www.adafruit.com/product/3010) |
-| Featherwing Logger (RTC microSD) | <img src="image-22.png" alt="Featherwing Logger"> | Real-time Clock and MicroSD Reader <br> It works like the memory and data storage of a computer. | [Adafruit Store](https://www.adafruit.com/product/2922) |
-| Featherwing OLED 128x64 | <img src="image-23.png" alt="Featherwing OLED"> | Display It is equivalent to the computer screen. | [Adafruit Store](https://www.adafruit.com/product/4650) |
+| Feather M0 WiFi (WINC1500) | <img src="image-21.png" alt="Feather M0 WiFi"> | Microcontroller and Wifi Radio <br> It is equivalent to the CPU <br> of a computer. | [Adafruit Store](https://www.adafruit.com/product/3010) |
+| Featherwing Logger (RTC microSD) | <img src="image-22.png" alt="Featherwing Logger"> | Real-time Clock and MicroSD Reader <br> It works like the memory and data storage <br> of a computer. | [Adafruit Store](https://www.adafruit.com/product/2922) |
+| Featherwing OLED 128x64 | <img src="image-23.png" alt="Featherwing OLED"> | Display <br> It is equivalent to the computer screen. | [Adafruit Store](https://www.adafruit.com/product/4650) |
 
 **Sensors**
 
