@@ -26,7 +26,7 @@
 
 <div align="center">
 
-![Hero Image](images/air_mon_system.jpg)
+![Hero Image](images/air_mon_system.JPG)
 
 </div>
 
