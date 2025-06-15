@@ -24,6 +24,12 @@
 
 ##  What You'll Build
 
+<div align="center">
+
+![Hero Image](images/air_mon_system.png)
+
+</div>
+
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
 
 ###  Key Features
