@@ -29,12 +29,11 @@ This comprehensive guide provides **detailed, step-by-step instructions** for bu
 
 ###  What You'll Build
 
-<div align="center">
+<p align="center">
+  <img src="images/air_mon_system_sqr.png" width="200"/>
+  <img src="images/CSL_AQS_solar_sqr.png" width="200"/>
+</p>
 
-![Hero Image](images/air_mon_system_sqr.png)
-![Hero Image](images/CSL_AQS_solar_sqr.png)
-
-</div>
 
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
 
