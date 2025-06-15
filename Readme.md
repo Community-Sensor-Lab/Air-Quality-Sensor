@@ -1,3 +1,9 @@
+<div align="center">
+
+![Banner](../images/csl_banner.png.png)
+
+</div>
+
 #  Air Quality Sensor Assembly Guide
 
 <div align="center">
