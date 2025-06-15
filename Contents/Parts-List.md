@@ -3,16 +3,16 @@
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
 | Feather M0 WiFi (WINC1500) | <img src="image-21.png" alt="Feather M0 WiFi" style="width:700px; max-width:100%;"> | Microcontroller and Wifi Radio It is equivalent to the CPU of a computer. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
-| Featherwing Logger (RTC microSD) | <a href="https://www.adafruit.com/product/2922"><img src="image-22.png" alt="Featherwing Logger" style="width:700px; max-width:100%;"></a> | Real-time Clock and MicroSD Reader It works like the memory and data storage of a computer. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
-| Featherwing OLED 128x64 | <a href="https://www.adafruit.com/product/4650"><img src="image-23.png" alt="Featherwing OLED" style="width:700px; max-width:100%;"></a> | Display It is equivalent to the computer screen. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
+| Featherwing Logger (RTC microSD) | <img src="image-22.png" alt="Featherwing Logger" style="width:700px; max-width:100%;"> | Real-time Clock and MicroSD Reader It works like the memory and data storage of a computer. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
+| Featherwing OLED 128x64 | <img src="image-23.png" alt="Featherwing OLED" style="width:700px; max-width:100%;"> | Display It is equivalent to the computer screen. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
 
 **Sensors**
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Adafruit SCD41 CO2 | <a href="https://www.adafruit.com/product/5190"><img src="image-24.png" alt="Adafruit SCD41 CO2" style="width:700px; max-width:100%;"></a> | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
-| BME280 Temp. Press. Rel Humidity | <a href="https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372"><img src="image-25.png" alt="BME280 Sensor" style="width:700px; max-width:100%;"></a> | Temp. Pressure Humidity Sensor | [https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
-| Sensirion SEK-SEN5X | <a href="https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756"><img src="image-26.png" alt="Sensirion SEK-SEN5X" style="width:700px; max-width:100%;"></a> | Particulate Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
+| Adafruit SCD41 CO2 | <img src="image-24.png" alt="Adafruit SCD41 CO2" style="width:700px; max-width:100%;"> | CO2 Sensor | [https://www.adafruit.com/product/5190](https://www.adafruit.com/product/5190) |
+| BME280 Temp. Press. Rel Humidity | <img src="image-25.png" alt="BME280 Sensor" style="width:700px; max-width:100%;"> | Temp. Pressure Humidity Sensor | [https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
+| Sensirion SEK-SEN5X | <img src="image-26.png" alt="Sensirion SEK-SEN5X" style="width:700px; max-width:100%;"> | Particulate Matter/VOC/NOX Sensor | [https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
 
 **Additional Parts**
 
