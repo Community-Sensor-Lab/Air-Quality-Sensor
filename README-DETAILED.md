@@ -28,6 +28,13 @@
 This comprehensive guide provides **detailed, step-by-step instructions** for building an air quality monitoring system using Arduino-compatible components. Perfect for **classroom environments** and **self-paced learning**.
 
 ###  What You'll Build
+
+<div align="center">
+
+![Hero Image](images/air_mon_system.JPG)
+
+</div>
+
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
 
 ###  Project Specifications
