@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banner](../images/csl_banner.PNG)
+![Banner](images/csl_banner.png)
 
 </div>
 
