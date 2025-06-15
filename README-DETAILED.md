@@ -35,6 +35,12 @@ This comprehensive guide provides **detailed, step-by-step instructions** for bu
 
 </div>
 
+<div align="center">
+
+![Hero Image](images/CSL_AQS_solar_sqr.png)
+
+</div>
+
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
 
 ###  Project Specifications
