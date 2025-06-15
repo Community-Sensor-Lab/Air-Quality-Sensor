@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banner](../Air-Quality-Sensor/images/csl_banner.png)
+![Banner](../images/csl_banner.PNG)
 
 </div>
 
