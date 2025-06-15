@@ -31,7 +31,7 @@ This comprehensive guide provides **detailed, step-by-step instructions** for bu
 
 <div align="center">
 
-![Hero Image](images/air_mon_system1.png)
+![Hero Image](images/air_mon_system_sqr.png)
 
 </div>
 
