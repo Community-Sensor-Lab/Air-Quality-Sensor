@@ -32,11 +32,6 @@ This comprehensive guide provides **detailed, step-by-step instructions** for bu
 <div align="center">
 
 ![Hero Image](images/air_mon_system_sqr.png)
-
-</div>
-
-<div align="center">
-
 ![Hero Image](images/CSL_AQS_solar_sqr.png)
 
 </div>
