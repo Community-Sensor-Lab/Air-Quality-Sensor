@@ -26,6 +26,7 @@
 
 <p align="center">
   <img src="images/air_mon_system_sqr.png" width="49%"/>
+  
   <img src="images/CSL_AQS_solar_sqr.png" width="49%"/>
 </p>
 
