@@ -2,7 +2,7 @@
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Feather M0 WiFi (WINC1500) | <img src="../Contents/resized_images/image-21.png" alt="Feather M0 WiFi"> | Microcontroller and Wifi Radio It is equivalent to the CPU of a computer. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
+| Feather M0 WiFi (WINC1500) | <img src="image-21.png" alt="Feather M0 WiFi"> | Microcontroller and Wifi Radio It is equivalent to the CPU of a computer. | [https://www.adafruit.com/product/3010](https://www.adafruit.com/product/3010) |
 | Featherwing Logger (RTC microSD) | <img src="image-22.png" alt="Featherwing Logger"> | Real-time Clock and MicroSD Reader It works like the memory and data storage of a computer. | [https://www.adafruit.com/product/2922](https://www.adafruit.com/product/2922) |
 | Featherwing OLED 128x64 | <img src="image-23.png" alt="Featherwing OLED"> | Display It is equivalent to the computer screen. | [https://www.adafruit.com/product/4650](https://www.adafruit.com/product/4650) |
 
