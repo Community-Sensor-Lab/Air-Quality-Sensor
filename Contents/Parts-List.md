@@ -12,9 +12,9 @@
 
 | Component | Image | Description | Link |
 | :---- | :---- | :---- | :---- |
-| Adafruit SCD41 CO2 | <img src="image-24.png" alt="Adafruit SCD41 CO2" width="200"> | CO2 Sensor | [Adafruit Store](https://www.adafruit.com/product/5190) |
-| BME280 Temp. Press. Rel Humidity | <img src="image-25.png" alt="BME280 Sensor" width="200"> | Temperature, Pressure & Humidity Sensor | [DigiKey](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
-| Sensirion SEK-SEN5X | <img src="image-26.png" alt="Sensirion SEK-SEN5X" width="200"> | Particulate Matter/VOC/NOX Sensor | [DigiKey](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
+| Adafruit SCD41 CO2 | <img src="image-24.png" alt="Adafruit SCD41 CO2" width="300"> | CO2 Sensor | [Adafruit Store](https://www.adafruit.com/product/5190) |
+| BME280 Temp. Press. Rel Humidity | <img src="image-25.png" alt="BME280 Sensor" width="300"> | Temperature, Pressure & Humidity Sensor | [DigiKey](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2652/5604372) |
+| Sensirion SEK-SEN5X | <img src="image-26.png" alt="Sensirion SEK-SEN5X" width="300"> | Particulate Matter/VOC/NOX Sensor | [DigiKey](https://www.digikey.com/en/products/detail/sensirion-ag/SEN55-SDN-T/16342756) |
 
 **Additional Parts**
 
