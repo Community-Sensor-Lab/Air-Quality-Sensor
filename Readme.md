@@ -1,4 +1,4 @@
-# 🌬️ Air Quality Sensor Assembly Guide
+#  Air Quality Sensor Assembly Guide
 
 <div align="center">
 
@@ -16,18 +16,18 @@
 
 ---
 
-## 🎯 What You'll Build
+##  What You'll Build
 
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
 
-### ✨ Key Features
+###  Key Features
 -  **Multi-sensor monitoring** (5 environmental parameters)
 -  **SD card data logging** for long-term analysis  
 -  **OLED display** for real-time readings
 -  **WiFi connectivity** with Google Sheets integration
 -  **Portable design** for indoor/outdoor use
 
-### 🎓 Learning Outcomes
+###  Learning Outcomes
 By completing this project, you'll gain hands-on experience with:
 -  **Electronics assembly** and soldering techniques
 -  **Arduino programming** and sensor integration
@@ -36,7 +36,7 @@ By completing this project, you'll gain hands-on experience with:
 
 ---
 
-## ⏱️ Project Overview
+##  Project Overview
 
 | **Duration** | **Difficulty** | **Prerequisites** |
 |:------------:|:--------------:|:-----------------:|
@@ -46,7 +46,7 @@ By completing this project, you'll gain hands-on experience with:
 
 ---
 
-## 📚 Complete Guide Contents
+##  Complete Guide Contents
 
 | Section | Title | Author | Description |
 |:-------:|-------|--------|-------------|
@@ -65,7 +65,7 @@ By completing this project, you'll gain hands-on experience with:
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 1. **Gather Materials** → Check the [Parts List](Contents/Parts-List.md)
 2. **Setup Workspace** → Review [Skills & Tools](Contents/1.%20Required-Skills-and-Tools.md)
@@ -83,7 +83,7 @@ By completing this project, you'll gain hands-on experience with:
 
 ---
 
-## 🎯 Perfect For
+##  Perfect For
 
 -  **STEM Education Programs**
 -  **Students learning electronics**
@@ -100,9 +100,7 @@ Found an issue or have suggestions? We welcome contributions to improve this edu
 
 <div align="center">
 
-**Happy Building! 🔧✨**
-
-*Transform your understanding of environmental monitoring while building something truly useful*
+**Transform your understanding of environmental monitoring while building something truly useful**
 
 ![Contributors](https://img.shields.io/badge/contributors-4-orange)
 ![STEM](https://img.shields.io/badge/education-STEM-purple)
