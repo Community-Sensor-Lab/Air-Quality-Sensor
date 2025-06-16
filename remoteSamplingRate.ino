@@ -18,11 +18,11 @@ static int samplingRate = 10000;
 char server_google_script[] = "script.google.com"; 
 char server_google_usercontent[] = "script.googleusercontent.com"; 
 
-char ssidg[] = "NGENSMOTO";
-char passcodeg[] = "N63n5adm1n";
+char ssidg[] = "pass";
+char passcodeg[] = "pass";
 
 //String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\"from, my, sensor, ";
-char gsidg[] = "AKfycbzm2JB3daLC60cet3Cl-iuiJwkW5TDqIBrta2XS925wwScDWxox3tHya92Eclsbo7zs";
+char gsidg[] = "gsid";
 uint8_t status; 
 WiFiSSLClient client;   
 
