@@ -25,9 +25,7 @@
 ##  What You'll Build
 
 <p align="center">
-  <img src="images/air_mon_system_sqr.png" width="49%"/>
-  
-  <img src="images/CSL_AQS_solar_sqr.png" width="49%"/>
+  <img src="images/air_mon_system_sqr.png" width="49%" style="border: 2px solid #ddd;"/><img src="images/CSL_AQS_solar_sqr.png" width="49%" style="border: 2px solid #ddd;"/>
 </p>
 
 
