@@ -116,6 +116,7 @@ By completing this detailed guide, students will master:
 | Section | Title | Author | Skills Developed | Duration |
 |:-------:|-------|--------|------------------|:--------:|
 | **9** | [ **PCB Design**](Contents/9.%20Design-and-Assembly-of-PCB.md) | *Mark* | PCB layout, professional assembly, manufacturing | 1 hour |
+| **9.8** | [ **Assembly of AQS Monitor on PCB Board**](Contents/9.8%20Assembley-of-AQS-Monitor-on-PCB-Board.md) | | Soldering components, wiring sensors, PCB mounting | 50 min |
 | **10** | [ **Enclosure Design**](Contents/10.%20AQS-PCB-Mount.md) | *Vincent* | 3D printing, mechanical design, product finishing | 45 min |
 
 **Engineering Skills:**
