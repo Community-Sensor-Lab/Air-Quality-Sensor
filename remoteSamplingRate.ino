@@ -7,6 +7,13 @@ Sensor <- response(Appscript sends a ContentService object)
 
 Content Service object is a redirect and needs to be handled by the sensor.
 *************************************************/
+
+// Note:
+
+// We are bounded at 12 seconds without loss of data.
+// Anything below that causes a large amount of incomplete responses.
+
+
 // Dependencies
 #include <SPI.h>
 #include <WiFi101.h>
@@ -30,14 +37,28 @@ void httpGet(String server, String url) {
   //Serial.println("Calling httpGet...");
   client.println("GET " + url + " HTTP/1.1");
   client.println("Host: " + String(server));
-  client.println();  // End of headers
+  client.println("Connection: close");
+  client.println();
 
   response = "";
-  while (client.available()) {
-    char c = client.read();
-    Serial.write(c);
-    response += c;
+  unsigned long lastRead = millis();
+  const unsigned long timeout = 1700; // 3 seconds
+
+  while (client.connected() || client.available()) {
+    if (client.available()) {
+      char c = client.read();
+      response += c;
+      lastRead = millis(); // reset timer on data received
+    }
+
+    if (millis() - lastRead > timeout) {
+      Serial.println("Response timeout. Exiting read loop.");
+      break;
+    }
   }
+
+
+  delay(200);  // Allow TLS setup
   handleResponse();
 }
 
@@ -47,18 +68,33 @@ void httpPost(String payload,String server, char gsidg[]) {
   client.println(String("POST /macros/s/") + String(gsidg) + String("/exec HTTP/1.1"));
   client.println("Host: "+ String(server));
   client.println("Content-Type: application/json");
+  client.println("Connection: close");
   client.print("Content-Length: ");
   client.println(payload.length());
   client.println();
   client.print(payload);
   client.println();
 
+
+
   response = "";
-  while (client.available()) {
-    char c = client.read();
-    Serial.write(c);
-    response += c;
-  }
+  unsigned long lastRead = millis();
+  const unsigned long timeout = 3000; // 3 seconds
+
+  while (client.connected() || client.available()) {
+    if (client.available()) {
+      char c = client.read();
+      response += c;
+      lastRead = millis(); // reset timer on data received
+    }
+
+    if (millis() - lastRead > timeout) {
+      Serial.println("Response timeout. Exiting read loop.");
+      break;
+    }
+  }  
+
+  delay(200);  // Allow TLS setup
   handleResponse();
 }
 
@@ -75,8 +111,7 @@ void handleResponse() {
 
       Serial.print("Parsed sampling rate: ");
       Serial.println(samplingRate);
-      client.stop();
-      delay(100);
+    
     }
   }
   // Handle Redirect (302 Moved Temporarily)
@@ -100,12 +135,8 @@ void handleResponse() {
       // Handle the redirect with a GET request
       String pathAndQuery = locationURL.substring(pathIndex + 4);  // Skip ".com"
       
-      client.stop();  // Force fresh connection
-      delay(100);
-
-      //Serial.println("\nConnecting to redirected server...");
+    
       initializeClient(server_google_usercontent);
-      delay(200);  // Allow TLS setup
       httpGet(server_google_usercontent, pathAndQuery);
     } else {
       Serial.println("No Location header found.");
@@ -188,3 +219,4 @@ void loop() {
     Serial.println("Wifi disconnected");
   };
 }
+
