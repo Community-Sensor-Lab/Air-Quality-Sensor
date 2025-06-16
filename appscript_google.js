@@ -37,27 +37,20 @@ function doPost(e) {
   if (parsedData !== undefined){
     switch (parsedData.command) {
       case "appendRow":
-      Logger.log("Executed Command")
-        //let tmp = SS.getSheetByName(parsedData.sheet_name);
-        let tmp = sheet;
         var dataArr = parsedData.values.split(","); 
         // Row format - "datetime","O3 ppbv","cell temp C","press mbar","flow cc/min"  
         var d = new Date(); 
         dformat = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('/') + ' ' + [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
         dataArr.unshift(dformat);
         // Appends to the last row
-        tmp.appendRow(dataArr); 
+        sheet.appendRow(dataArr); 
         // Save to sheets
         SpreadsheetApp.flush();
-        //sendToNodeRedPost(parsedData); 
         break;
     }
-    //sendToNodeRedPost(e.postData.contents);
-    Logger.log("Parsed Data Successfully");
       return ContentService.createTextOutput("Success");
     } // endif (parsedData !== undefined)
   else {
-    Logger.log("Error Occured while Parsing the data");
       return ContentService.createTextOutput("Error!   Request body empty or in incorrect format.");
     }   
 }
