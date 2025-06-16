@@ -28,10 +28,10 @@
   <table>
     <tr>
       <td style="border: 2px solid #ddd; padding: 5px;">
-        <img src="images/air_mon_system_sqr.png" width="450"/>
+        <img src="images/air_mon_system_sqr.png" width="49%"/>
       </td>
       <td style="border: 2px solid #ddd; padding: 5px;">
-        <img src="images/CSL_AQS_solar_sqr.png" width="450"/>
+        <img src="images/CSL_AQS_solar_sqr.png" width="49%"/>
       </td>
     </tr>
   </table>
