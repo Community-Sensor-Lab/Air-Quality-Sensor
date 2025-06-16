@@ -94,7 +94,7 @@ By completing this detailed guide, students will master:
 | **5** | [ **Code Integration**](Contents/5.%20Code-Activity.md) | *Lorena* | Code merging, programming logic, debugging | 45 min |
 | **6** | [ **Firmware Deployment**](Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.md) | *Mark* | GitHub workflows, firmware flashing, troubleshooting | 30 min |
 
-**🔧 Technical Focus:**
+**Technical Focus:**
 - **Code Architecture**: Understanding sensor libraries and data flow
 - **Debugging Skills**: Serial output analysis, OLED diagnostics
 - **Version Control**: GitHub integration, firmware management
