@@ -26,7 +26,7 @@
 
 <p align="center">
   <img src="images/air_mon_system_sqr.png" width="49%"/>
-  <img src="images/CSL_AQS_solar_sqr.png" width="49%"/>
+  <img src="images/air_mon_system_sqr1.png" width="49%"/>
 </p>
 
 > **A complete air quality monitoring system** that measures temperature, humidity, CO2, VOC/NOX, and particulate matter—with data logging, real-time display, and cloud connectivity.
