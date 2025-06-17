@@ -25,7 +25,7 @@
 ##  What You'll Build
 
 <p align="center">
-  <img src="images/hero_spr.png" width="49%"/>
+  <img src="images/hero_sqr3.png" width="49%"/>
   <img src="images/air_mon_system_sqr1.png" width="49%"/>
 </p>
 
