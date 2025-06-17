@@ -29,7 +29,7 @@
 | 16 Pin Headers | <img src="image-35.png" alt="16 Pin Headers"> | 16 Pin Header for Feather Logger and M0 | [DigiKey](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC161LFBN-RC/810154) |
 | Feather Stacking Header Set | <img src="image-36.png" alt="Feather Stacking Header Set"> | Stacking header for Feather M0 | [Adafruit Store](https://www.adafruit.com/product/2830) |
 | Grove Female Header - DIP-4P-2.0mm | <img src="image-37.png" alt="Grove Female Header"> | i2c Grove Connector | [Seeed Studio](https://www.seeedstudio.com/Grove-Universal-4-pin-connector.html) |
-| CSL_AQS_V1 PCB Board (KiCAD) | <img src="image-38.png" alt="CSL_AQS_V1 PCB Board"> | PCB Board | [PCBWay](https://www.pcbway.com/) / [GitHub](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL_AQS_V5) |
+| CSL_AQS_V1 PCB Board (KiCAD) | <img src="../Contents/image-38.png" alt="CSL_AQS_V1 PCB Board"> | PCB Board | [PCBWay](https://www.pcbway.com/) / [GitHub](https://github.com/Community-Sensor-Lab/Air-Quality-Sensor/tree/CSL_AQS_V5) |
 | PVC Tube | <img src="image-39.png" alt="PVC Tube"> | PVC 3 Inch Diameter 7 Inch LengthTube | [Home Depot](https://www.homedepot.com/p/Charlotte-Pipe-3-in-x-2-ft-PVC-DWV-Sch-40-Pipe-PVC073000200HA/100533056) |
 | PVC Cap | <img src="image-40.png" alt="PVC Cap"> | PVC Cap 3 Inch Diameter | [Home Depot](https://www.homedepot.com/p/3-in-PVC-DWV-Cap-PVC001161000HD/203393254) |
 | Type C Cable | <img src="image-41.png" alt="Type C Cable"> | Micro USB Cable | [Amazon](https://www.amazon.com/Ruaeoda-Micro-Android-Charger-Gold-Plated/dp/B0D7RZJSPS/ref=sr_1_10?s=industrial&sr=1-10) |
