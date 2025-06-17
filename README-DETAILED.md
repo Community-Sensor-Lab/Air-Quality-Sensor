@@ -30,7 +30,7 @@ This comprehensive guide provides **detailed, step-by-step instructions** for bu
 ###  What You'll Build
 
 <p align="center">
-  <img src="images/air_mon_system_sqr.png" width="49%"/>
+  <img src="images/hero_spr2.png" width="49%"/>
   <img src="images/CSL_AQS_solar_sqr.png" width="49%"/>
 </p>
 
