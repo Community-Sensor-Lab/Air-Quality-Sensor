@@ -100,7 +100,11 @@ void initializeClient();
   
 // Global Variables
 
-char server[] = "script.google.com"; 
+static String response = "";
+static int samplingRate = 10000;
+char server_google_script[] = "script.google.com"; 
+char server_google_usercontent[] = "script.googleusercontent.com"; 
+
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 
@@ -157,7 +161,7 @@ void setup() {
 
   initializeOLED();
   initializeSCD41();                                      
-  // initializeSCD30(25);                                                                          
+ // initializeSCD30(25);                                                                          
   initializeBME280();  
   initializeSen5x(); 
   initializeRTC();                                          
