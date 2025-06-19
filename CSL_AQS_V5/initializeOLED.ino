@@ -1,3 +1,7 @@
+/*!
+* @brief 
+*/
+
 void initializeOLED()  {
   Serial.println("starting 128x64 OLED... ");
   if (!display.begin(0x3C, true)) // Address 0x3C for 128x32

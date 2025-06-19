@@ -105,12 +105,9 @@ int samplingRate = 10000;
 char server_google_script[] = "script.google.com"; 
 char server_google_usercontent[] = "script.googleusercontent.com"; 
 
-
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 
-// char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
- mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
- ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x"; 
+// CO2_scd30, T_scd30, RH_scd30 
 char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
@@ -212,11 +209,9 @@ void loop(void) {
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
-
   //delay(5000);  // wait for the sps30 to stabilize
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-  // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
   payloadUpload(payload + "\"" + outstr + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\",\"srate\":" + String(samplingRate) + "}"
 );
 
@@ -280,7 +275,7 @@ void loop(void) {
       display.clearDisplay();
       display.display();
     };
-    int sleepMS = Watchdog.sleep();// remove comment for low power
+    //int sleepMS = Watchdog.sleep();// remove comment for low power
     delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }

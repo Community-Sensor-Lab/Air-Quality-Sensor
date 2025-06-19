@@ -1,4 +1,3 @@
-
 /*!
 * @brief Makes an http get request and handles the response message by calling handleResponse()
 **/
@@ -74,6 +73,8 @@ void handleResponse() {
   if (response.indexOf("200 OK") != -1) {
     //Serial.println("Successfully fetched data from google AppScript");
     int srateIndex = response.indexOf("srate:");
+    Serial.println("RESPONSE: ");
+    Serial.println(response);
     if (srateIndex != -1) {
       int valueStart = srateIndex + 6; // Skip past "srate:"
       int valueEnd = response.indexOf('\n', valueStart); // Find the end of the line
@@ -144,33 +145,6 @@ void payloadUpload(String payload) {
       // Send data to Google Apps Script
       httpPost(payload,server_google_script, gsidg);
 
-      // if (!client.connected()) {
-      //   initializeClient();
-      // }
-      // Serial.print("payload: ");
-      // payload = payload + String("\"}");
-      // Serial.println(payload);
-      // client.println(String("POST /macros/s/") + String(gsidg) + String("/exec HTTP/1.1"));
-      // client.println("Host: script.google.com");
-      // client.println("Content-Type: application/x-www-form-urlencoded");
-      // client.print("Content-Length: ");
-      // client.println(payload.length());
-      // client.println();
-      // client.print(payload);
-      // client.println();
-      // delay(200);
-
-      // if (client.available())
-      //   Serial.println("Response: ");
-      // while (client.available()) {
-      //   char c = client.read();
-      //   Serial.write(c);
-      // }
-
-      // client.stop();
-      // if (!client.connected()) {
-      //   Serial.println("disconnected from server");
-      // };
       WiFi.end();
       break;
     }
