@@ -58,7 +58,7 @@
 #include <FlashStorage.h>
 
 
-#define VBATPIN A7                                              // this is also D9 button A disable pullup to read analog
+#define VBATPIN A7                                           // this is also D9 button A disable pullup to read analog
 #define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
 #define BUTTON_B 6                                              // oled button
 #define BUTTON_C 5                                              // oled button
@@ -100,8 +100,8 @@ void initializeClient();
   
 // Global Variables
 
-static String response = "";
-static int samplingRate = 10000;
+String response = "";
+int samplingRate = 10000;
 char server_google_script[] = "script.google.com"; 
 char server_google_usercontent[] = "script.googleusercontent.com"; 
 
@@ -213,20 +213,18 @@ void loop(void) {
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
 
-  delay(5000);  // wait for the sps30 to stabilize
+  //delay(5000);  // wait for the sps30 to stabilize
 
-  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-
+  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
   // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
-  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
+  payloadUpload(payload + "\"" + outstr + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\",\"srate\":" + String(samplingRate) + "}"
+);
 
   Serial.println(header);
-  // Serial.println(String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  
-  // logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+
+  // print sd card
+  //logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  //logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   // sleep cycle
   for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
@@ -283,6 +281,6 @@ void loop(void) {
       display.display();
     };
     int sleepMS = Watchdog.sleep();// remove comment for low power
-    //delay(6000);  // uncomment to debug because serial communication doesn't come back after sleeping
+    delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }

@@ -125,6 +125,7 @@ void handleResponse() {
 * @param
 */
 void payloadUpload(String payload) {
+  Serial.print(payload);
   for (int i = 1; i < 4; i++) { 
     if (passcodeg != "") 
       status = WiFi.begin(ssidg, passcodeg);
