@@ -97,8 +97,20 @@ void makeMACssidAP(String startString);
 
 void payloadUpload(String payload);
 void initializeClient();
-  
+
+//Interrupt Handler
+void A() {
+  force_pro = true;
+}
+
 // Global Variables
+
+char outstr[160];
+int32_t Tsleep = 0;
+bool displayState = true;
+bool buttonAstate = true;
+int lastTimeToggle = 0;
+int timeDebounce = 100;
 
 char server[] = "script.google.com"; 
 
@@ -181,17 +193,6 @@ void setup() {
   }
 }
 
-//Interrupt Handler
-void A() {
-  force_pro = true;
-}
-
-char outstr[160];
-int32_t Tsleep = 0;
-bool displayState = true;
-bool buttonAstate = true;
-int lastTimeToggle = 0;
-int timeDebounce = 100;
 
 void loop(void) {
 
