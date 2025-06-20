@@ -58,7 +58,7 @@
 #include <FlashStorage.h>
 
 
-#define VBATPIN A7                                              // this is also D9 button A disable pullup to read analog
+#define VBATPIN A7                                           // this is also D9 button A disable pullup to read analog
 #define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
 #define BUTTON_B 6                                              // oled button
 #define BUTTON_C 5                                              // oled button
@@ -76,8 +76,8 @@
 void initializeOLED();
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
 
-void initializeSCD30();
-String readSCD30();
+//void initializeSCD30();
+//String readSCD30();
 
 void initializeSCD41(); 
 String readSCD41();
@@ -98,15 +98,29 @@ void makeMACssidAP(String startString);
 void payloadUpload(String payload);
 void initializeClient();
   
+
+//Interrupt Handler
+void A() {
+  force_pro = true;
+}
+
 // Global Variables
 
-char server[] = "script.google.com"; 
+char outstr[160];
+int32_t Tsleep = 0;
+bool displayState = true;
+bool buttonAstate = true;
+int lastTimeToggle = 0;
+int timeDebounce = 100;
+
+String response = "";
+int samplingRate = 10000;
+char server_google_script[] = "script.google.com"; 
+char server_google_usercontent[] = "script.googleusercontent.com"; 
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 
-// char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
- mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
- ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x"; 
+// CO2_scd30, T_scd30, RH_scd30 
 char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
@@ -157,7 +171,7 @@ void setup() {
 
   initializeOLED();
   initializeSCD41();                                      
-  // initializeSCD30(25);                                                                          
+ // initializeSCD30(25);                                                                          
   initializeBME280();  
   initializeSen5x(); 
   initializeRTC();                                          
@@ -179,19 +193,9 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-}
 
-//Interrupt Handler
-void A() {
-  force_pro = true;
+   Watchdog.enable(1000)
 }
-
-char outstr[160];
-int32_t Tsleep = 0;
-bool displayState = true;
-bool buttonAstate = true;
-int lastTimeToggle = 0;
-int timeDebounce = 100;
 
 void loop(void) {
 
@@ -208,24 +212,21 @@ void loop(void) {
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
+  //delay(5000);  // wait for the sps30 to stabilize
 
-  delay(5000);  // wait for the sps30 to stabilize
-
-  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-
-  // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
-  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
+  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+  payloadUpload(payload + "\"" + outstr + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\",\"srate\":" + String(samplingRate) + "}"
+);
 
   Serial.println(header);
-  // Serial.println(String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  
-  // logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
+  // print sd card
+  //logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  //logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  
   // sleep cycle
-  for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
+  int sleepMS = 0;
+  while ( sleepMS <= samplingRate ) {                                  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
       display.clearDisplay();
@@ -278,7 +279,7 @@ void loop(void) {
       display.clearDisplay();
       display.display();
     };
-    int sleepMS = Watchdog.sleep();// remove comment for low power
-    //delay(6000);  // uncomment to debug because serial communication doesn't come back after sleeping
+    sleepMS += Watchdog.sleep();// remove comment for low power
+    //delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }

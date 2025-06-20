@@ -1,4 +1,6 @@
-
+/*!
+* @brief
+*/
 void initializeRTC(){
   Serial.println("starting RTC... ");
   Wire.begin();  

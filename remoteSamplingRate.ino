@@ -1,6 +1,38 @@
-/*!
-* @brief Makes an http get request and handles the response message by calling handleResponse()
-**/
+/*************************************************
+Microcontroller -  Adafruit Feather M0 + WiFi ATWINC1500
+Small sample of dynamically updating sensor variables using an App Script
+
+Sensor -> request(sends POST)
+Sensor <- response(Appscript sends a ContentService object)
+
+Content Service object is a redirect and needs to be handled by the sensor.
+*************************************************/
+
+// Note:
+
+// We are bounded at 12 seconds without loss of data.
+// Anything below that causes a large amount of incomplete responses.
+
+
+// Dependencies
+#include <SPI.h>
+#include <WiFi101.h>
+
+// Global variables
+int count = 0;
+static String response = "";
+static int samplingRate = 10000;
+char server_google_script[] = "script.google.com"; 
+char server_google_usercontent[] = "script.googleusercontent.com"; 
+
+char ssidg[] = "pass";
+char passcodeg[] = "pass";
+
+//String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\"from, my, sensor, ";
+char gsidg[] = "gsid";
+uint8_t status; 
+WiFiSSLClient client;   
+
 void httpGet(String server, String url) {
   //Serial.println("Calling httpGet...");
   client.println("GET " + url + " HTTP/1.1");
@@ -25,15 +57,13 @@ void httpGet(String server, String url) {
     }
   }
 
+
   delay(200);  // Allow TLS setup
   handleResponse();
 }
 
-
-/*!
-* @brief Makes an http post request and handles the response message by calling handleResponse()
-**/
-void httpPost(String payload, char server[], String gsidg) {
+// POST method to Google App Script
+void httpPost(String payload,String server, char gsidg[]) {
   //Serial.println("Calling httpPost...");
   client.println(String("POST /macros/s/") + String(gsidg) + String("/exec HTTP/1.1"));
   client.println("Host: "+ String(server));
@@ -43,7 +73,10 @@ void httpPost(String payload, char server[], String gsidg) {
   client.println(payload.length());
   client.println();
   client.print(payload);
-  
+  client.println();
+
+
+
   response = "";
   unsigned long lastRead = millis();
   const unsigned long timeout = 3000; // 3 seconds
@@ -65,29 +98,21 @@ void httpPost(String payload, char server[], String gsidg) {
   handleResponse();
 }
 
-
-/*!
-* @brief Handles response from httpGet() and httPost()
-**/
+// Handle GET or POST response
 void handleResponse() {
   if (response.indexOf("200 OK") != -1) {
     //Serial.println("Successfully fetched data from google AppScript");
     int srateIndex = response.indexOf("srate:");
-    Serial.println("RESPONSE: ");
-    Serial.println(response);
     if (srateIndex != -1) {
       int valueStart = srateIndex + 6; // Skip past "srate:"
       int valueEnd = response.indexOf('\n', valueStart); // Find the end of the line
       String rateStr = response.substring(valueStart, valueEnd);
       samplingRate = rateStr.toInt();
-     
+
       Serial.print("Parsed sampling rate: ");
       Serial.println(samplingRate);
     
     }
-
-    // Todo: Remotely turning off the screen
-    
   }
   // Handle Redirect (302 Moved Temporarily)
   else if (response.indexOf("302 Moved Temporarily") != -1) {
@@ -123,61 +148,75 @@ void handleResponse() {
   }
 }
 
-
-/*!
-* @brief
-* @param
-*/
-void payloadUpload(String payload) {
-  Serial.print(payload);
-  for (int i = 1; i < 4; i++) { 
-    if (passcodeg != "") 
-      status = WiFi.begin(ssidg, passcodeg);
-    else
-      status = WiFi.begin(ssidg);
-    delay(500);
-
-    if (WiFi.status() == WL_CONNECTED) {
-      
-      while (!client.connected()) {
-        Serial.println("Connecting to server...");
-        initializeClient(server_google_script);
-        delay(100);
-      }
-
-      // Send data to Google Apps Script
-      httpPost(payload,server_google_script, gsidg);
-
-      WiFi.end();
-      break;
-    }
-    else {
-      Serial.print("Trying to connect to Wifi : "); 
-      Serial.println(i);
-    }
-  }
-  if (status != WL_CONNECTED)
-    Serial.println("Continuing without WiFi");
-}
-
-
-/*!
-* @brief Starts SSL connection to server
-* 
-*/
+// Initialize connection to the server
 void initializeClient(char server[]) {
-  Serial.println("\nStarting connection to server... ");
-  if (client.connectSSL(server, 443)) {     
-    Serial.println("Connected to ");
+  //Serial.println("\nStarting connection to server... ");
+  if (client.connectSSL(server, 443)) {
+    Serial.println("Connected to: ");
     Serial.println(server);
     while (client.available()) {
       char c = client.read();
       Serial.write(c);
     }
-    Serial.println();
-  }
-  else {
-    Serial.print("Not connected to ");
+  } else {
+    Serial.print("Not connected to: ");
     Serial.println(server);
   }
+  Serial.println("End initializeClient");
+  Serial.println();
+  delay(100);
 }
+
+// Upload sensor data to the Google Apps Script
+void payloadUpload(String payload) {
+  //Serial.println("Calling payloadUpload...");
+  if (WiFi.status() == WL_CONNECTED) {
+    while (!client.connected()) {
+      Serial.println("Connecting to server...");
+      initializeClient(server_google_script);
+      delay(100);
+    }
+
+    // Send data to Google Apps Script
+    httpPost(payload,server_google_script, gsidg);
+    // WiFi.end();
+  } else {
+    Serial.println("Wi-Fi not connected. Continuing without Wi-Fi.");
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  delay(1000);
+  WiFi.setPins(8, 7, 4, 2);  // Set pins for Feather M0 Wi-Fi
+
+  for (int i = 0; i < 5; i++) {
+    status = WiFi.begin(ssidg, passcodeg);
+    int retry = 0;
+    while (WiFi.status() != WL_CONNECTED && retry++ < 10) {
+      delay(1000);
+    }
+    if (WiFi.status() == WL_CONNECTED) break;
+  }
+
+  Serial.print("Connected to wifi? ");
+  Serial.println(WiFi.status() == WL_CONNECTED);
+
+  Serial.print("samplingRate: ");
+  Serial.println(samplingRate);
+}
+
+void loop() {
+  //Serial.println(count);
+  String p = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":\"" + String(count) +"\", \"srate\":" + String(samplingRate)+"}";
+  Serial.print(p);
+  payloadUpload(p); 
+  Serial.print("\nsamplingRate: ");
+  Serial.println(samplingRate);
+  count += 1;
+  delay(samplingRate);  // Delay to simulate periodic uploads
+  while(WiFi.status() != WL_CONNECTED){
+    Serial.println("Wifi disconnected");
+  };
+}
+

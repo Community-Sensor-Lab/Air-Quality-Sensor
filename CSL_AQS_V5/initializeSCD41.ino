@@ -38,7 +38,7 @@ String readSCD41() {
     CO2scd41 = scd41.getCO2();
     float Tscd41 = scd41.getTemperature();
     float RHscd41 = scd41.getHumidity();
-    return (String(CO2scd41) + String(", ") + String(Tscd41) + String(", ") + String(RHscd41) + String(", "));
+    return (String(CO2scd41) + String(", ") + String(Tscd41) + String(", ") + String(RHscd41));
   }
   else {
     return ("None,None,None,");

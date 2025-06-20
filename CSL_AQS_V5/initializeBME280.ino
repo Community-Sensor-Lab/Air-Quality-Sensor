@@ -41,7 +41,7 @@ String readBME280(){
     Tbme = bme280.readTemperature();
     Pbme = bme280.readPressure() / 100; // for hPa
     RHbme = bme280.readHumidity();
-  return (String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) + String(", "));
+  return (String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) );
   }
   else{
   stat |= 0x09;

@@ -1,4 +1,6 @@
-
+/*!
+* @brief
+*/
 File initializeSD()  {
   File logFile;
   if (!SD.begin(SD_CS)) { 
