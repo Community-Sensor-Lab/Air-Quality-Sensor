@@ -76,8 +76,8 @@
 void initializeOLED();
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
 
-void initializeSCD30();
-String readSCD30();
+//void initializeSCD30();
+//String readSCD30();
 
 void initializeSCD41(); 
 String readSCD41();
@@ -180,6 +180,8 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
+
+   Watchdog.enable(1000)
 }
 
 //Interrupt Handler
@@ -220,9 +222,10 @@ void loop(void) {
   // print sd card
   //logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   //logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
-
+  
   // sleep cycle
-  for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
+  int sleepMS = 0;
+  while ( sleepMS <= samplingRate ) {                                  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
       display.clearDisplay();
@@ -275,7 +278,7 @@ void loop(void) {
       display.clearDisplay();
       display.display();
     };
-    //int sleepMS = Watchdog.sleep();// remove comment for low power
-    delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
+    sleepMS += Watchdog.sleep();// remove comment for low power
+    //delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }
