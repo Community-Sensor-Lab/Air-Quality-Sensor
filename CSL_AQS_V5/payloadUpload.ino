@@ -80,11 +80,14 @@ void handleResponse() {
       int valueEnd = response.indexOf('\n', valueStart); // Find the end of the line
       String rateStr = response.substring(valueStart, valueEnd);
       samplingRate = rateStr.toInt();
-
+     
       Serial.print("Parsed sampling rate: ");
       Serial.println(samplingRate);
     
     }
+
+    // Todo: Remotely turning off the screen
+    
   }
   // Handle Redirect (302 Moved Temporarily)
   else if (response.indexOf("302 Moved Temporarily") != -1) {
