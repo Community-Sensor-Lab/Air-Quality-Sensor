@@ -99,6 +99,9 @@ void payloadUpload(String payload);
 void initializeClient();
   
 
+// Force Provisioning
+bool force_pro = false;
+
 //Interrupt Handler
 void A() {
   force_pro = true;
@@ -143,9 +146,6 @@ float RHbme= 0;
 float massConcentrationPm2p5 = 0;
 float vocIndex = 0;
 float noxIndex = 0;
-
-// Force Provisioning
-bool force_pro = false;
 
 // Sensor Componentns                                                                 
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
@@ -193,8 +193,7 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-
-   Watchdog.enable(1000)
+  Watchdog.sleep(16000);
 }
 
 void loop(void) {
