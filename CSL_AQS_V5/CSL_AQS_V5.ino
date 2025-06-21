@@ -42,21 +42,8 @@
    AMALIA TORRES, CUNY, July 2021
 
 */
-#include <SPI.h>
-#include <SD.h>
-#include <Wire.h>
-#include <Adafruit_SleepyDog.h>
-#include "RTClib.h"                              
-#include "SparkFun_SCD30_Arduino_Library.h"                    
-#include "SparkFun_SCD4x_Arduino_Library.h"                    
-#include <Adafruit_GFX.h>
-#include <Adafruit_SH110X.h>  
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
-#include <SensirionI2CSen5x.h>
-#include <WiFi101.h>
-#include <FlashStorage.h>
 
+#include "CSL_AQS_V5.h"
 
 #define VBATPIN A7                                           // this is also D9 button A disable pullup to read analog
 #define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
@@ -71,43 +58,10 @@
 #define USE_PRODUCT_INFO
 #endif
 
-
-// Function prototypes
-void initializeOLED();
-bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
-
-//void initializeSCD30();
-//String readSCD30();
-
-void initializeSCD41(); 
-String readSCD41();
-
-void initializeBME280(); 
-String readBME280();
-
-void initializeSen5x();
-String readSen5x();   
-
-File initializeSD(); 
-
-void payloadUpload(String payload);
-void printMacAddress(byte mac[]); 
-void AP_getInfo(String &ssid, String &passcode, String &gsid);
-void makeMACssidAP(String startString);
-
-void payloadUpload(String payload);
-void initializeClient();
-  
+// Global Variables
 
 // Force Provisioning
 bool force_pro = false;
-
-//Interrupt Handler
-void A() {
-  force_pro = true;
-}
-
-// Global Variables
 
 char outstr[160];
 int32_t Tsleep = 0;
@@ -120,22 +74,18 @@ String response = "";
 int samplingRate = 10000;
 char server_google_script[] = "script.google.com"; 
 char server_google_usercontent[] = "script.googleusercontent.com"; 
-
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
-
-// CO2_scd30, T_scd30, RH_scd30 
+// Alternative: CO2_scd30, T_scd30, RH_scd30 
 char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
-
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 uint8_t stat = 0; 
-
+// Alternative: 
 // SCD30 & SCD40
 //uint16_t CO2scd30;
 uint16_t CO2scd41;  
-
 
 // BME
 float Tbme = 0;
@@ -147,14 +97,13 @@ float massConcentrationPm2p5 = 0;
 float vocIndex = 0;
 float noxIndex = 0;
 
-// Sensor Componentns                                                                 
+// Sensor Instances                                                                
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
 Adafruit_BME280 bme280;  
 SensirionI2CSen5x sen5x; 
 RTC_PCF8523 rtc; 
 WiFiSSLClient client;                                          
 File logfile;                                                  
-
 // SCD30 scd30;                                             
 SCD4x scd41(SCD4x_SENSOR_SCD41);                          
 
@@ -171,7 +120,7 @@ void setup() {
 
   initializeOLED();
   initializeSCD41();                                      
- // initializeSCD30(25);                                                                          
+  // initializeSCD30(25);                                                                          
   initializeBME280();  
   initializeSen5x(); 
   initializeRTC();                                          
@@ -198,8 +147,7 @@ void setup() {
 
 void loop(void) {
 
-  uint8_t ctr = 0;
-                                  
+  uint8_t ctr = 0;            
  
   // String scd30String = readSCD30(100);
   String scd41String = readSCD41();
@@ -228,52 +176,7 @@ void loop(void) {
   while ( sleepMS <= samplingRate ) {                                  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
-      display.clearDisplay();
-     
-      display.setCursor(0, 0); 
-      display.print("CO2");
-      display.setCursor(40, 0); 
-      display.print(CO2scd41); 
-      display.print(" ppm");
-      display.print("  ");
-      display.print(measuredvbat, 2); 
-      display.print("V");
-
-
-      display.setCursor(0, 8); 
-      display.print("T");
-      display.setCursor(40, 8); 
-      display.print(Tbme, 2); 
-      display.print("C");
-
-      display.setCursor(0, 16);
-      display.print("P");
-      display.setCursor(40, 16);  
-      display.print(Pbme, 2);  
-      display.print(" mBar");
-
-      display.setCursor(0, 24);  
-      display.print("RH");
-      display.setCursor(40, 24); 
-      display.print(RHbme, 0);  
-      display.print("%");
-
-      display.setCursor(0, 32);  
-      display.print("VOC");
-      display.setCursor(40, 32); 
-      display.print(vocIndex, 2);  
-
-      display.setCursor(0, 40); 
-      display.print("NOX");
-      display.setCursor(40, 40); 
-      display.print(noxIndex, 2); 
-
-      display.setCursor(0, 48); 
-      display.print("Pm 2.5");
-      display.setCursor(40, 48);
-      display.print(massConcentrationPm2p5, 2); 
-
-      display.display();
+      displaySensorData(measuredvbat);
     } else {       
       display.clearDisplay();
       display.display();

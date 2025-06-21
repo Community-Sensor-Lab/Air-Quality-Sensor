@@ -1,7 +1,6 @@
-#ifndef CSL_AQS_V5_h
-#define CSL_AQS_V5_h
+#ifndef CLS_AQS_V5_H
+#define CLS_AQS_V5_H
 
-#include "Arduino.h"
 #include <SPI.h>
 #include <SD.h>
 #include <Wire.h>
@@ -17,53 +16,91 @@
 #include <WiFi101.h>
 #include <FlashStorage.h>
 
-#define VBATPIN A7                                              // this is also D9 button A disable pullup to read analog
-#define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
-#define BUTTON_B 6                                              // oled button
-#define BUTTON_C 5                                              // oled button
-#define SD_CS 10                                                // Chip select for SD card default for Adalogger
+#define VBATPIN A7                                         // This is also D9 button A disable pullup to read analog
+#define BUTTON_A 9                                          // Oled button also A7 enable pullup to read button
+#define BUTTON_B 6                                          // oled button
+#define BUTTON_C 5                                          // oled button
+#define SD_CS 10                                            // Chip select for SD card default for Adalogger
 #define MAXBUF_REQUIREMENT 48
 
-#if (defined(I2C_BUFFER_LENGTH) &&            \
-(I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || \
-(defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
-#define USE_PRODUCT_INFO
+// Global status in uint8_t stat (bitwise status flags)
+#define STAT_STARTING 0x00
+#define STAT_SD_NOT_PRESENT 0x01
+#define STAT_SD_CREATE_FAIL 0x02
+#define STAT_RTC_FAIL 0x03
+#define STAT_SCD30_NOT_AVAILABLE 0x04
+#define STAT_SCD30_TIMEOUT 0x05
+#define STAT_SCD41_NOT_AVAILABLE 0x06
+#define STAT_SCD41_TIMEOUT 0x07
+#define STAT_BME280_MALFUNCTION 0x08
+#define STAT_BME280_TIMEOUT 0x09
+#define STAT_SEN5X_MALFUNCTION 0x0A
+#define STAT_SEN5X_TIMEOUT 0x0B
+#define STAT_SSL_ERROR 0x0C
+#define STAT_PROVISION_ERROR 0x0D
+#define STAT_OTHER_ERROR 0x0E
 
+// Function prototypes
+void initializeOLED();
+bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce);
+void initializeSCD41(); 
+String readSCD41();
+void initializeBME280(); 
+String readBME280();
+void initializeSen5x();
+String readSen5x();   
+File initializeSD(); 
+void payloadUpload(String payload);
+void printMacAddress(byte mac[]); 
+void AP_getInfo(String &ssid, String &passcode, String &gsid);
+void makeMACssidAP(String startString);
+void initializeClient();
+void A();  // Interrupt Handler
 
-class CSL_AQS_V4p5
-{
+// Global Variables
+extern char outstr[160];
+extern int32_t Tsleep;
+extern bool displayState;
+extern bool buttonAstate;
+extern int lastTimeToggle;
+extern int timeDebounce;
+extern String response;
+extern int samplingRate;
+extern char server_google_script[];
+extern char server_google_usercontent[];
+extern String payload;
+extern int status;
+extern String ssidg, passcodeg, gsidg;
+extern uint8_t stat; 
+extern uint16_t CO2scd41;  
+extern float Tbme;
+extern float Pbme;
+extern float RHbme;
+extern float massConcentrationPm2p5;
+extern float vocIndex;
+extern float noxIndex;
 
-public:
+// Sensor Components
+extern Adafruit_SH1107 display;      
+extern Adafruit_BME280 bme280;  
+extern SensirionI2CSen5x sen5x; 
+extern RTC_PCF8523 rtc; 
+extern WiFiSSLClient client;                                          
+extern File logfile;                                                   // For SD card logging
+extern SCD4x scd41;  // SCD41 sensor instance
 
-  CSL_AQS_V4p5(void)
+// CO2, Temperature, Humidity Data Header
+extern char header[];
 
-  void initializeOLED();
+// Payload format for Google Sheets
+extern String payload;
 
-  bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
-  
-  void initializeSCD30();
-  
-  void initializeSCD41(); 
-  
-  void initializeBME280(); 
-  
-  void initializeSen5x();
+// Debug print header for SD card
+extern const String headerSD;
 
-  void initializeRTC();
+// Force Provisioning flag
+extern bool force_pro;
 
-  void printWiFiStatus();
-  void printMacAddress(byte mac[]); 
-  void AP_getInfo(String &ssid, String &passcode, String &gsid);
-  void makeMACssidAP(String startString);
-  
+#endif // 
 
-  void initializeClient();
-  void payloadUpload(String payload);
-
-private
-  const char webpage_html[] PROGMEM;
-
-}
-
-#endif
   
