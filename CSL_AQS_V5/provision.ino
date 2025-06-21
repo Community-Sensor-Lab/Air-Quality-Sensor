@@ -1,6 +1,6 @@
 /*!
 *   @brief Decodes url encoded values 
-*   Solves the case where $ or other uncommon characters are used in a wifi password 
+*   @details Solves the case where $ or other uncommon characters are used in a wifi password 
 */
 String urlDecode(String input) {
   String decoded = "";
