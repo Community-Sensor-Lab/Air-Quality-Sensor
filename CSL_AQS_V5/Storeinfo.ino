@@ -1,15 +1,3 @@
-/*!
-* @brief struct to store wifi credentials
-*/
-
-typedef struct {
-  boolean valid;
-  char saved_ssid[64];
-  char saved_passcode[64];
-  char saved_gsid[128];
-} Secrets;
-
-
 FlashStorage(flash_storage, Secrets);
 
 /*!
@@ -35,8 +23,6 @@ void storeinfo(String &ssid, String &passcode, String &gsid) {
     String saved_ssid = ssid;
     String saved_passcode = passcode;
     String saved_gsid = gsid;
-
-    
     saved_ssid.toCharArray(info.saved_ssid, 64);
     saved_passcode.toCharArray(info.saved_passcode, 64);
     saved_gsid.toCharArray(info.saved_gsid, 128);

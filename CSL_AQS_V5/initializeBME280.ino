@@ -1,7 +1,6 @@
 /*!
 * @brief initialize BME280 sensor
 */
-
 void initializeBME280()  {
   Serial.println("starting BME280... ");
   unsigned bmeStatus = bme280.begin();
@@ -17,6 +16,8 @@ void initializeBME280()  {
     display.display();
   }
   else{
+    // TODO: review if this config works well with WatchDog
+
     // void Adafruit_BME280::setSampling(sensor_mode mode, sensor_sampling tempSampling, sensor_sampling pressSampling, sensor_sampling humSampling, sensor_filter filter, standby_duration duration)
     bme280.setSampling(
     Adafruit_BME280::MODE_FORCED,          

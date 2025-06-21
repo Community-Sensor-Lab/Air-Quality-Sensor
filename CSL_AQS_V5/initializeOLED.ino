@@ -1,7 +1,6 @@
 /*!
 * @brief 
 */
-
 void initializeOLED() {
   Serial.println("starting 128x64 OLED... ");
   if (!display.begin(0x3C, true))  // Address 0x3C for 128x32
@@ -24,6 +23,10 @@ void initializeOLED() {
   }
 }
 
+/*!
+* @brief
+* @details 
+*/
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce) {
   if (digitalRead(button)) {
     buttonState = true;

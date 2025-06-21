@@ -45,6 +45,11 @@ void httpPost(String payload, char server[], String gsidg) {
   client.print(payload);
   
   response = "";
+
+  // This approach was selected because it allowed the sensor to escape instances where a package never arrives completely.
+  // This approach also gives the sensor enough time to receive the message. (Still needs to be tested for instances where the internet connection is really poor and the
+  // request-response cycle between the server and the sensor takes longer than 3 seconds.)
+
   unsigned long lastRead = millis();
   const unsigned long timeout = 3000; // 3 seconds
 
@@ -86,7 +91,7 @@ void handleResponse() {
     
     }
 
-    // Todo: Remotely turning off the screen
+    // Future application: Remotely turning off the screen
     
   }
   // Handle Redirect (302 Moved Temporarily)

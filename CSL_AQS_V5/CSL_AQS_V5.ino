@@ -167,7 +167,7 @@ void loop(void) {
 
   Serial.println(header);
 
-  // print sd card
+  // Uncomment to support sd card
   //logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   //logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
   
@@ -181,7 +181,7 @@ void loop(void) {
       display.clearDisplay();
       display.display();
     };
-    sleepMS += Watchdog.sleep();// remove comment for low power
+    sleepMS += Watchdog.sleep();
     //delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }

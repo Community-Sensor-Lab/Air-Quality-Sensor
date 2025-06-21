@@ -101,6 +101,28 @@ extern const String headerSD;
 // Force Provisioning flag
 extern bool force_pro;
 
+const char webpage_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE HTML><html><head>
+  <title>Community Sensor Lab provisioning page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+  <h1>NGENS Air Quality Sensor</h1>
+  <form action="/get">
+    ssid: <input type="text" name="SSID"><br>
+    passcode: <input type="password" name="passcode"><br>
+    gsid: <input type="text" name="GSID"><br>
+    <input type="submit" value="Submit">
+  </form>
+</body></html>)rawliteral";
+
+
+typedef struct {
+  boolean valid;
+  char saved_ssid[64];
+  char saved_passcode[64];
+  char saved_gsid[128];
+} Secrets;
+
 #endif // 
 
   

@@ -1,24 +1,6 @@
 /*!
-/* @brief   starts a simple webpage with three fields to enter and send info
-*/
-
-const char webpage_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html><head>
-  <title>Community Sensor Lab provisioning page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head><body>
-  <h1>NGENS Air Quality Sensor</h1>
-  <form action="/get">
-    ssid: <input type="text" name="SSID"><br>
-    passcode: <input type="password" name="passcode"><br>
-    gsid: <input type="text" name="GSID"><br>
-    <input type="submit" value="Submit">
-  </form>
-</body></html>)rawliteral";
-
-/*!
-*   @brief decodes url encoded values
-*   
+*   @brief Decodes url encoded values 
+*   Solves the case where $ or other uncommon characters are used in a wifi password 
 */
 String urlDecode(String input) {
   String decoded = "";
@@ -43,7 +25,7 @@ String urlDecode(String input) {
 
 
 /*!
-*   @brief  prints information of the wifi the micro controller is connected to. 
+*   @brief  Prints information about the wifi the micro controller is currently connected to. 
 */
 
 void printWiFiStatus() {
