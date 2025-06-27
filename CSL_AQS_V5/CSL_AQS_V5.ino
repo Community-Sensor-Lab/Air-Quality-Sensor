@@ -156,13 +156,9 @@ void loop(void) {
   display.clearDisplay();
   display.display();
 
-
-  Serial.println("Sampling Period:");  // : Testing
-  Serial.println(samplingPeriod);
-  
   // Formula: remaining time = sampling period - time elapse
   int timeRemaining = max(0, samplingPeriod - (millis() - startTime)); // : Testing
-  
+
 
   while ( 0 < timeRemaining){ 
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
@@ -173,9 +169,6 @@ void loop(void) {
     }   
     // Update time remaining
     timeRemaining -=  Watchdog.sleep();
-    //timeRemaining -= 8000;
-    //Serial.println("Time Remaining: ");
-    //Serial.println(timeRemaining);
   }
 }
 
