@@ -1,5 +1,5 @@
 /*!
-* @brief
+* @brief Initialize SD card
 */
 File initializeSD()  {
   File logFile;
@@ -34,3 +34,41 @@ File initializeSD()  {
 
   return logFile;
 }
+
+
+
+void writeToSD(String data) {
+  String WifiStatus;
+
+  // Get the current Wi-Fi status
+  switch(WiFi.status()) {
+    case WL_CONNECTED:
+      WifiStatus = "WL_CONNECTED";
+      break;
+    
+    case WL_NO_SHIELD:
+      WifiStatus = "WL_NO_SHIELD";
+      break;
+
+    case WL_CONNECT_FAILED:
+      WifiStatus = "WL_CONNECT_FAILED";
+      break;
+
+    case WL_IDLE_STATUS:
+      WifiStatus = "WL_IDLE_STATUS";
+      break;
+      
+    case WL_DISCONNECTED:
+      WifiStatus = "WL_DISCONNECTED";
+      break;
+      
+    default:
+      WifiStatus = "UNKNOWN_STATUS";
+      break;
+  }
+
+  // Write the data and the Wi-Fi status to the SD card
+  logfile.println(data + " " + WifiStatus);
+  logfile.flush();  // Write to disk, this is I/O intensive
+}
+

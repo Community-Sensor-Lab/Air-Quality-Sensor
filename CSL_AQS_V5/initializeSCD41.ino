@@ -1,5 +1,5 @@
 /*!
-* @brief 
+* @brief Initialize SCD41 
 **/
 void initializeSCD41() {
   Serial.println("starting SCD41... ");

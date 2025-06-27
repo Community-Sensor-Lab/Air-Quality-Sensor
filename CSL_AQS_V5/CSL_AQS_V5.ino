@@ -128,11 +128,6 @@ void setup() {
 
   delay(3000);
 
-  //Set Interrupt
-  pinMode(BUTTON_A, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_A), A, CHANGE);
-
-
   if (!check_valid()) {
     AP_getInfo(ssidg, passcodeg, gsidg);
   } else {
@@ -142,13 +137,15 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-  Watchdog.sleep(16000);
+  //Watchdog.sleep(16000);
 }
 
 void loop(void) {
 
-  uint8_t ctr = 0;            
- 
+   
+  // Get the starting time before the loop runs
+  unsigned long startTime = millis(); // : Testing
+
   // String scd30String = readSCD30(100);
   String scd41String = readSCD41();
   String bmeString   = readBME280();  
@@ -162,26 +159,32 @@ void loop(void) {
   //delay(5000);  // wait for the sps30 to stabilize
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-  payloadUpload(payload + "\"" + outstr + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\",\"srate\":" + String(samplingRate) + "}"
-);
-
-  Serial.println(header);
-
-  // Uncomment to support sd card
-  //logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  //logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  payloadUpload("\"" + String(outstr) + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\"}");
+    
   
-  // sleep cycle
-  int sleepMS = 0;
-  while ( sleepMS <= samplingRate ) {                                  // 124s = 8x16s sleep, only toggle display
+  Serial.println("Sampling Rate:");
+  Serial.println(samplingRate);
+   // Get the starting time before the loop runs
+  unsigned long current = millis(); // : Testing
+  while (current-startTime < samplingRate){
+    
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
       displaySensorData(measuredvbat);
     } else {       
       display.clearDisplay();
       display.display();
-    };
-    sleepMS += Watchdog.sleep();
-    //delay(samplingRate);  // uncomment to debug because serial communication doesn't come back after sleeping
-  }
+    }
+
+    current = millis();
+  }  
+
+
+  // Get the end time after the loop finishes
+  unsigned long endTime = millis(); //:Testing
+  // Calculate the time difference (loop duration) in milliseconds
+  unsigned long loopDuration = endTime - startTime; ///:Testing
+  Serial.print("Loop Duration: ");
+  Serial.println(loopDuration);
+
 }

@@ -1,5 +1,5 @@
 /*!
-* @brief
+* @brief Initialize Sen5x
 * @param
 */
 
@@ -45,10 +45,21 @@ void initializeSen5x(){
 
 
 /*!
-* @brief
-* @param
+* @brief Read meassurement from Sen5X
+* @param 
+* @details Meassurement reads:
+    massConcentrationPm1p0,
+    massConcentrationPm4p0,
+    massConcentrationPm10p0,
+    numberConcentrationPm0p5,
+    numberConcentrationPm1p0,
+    numberConcentrationPm2p5,
+    numberConcentrationPm4p0,
+    numberConcentrationPm10p0,
+    typicalParticleSize,
+    ambientHumidity,
+    ambientTemperature
 */
-
 String readSen5x(){
     float massConcentrationPm1p0 = 0;
     float massConcentrationPm4p0 = 0;

@@ -1,3 +1,7 @@
+
+
+
+
 /*!
 * @brief Makes an http get request and handles the response message by calling handleResponse()
 **/
@@ -130,39 +134,53 @@ void handleResponse() {
 
 
 /*!
-* @brief
-* @param
+* @brief Upload payload
+* @param 
+* @details Try's to connect to wifi 4 times. If the sensor connects to wifi it will send the payload to google appscript by calling httPost().
 */
-void payloadUpload(String payload) {
-  Serial.print(payload);
-  for (int i = 1; i < 4; i++) { 
-    if (passcodeg != "") 
-      status = WiFi.begin(ssidg, passcodeg);
-    else
-      status = WiFi.begin(ssidg);
-    delay(500);
+void payloadUpload(String data) {
+  
 
-    if (WiFi.status() == WL_CONNECTED) {
-      
-      while (!client.connected()) {
-        Serial.println("Connecting to server...");
-        initializeClient(server_google_script);
-        delay(100);
+  // Connect to wifi if not already connected
+  if (status != WL_CONNECTED){
+    for (int i = 1; i < 4; i++) { 
+      if (passcodeg != "") status = WiFi.begin(ssidg, passcodeg);
+      else status = WiFi.begin(ssidg);
+
+      delay(500);
+
+      if (WiFi.status() == WL_CONNECTED) break;
+      else {
+        Serial.print("Trying to connect to Wifi : "); 
+        Serial.println(i);
       }
-
-      // Send data to Google Apps Script
-      httpPost(payload,server_google_script, gsidg);
-
-      WiFi.end();
-      break;
-    }
-    else {
-      Serial.print("Trying to connect to Wifi : "); 
-      Serial.println(i);
     }
   }
-  if (status != WL_CONNECTED)
+
+
+  // Upload paylod  to appscript
+  if (status == WL_CONNECTED){
+    Serial.println("Connected to Wifi");
+    writeToSD(data + samplingRate);
+      
+    while (!client.connected()) {
+      Serial.println("Connecting to server...");
+      initializeClient(server_google_script);
+      delay(100);
+    }
+    httpPost(payload + data,server_google_script, gsidg);
+
+    // Disconnect from WiFi if sampling rate is below 5 seconds.
+    // Note: Having the WiFi could consume more energy this needs to be tested further.
+    if (samplingRate >= 5000) {
+      WiFi.end();
+      status = WL_DISCONNECTED;
+    };
+  }
+  else {
     Serial.println("Continuing without WiFi");
+    writeToSD(data + samplingRate);
+  }
 }
 
 
@@ -186,3 +204,8 @@ void initializeClient(char server[]) {
     Serial.println(server);
   }
 }
+
+
+
+
+

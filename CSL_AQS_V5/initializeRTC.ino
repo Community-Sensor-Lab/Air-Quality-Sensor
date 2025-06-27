@@ -1,5 +1,5 @@
 /*!
-* @brief Starts Real time clock
+* @brief Initialize Real time clock
 * @details The real time clock works on battery and it helps keep track of time even after the micro controller is disonnected from a power source.
 */
 void initializeRTC(){
