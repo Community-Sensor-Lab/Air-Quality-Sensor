@@ -57,8 +57,6 @@ void A() {
 * @brief Display Sensor Data for scd40, bme280, sen5x
 */
 void displaySensorData(float measuredvbat) {
-  display.clearDisplay();
-
   display.setCursor(0, 0);
   display.print("CO2");
   display.setCursor(40, 0);

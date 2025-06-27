@@ -167,6 +167,7 @@ void loop(void) {
    // Get the starting time before the loop runs
   unsigned long current = millis(); // : Testing
   unsigned long local_start = millis();
+  display.clearDisplay();
   while (current-local_start < samplingRate){
     
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
