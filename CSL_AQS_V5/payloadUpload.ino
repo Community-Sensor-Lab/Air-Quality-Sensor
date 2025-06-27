@@ -168,7 +168,7 @@ void payloadUpload(String data) {
       initializeClient(server_google_script);
       delay(100);
     }
-    httpPost(payload + data,server_google_script, gsidg);
+    httpPost(payload + data + "\"}",server_google_script, gsidg);
 
     // Disconnect from WiFi if sampling rate is below 5 seconds.
     // Note: Having the WiFi could consume more energy this needs to be tested further.

@@ -27,7 +27,7 @@ File initializeSD()  {
     else  {
       Serial.print("logging to file: ");
       Serial.println(filename);
-      logFile.println(header);
+      logFile.println(String(header) + "Sampling Rate, WiFi Status");
       logFile.flush();
     }
   }

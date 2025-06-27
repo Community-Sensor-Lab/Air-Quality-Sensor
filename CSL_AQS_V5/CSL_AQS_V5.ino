@@ -159,14 +159,15 @@ void loop(void) {
   //delay(5000);  // wait for the sps30 to stabilize
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-  payloadUpload("\"" + String(outstr) + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString + "\"}");
+  payloadUpload("\"" + String(outstr) + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString);
     
   
   Serial.println("Sampling Rate:");
   Serial.println(samplingRate);
    // Get the starting time before the loop runs
   unsigned long current = millis(); // : Testing
-  while (current-startTime < samplingRate){
+  unsigned long local_start = millis();
+  while (current-local_start < samplingRate){
     
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
@@ -186,5 +187,6 @@ void loop(void) {
   unsigned long loopDuration = endTime - startTime; ///:Testing
   Serial.print("Loop Duration: ");
   Serial.println(loopDuration);
+
 
 }
