@@ -88,10 +88,10 @@ void handleResponse() {
       int valueStart = srateIndex + 6; // Skip past "srate:"
       int valueEnd = response.indexOf('\n', valueStart); // Find the end of the line
       String rateStr = response.substring(valueStart, valueEnd);
-      samplingRate = rateStr.toInt();
+      samplingPeriod = rateStr.toInt();
      
       Serial.print("Parsed sampling rate: ");
-      Serial.println(samplingRate);
+      Serial.println(samplingPeriod);
     
     }
 
@@ -161,7 +161,7 @@ void payloadUpload(String data) {
   // Upload paylod  to appscript
   if (status == WL_CONNECTED){
     Serial.println("Connected to Wifi");
-    writeToSD(data + samplingRate);
+    writeToSD_With_WiFiStat(data + samplingPeriod);
       
     while (!client.connected()) {
       Serial.println("Connecting to server...");
@@ -172,14 +172,14 @@ void payloadUpload(String data) {
 
     // Disconnect from WiFi if sampling rate is below 5 seconds.
     // Note: Having the WiFi could consume more energy this needs to be tested further.
-    if (samplingRate >= 5000) {
+    if (samplingPeriod >= 5000) {
       WiFi.end();
       status = WL_DISCONNECTED;
     };
   }
   else {
     Serial.println("Continuing without WiFi");
-    writeToSD(data + samplingRate);
+    writeToSD_With_WiFiStat(data + samplingPeriod);
   }
 }
 

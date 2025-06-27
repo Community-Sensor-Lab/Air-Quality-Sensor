@@ -71,7 +71,7 @@ int lastTimeToggle = 0;
 int timeDebounce = 100;
 
 String response = "";
-int samplingRate = 10000;
+int samplingPeriod = 10000;
 char server_google_script[] = "script.google.com"; 
 char server_google_usercontent[] = "script.googleusercontent.com"; 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
@@ -82,6 +82,7 @@ char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 uint8_t stat = 0; 
+
 // Alternative: 
 // SCD30 & SCD40
 //uint16_t CO2scd30;
@@ -128,66 +129,54 @@ void setup() {
 
   delay(3000);
 
-  if (!check_valid()) {
-    AP_getInfo(ssidg, passcodeg, gsidg);
-  } else {
+  if (!check_valid()) AP_getInfo(ssidg, passcodeg, gsidg);
+  else {
     display.clearDisplay();
     display.setCursor(0, 0);
     display.println("Connecting to previously saved network");
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-  //Watchdog.sleep(16000);
+  
+  //Watchdog.enable(8000);
 }
 
 void loop(void) {
-
-   
-  // Get the starting time before the loop runs
   unsigned long startTime = millis(); // : Testing
-
-  // String scd30String = readSCD30(100);
-  String scd41String = readSCD41();
-  String bmeString   = readBME280();  
-  String sen5xString  = readSen5x();
   DateTime now;
   now = rtc.now();                                                    
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
-  //delay(5000);  // wait for the sps30 to stabilize
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-  payloadUpload("\"" + String(outstr) + "," + scd41String + "," + bmeString + "," + String(measuredvbat) + "," + String(stat) + "," + sen5xString);
-    
-  
-  Serial.println("Sampling Rate:");
-  Serial.println(samplingRate);
-   // Get the starting time before the loop runs
-  unsigned long current = millis(); // : Testing
-  unsigned long local_start = millis();
+  payloadUpload("\"" + String(outstr) + "," + readSCD41() + "," + readBME280() + "," + String(measuredvbat) + "," + String(stat) + "," + readSen5x());
+   
+
   display.clearDisplay();
-  while (current-local_start < samplingRate){
-    
+  display.display();
+
+
+  Serial.println("Sampling Period:");  // : Testing
+  Serial.println(samplingPeriod);
+  
+  // Formula: remaining time = sampling period - time elapse
+  int timeRemaining = max(0, samplingPeriod - (millis() - startTime)); // : Testing
+
+  while ( 0 < timeRemaining){ 
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) { // On
-      displaySensorData(measuredvbat);
-    } else {       
+    if (displayState) { displaySensorData(measuredvbat); }
+    else {       
       display.clearDisplay();
       display.display();
-    }
-
-    current = millis();
-  }  
-
-
-  // Get the end time after the loop finishes
-  unsigned long endTime = millis(); //:Testing
-  // Calculate the time difference (loop duration) in milliseconds
-  unsigned long loopDuration = endTime - startTime; ///:Testing
-  Serial.print("Loop Duration: ");
-  Serial.println(loopDuration);
-
-
+    }   
+    // Update time remaining
+    //timeRemaining -=  Watchdog.sleep();
+    timeRemaining -= 8000;
+    Serial.println("Time Remaining: ");
+    Serial.println(timeRemaining);
+  }
 }
+
+

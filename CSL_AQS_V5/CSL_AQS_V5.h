@@ -55,7 +55,7 @@ void printMacAddress(byte mac[]);
 void AP_getInfo(String &ssid, String &passcode, String &gsid);
 void makeMACssidAP(String startString);
 void initializeClient();
-void writeToSD(String data);
+void writeToSD_With_WiFiStat(String data);
 void A();  // Interrupt Handler
 
 // Global Variables
@@ -66,7 +66,7 @@ extern bool buttonAstate;
 extern int lastTimeToggle;
 extern int timeDebounce;
 extern String response;
-extern int samplingRate;
+extern int samplingPeriod;
 extern char server_google_script[];
 extern char server_google_usercontent[];
 extern String payload;

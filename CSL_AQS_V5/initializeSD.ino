@@ -36,8 +36,12 @@ File initializeSD()  {
 }
 
 
+/*!
+* @brief Writes the sensors data to SD card along with the WiFi status
+* @details knowing the wifi status helps us know if the data was also uploaded to Appscript 
+*/
 
-void writeToSD(String data) {
+void writeToSD_With_WiFiStat(String data) {
   String WifiStatus;
 
   // Get the current Wi-Fi status
