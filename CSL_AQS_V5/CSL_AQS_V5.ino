@@ -162,7 +162,7 @@ void loop(void) {
 
   while ( 0 < timeRemaining){ 
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) { displaySensorData(measuredvbat); }
+    if (displayState) { displaySensorData();}
     else {       
       display.clearDisplay();
       display.display();
