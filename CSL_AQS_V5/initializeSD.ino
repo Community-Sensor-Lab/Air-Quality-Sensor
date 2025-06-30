@@ -72,7 +72,7 @@ void writeToSD_With_WiFiStat(String data) {
   }
 
   // Write the data and the Wi-Fi status to the SD card
-  logfile.println(data + " " + WifiStatus);
+  logfile.println(data + ", " + WifiStatus);
   logfile.flush();  // Write to disk, this is I/O intensive
 }
 
