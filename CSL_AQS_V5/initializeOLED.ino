@@ -14,44 +14,51 @@ void initializeOLED() {
 
     pinMode(BUTTON_A, INPUT_PULLUP);
     pinMode(BUTTON_B, INPUT_PULLUP);
-    pinMode(BUTTON_C, INPUT_PULLUP);
+    //pinMode(BUTTON_C, INPUT_PULLUP);
 
     //Set Interrupt
     attachInterrupt(digitalPinToInterrupt(BUTTON_A), A, CHANGE);
+    attachInterrupt(digitalPinTOInterrupt(BUTTON_B), B, CHANGE)
 
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
     display.setCursor(0, 0);
+    display.serial.println("Hello World");
     display.display();
   }
 }
 
-/*!
-* @brief
-* @details 
-*/
-bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce) {
-  if (digitalRead(button)) {
-    buttonState = true;
-    return state;
-  } else if (buttonState && millis() - prevTime > debounce) {
-    buttonState = false;
-    prevTime = millis();
-    return !state;
-  } else
-    return state;
-}
-
-
 // Utilities 
 
 /*!
-* @brief Interrupt Handler
+* @brief Interrupt Handler To force provisioning
 */
 void A() {
   force_pro = true;
 }
+
+/*!
+* @brief Clear screen once
+* @details 
+*/
+void B(){
+  buttonState = !buttonState;
+}
+// bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce) {
+//   if (digitalRead(button)) {
+//     buttonState = true;
+//     return state;
+//   } else if (buttonState && millis() - prevTime > debounce) {
+//     buttonState = false;
+//     prevTime = millis();
+//     return !state;
+//   } else
+//     return state;
+// }
+
+
+
 
 /*!
 * @brief Display Sensor Data for scd40, bme280, sen5x
