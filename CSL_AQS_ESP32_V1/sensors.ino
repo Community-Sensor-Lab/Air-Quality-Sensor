@@ -33,9 +33,7 @@ String readBME() {
   sensorData.Tbme = bme.readTemperature();
   sensorData.Pbme = bme.readPressure() / 100;  // for hPa
   sensorData.RHbme = bme.readHumidity();
-
-  String bmeString = String(sensorData.Tbme) + String(", ") + String(sensorData.Pbme) + String(", ") + String(sensorData.RHbme) + String(", ");
-  return bmeString;
+  return  (String(sensorData.Tbme) + String(", ") + String(sensorData.Pbme) + String(", ") + String(sensorData.RHbme) );
 }
 
 /* SCD41 CO2 SENSOR FROM SENSIRION USING "SparkFun_SCD4x_Arduino_Library.h"*/
@@ -71,7 +69,7 @@ String readSCD41() {
   sensorData.Tco2 = CO2sensor.getTemperature();
   sensorData.RHco2 = CO2sensor.getHumidity();
 
-  return (String(sensorData.CO2) + String(", ") + String(sensorData.Tco2) + String(", ") + String(sensorData.RHco2) + String(", "));
+  return (String(sensorData.CO2) + String(", ") + String(sensorData.Tco2) + String(", ") + String(sensorData.RHco2));
 }
 
 /* SEN55 PM VOC NOX SENSOR FROM SENSIRION USING "SensirionI2CSen5x.h" */
@@ -133,9 +131,8 @@ String readSEN55() {
     Serial.println(errorMessage);
   }
 
-  String SEN55_String = String(sensorData.mPm1_0) + String(", ") + String(sensorData.mPm2_5) + String(", ") + String(sensorData.mPm4_0) + String(", ")
+  return = (String(sensorData.mPm1_0) + String(", ") + String(sensorData.mPm2_5) + String(", ") + String(sensorData.mPm4_0) + String(", ")
                         + String(sensorData.mPm10) + String(", ") + String(sensorData.RHsen) + String(", ") + String(sensorData.Tsen) + String(", ") 
-                        + String(sensorData.VOCs) + String(", ") + String(sensorData.NOx) + String(", ");
+                        + String(sensorData.VOCs) + String(", ") + String(sensorData.NOx) );
 
-  return SEN55_String;
 }

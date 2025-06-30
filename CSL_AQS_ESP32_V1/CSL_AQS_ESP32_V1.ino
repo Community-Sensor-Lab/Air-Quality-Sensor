@@ -52,14 +52,7 @@ void setup() {
 }
 
 void loop() {
-
-  String bme = readBME();
-  delay(300);
-
-  String sen55 = readSEN55();
-  String scd41 = readSCD41();
   DateTime now = rtc.now();  // fetch the date + time
-
   pinMode(VBATPIN, INPUT);  // read battery voltage
   sensorData.Vbat = float(analogReadMilliVolts(VBATPIN) * 2.0 / 1000.00);
   pinMode(BUTTON_A, INPUT_PULLUP);
@@ -68,7 +61,7 @@ void loop() {
   sprintf(tstring, "%02u/%02u/%02u %02u:%02u:%02u, ",
           now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  String tempString = String(tstring) + bme + scd41 + sen55 + String(sensorData.Vbat);
+  String tempString = String(tstring) + ", " + readBME() + ", "+ readSCD41() + ", "+readSEN55() + ", " + String(sensorData.Vbat);
 
   Serial.println(header);
   Serial.println(tempString);
@@ -88,7 +81,7 @@ void loop() {
   display.clearDisplay();
   display.setCursor(0, 0);
   display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", sensorData.Tbme, sensorData.Pbme, sensorData.RHbme);
-  display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\n", sensorData.CO2, sensorData.mPm2_5, sensorData.VOCs);
+  display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", sensorData.CO2, sensorData.mPm2_5, sensorData.VOCs, sensorData.NOx);
   display.printf("Bat: %.2f V\n", sensorData.Vbat);
   display.display();
 

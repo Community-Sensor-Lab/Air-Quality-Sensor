@@ -13,25 +13,25 @@
 #define VBATPIN A13  // this is also D9 button A disable pullup to read analog
 #define BUTTON_A 15  // for the adafruit Feather ESP32 v2 (ABC, 15 32 14) Oled button also A7 enable pullup to read button
 #define BUTTON_B 32  // for the adafruit Feather ESP32 v2 (ABC, 15 32 14) Oled button also A7 enable pullup to read button
-//#define SD_CS 10    // Chip select for SD card default for Adalogger
+//#define SD_CS 10   // Chip select for SD card default for Adalogger
 
 /* STRUCT TO STORE ALL SENSOR DATA */
 typedef struct {
   DateTime now; 
-  float Tbme; // BME280 temperature C
-  float Pbme; // BME280 pressure mBar
-  float RHbme; // BME280 relative humidity %
+  float Tbme;   // BME280 temperature C
+  float Pbme;   // BME280 pressure mBar
+  float RHbme;  // BME280 relative humidity %
   uint16_t CO2; // SCD41 C02 in ppm
-  float Tco2; // SCD41 temperature C
-  float RHco2; // SCD41 relative humidity %
+  float Tco2;   // SCD41 temperature C
+  float RHco2;  // SCD41 relative humidity %
   float mPm1_0; // SEN55 pm1.0 in ug/m^3
   float mPm2_5; // SEN55 pm2.5 in ug/m^3
   float mPm4_0; // SEN55 pm4.0 in ug/m^3
-  float mPm10; // SEN55 pm10 in ug/m^3
-  float RHsen; // SEN55 relative humidity %
-  float Tsen; // SEN55 temperature C
-  float VOCs; // SEN55 VOCs index [1..500] 
-  float NOx; // SEN55 NOx index [1..500]
+  float mPm10;  // SEN55 pm10 in ug/m^3
+  float RHsen;  // SEN55 relative humidity %
+  float Tsen;   // SEN55 temperature C
+  float VOCs;   // SEN55 VOCs index [1..500] 
+  float NOx;    // SEN55 NOx index [1..500]
   float Vbat;
 } data;
 data sensorData; // instantiate a sensor data structure
@@ -65,13 +65,7 @@ static const char provisioningPage[] = R"===(
   </head><body>
   <form action="/get">
     ssid: <input type="text" name="SSID"><br>
-    <!-- <input type="submit" value="Submit">
-  </form><br>
-  <form action="/get"> -->
     passcode: <input type="password" name="passcode"><br>
-    <!-- <input type="submit" value="Submit">
-   </form><br>
- <form action="/get"> -->
     gsid: <input type="text" name="GSID"><br>
     <input type="submit" value="Submit">
   </form>
