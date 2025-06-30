@@ -56,95 +56,11 @@ void A() {
 /*!
 * @brief Display Sensor Data for scd40, bme280, sen5x
 */
-void displaySensorData(float measuredvbat) {
-  display.setCursor(0, 0);
-  display.print("CO2");
-  display.setCursor(40, 0);
-  display.print(CO2scd41);
-  display.print(" ppm");
-  display.print("  ");
-  display.print(measuredvbat, 2);
-  display.print("V");
-
-
-  display.setCursor(0, 8);
-  display.print("T");
-  display.setCursor(40, 8);
-  display.print(Tbme, 2);
-  display.print("C");
-
-  display.setCursor(0, 16);
-  display.print("P");
-  display.setCursor(40, 16);
-  display.print(Pbme, 2);
-  display.print(" mBar");
-
-  display.setCursor(0, 24);
-  display.print("RH");
-  display.setCursor(40, 24);
-  display.print(RHbme, 0);
-  display.print("%");
-
-  display.setCursor(0, 32);
-  display.print("VOC");
-  display.setCursor(40, 32);
-  display.print(vocIndex, 2);
-
-  display.setCursor(0, 40);
-  display.print("NOX");
-  display.setCursor(40, 40);
-  display.print(noxIndex, 2);
-
-  display.setCursor(0, 48);
-  display.print("Pm 2.5");
-  display.setCursor(40, 48);
-  display.print(massConcentrationPm2p5, 2);
-
-  display.display();
+void displaySensorData() {
   display.clearDisplay();
-
   display.setCursor(0, 0);
-  display.print("CO2");
-  display.setCursor(40, 0);
-  display.print(CO2scd41);
-  display.print(" ppm");
-  display.print("  ");
-  display.print(measuredvbat, 2);
-  display.print("V");
-
-
-  display.setCursor(0, 8);
-  display.print("T");
-  display.setCursor(40, 8);
-  display.print(Tbme, 2);
-  display.print("C");
-
-  display.setCursor(0, 16);
-  display.print("P");
-  display.setCursor(40, 16);
-  display.print(Pbme, 2);
-  display.print(" mBar");
-
-  display.setCursor(0, 24);
-  display.print("RH");
-  display.setCursor(40, 24);
-  display.print(RHbme, 0);
-  display.print("%");
-
-  display.setCursor(0, 32);
-  display.print("VOC");
-  display.setCursor(40, 32);
-  display.print(vocIndex, 2);
-
-  display.setCursor(0, 40);
-  display.print("NOX");
-  display.setCursor(40, 40);
-  display.print(noxIndex, 2);
-
-  display.setCursor(0, 48);
-  display.print("Pm 2.5");
-  display.setCursor(40, 48);
-  display.print(massConcentrationPm2p5, 2);
-
+  display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
+  display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5 , vocIndex, noxIndex);
+  display.printf("Bat: %.2f V\n", measuredvbat);
   display.display();
 }
