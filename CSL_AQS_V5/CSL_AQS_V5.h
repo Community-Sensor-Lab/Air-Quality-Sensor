@@ -56,12 +56,13 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid);
 void makeMACssidAP(String startString);
 void initializeClient();
 void writeToSD_With_WiFiStat(String data);
-void A();  // Interrupt Handler
+// Interrupt Handler
+void A();  
+void B();
 
 // Global Variables
 extern char outstr[160];
 extern int32_t Tsleep;
-extern bool displayState;
 extern bool buttonAstate;
 extern int lastTimeToggle;
 extern int timeDebounce;
@@ -101,6 +102,8 @@ extern const String headerSD;
 
 // Force Provisioning flag
 extern bool force_pro;
+
+extern bool displayState;
 
 
 typedef struct {
