@@ -161,7 +161,7 @@ void payloadUpload(String data) {
   // Upload paylod  to appscript
   if (status == WL_CONNECTED){
     Serial.println("Connected to Wifi");
-    writeToSD_With_WiFiStat(data + samplingPeriod);
+    writeToSD_With_WiFiStat(data + ", " + samplingPeriod);
       
     while (!client.connected()) {
       Serial.println("Connecting to server...");
@@ -179,7 +179,7 @@ void payloadUpload(String data) {
   }
   else {
     Serial.println("Continuing without WiFi");
-    writeToSD_With_WiFiStat(data + samplingPeriod);
+    writeToSD_With_WiFiStat(data + ", " + samplingPeriod);
   }
 }
 
