@@ -26,21 +26,16 @@ String readSCD41() {
   int counter = 0;
   if(scd41.measureSingleShot()){                                                          // Request fresh data (should take 5 seconds)
     while (!scd41.readMeasurement()){                                                     // readMeasurement() Check for fresh data
-      delay(1000);
+      delay(100);
       if (counter > 61){ 
         stat |= 0x07;
         break;
       }
       else
         counter += 1;
-    }
-
-    CO2scd41 = scd41.getCO2();
-    float Tscd41 = scd41.getTemperature();
-    float RHscd41 = scd41.getHumidity();
-    return (String(CO2scd41) + String(", ") + String(Tscd41) + String(", ") + String(RHscd41));
+    } 
   }
-  else {
-    return ("None,None,None,");
-  }
+  CO2scd41 = scd41.getCO2();
+  return (String(scd41.getCO2()) + String(", ") + String(scd41.getTemperature()) + String(", ") + String(scd41.getHumidity()));
+  
 }

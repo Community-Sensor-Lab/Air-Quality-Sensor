@@ -21,7 +21,7 @@
    https://github.com/Community-Sensor-Lab/Air-Quality-Sensor
 
    Global status is in uint8_t stat in bit order:
-   0-  0000 0000 0x00Starting state 
+   0-  0000 0000 0x00 Starting state 
    1-  0000 0001 0x01 SD card not present
    2-  0000 0010 0x02 SD could not create file
    3-  0000 0011 0x03 RTC failed
@@ -65,10 +65,13 @@ bool force_pro = false;
 
 char outstr[160];
 int32_t Tsleep = 0;
+
 bool displayState = true;
-bool buttonAstate = true;
+bool buttonBstate = true;
 int lastTimeToggle = 0;
 int timeDebounce = 100;
+
+
 
 String response = "";
 int samplingPeriod = 10000;
@@ -81,7 +84,7 @@ char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
-uint8_t stat = 0; 
+uint8_t stat = 0x00; 
 
 // Alternative: 
 // SCD30 & SCD40
@@ -147,26 +150,30 @@ void loop(void) {
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
-  pinMode(BUTTON_A, INPUT_PULLUP);
+  
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
   payloadUpload("\"" + String(outstr) + "," + readSCD41() + "," + readBME280() + "," + String(measuredvbat) + "," + String(stat) + "," + readSen5x());
    
+  Serial.println("displayState: ");
+  Serial.println(displayState);
 
   display.clearDisplay();
   display.display();
+  displayState = toggleButton(BUTTON_B, displayState, buttonBstate, lastTimeToggle, timeDebounce);
+  if (displayState) { 
+    displaySensorData(measuredvbat);
+  }
+  else {       
+      display.clearDisplay();
+      display.display();
+  }   
 
   // Formula: remaining time = sampling period - time elapse
   int timeRemaining = max(0, samplingPeriod - (millis() - startTime)); // : Testing
 
 
   while ( 0 < timeRemaining){ 
-    displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) { displaySensorData();}
-    else {       
-      display.clearDisplay();
-      display.display();
-    }   
     // Update time remaining
     timeRemaining -=  Watchdog.sleep();
   }

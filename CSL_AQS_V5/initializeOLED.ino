@@ -18,13 +18,13 @@ void initializeOLED() {
 
     //Set Interrupt
     attachInterrupt(digitalPinToInterrupt(BUTTON_A), A, CHANGE);
-    attachInterrupt(digitalPinTOInterrupt(BUTTON_B), B, CHANGE)
+    //attachInterrupt(digitalPinToInterrupt(BUTTON_B), B, CHANGE);
 
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(SH110X_WHITE);
     display.setCursor(0, 0);
-    display.serial.println("Hello World");
+    display.println("Hello World");
     display.display();
   }
 }
@@ -36,38 +36,41 @@ void initializeOLED() {
 */
 void A() {
   force_pro = true;
+ 
 }
 
 /*!
 * @brief Clear screen once
 * @details 
 */
-void B(){
-  buttonState = !buttonState;
-}
-// bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce) {
-//   if (digitalRead(button)) {
-//     buttonState = true;
-//     return state;
-//   } else if (buttonState && millis() - prevTime > debounce) {
-//     buttonState = false;
-//     prevTime = millis();
-//     return !state;
-//   } else
-//     return state;
+// void B(){
+//   displayState = !displayState;
+ 
 // }
 
-
+bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce )  {
+  if (digitalRead(button))  {
+    buttonState = true;
+    return state;
+  }
+  else if (buttonState && millis() - prevTime > debounce) {
+    buttonState = false;
+    prevTime = millis();
+    return !state;
+  }
+  else
+    return state;
+}
 
 
 /*!
 * @brief Display Sensor Data for scd40, bme280, sen5x
 */
-void displaySensorData() {
+void displaySensorData(float measuredvbat) {
   display.clearDisplay();
   display.setCursor(0, 0);
   display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
   display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5 , vocIndex, noxIndex);
-  display.printf("Bat: %.2f V\n", measuredvbat);
+  display.printf("\nBat: %.2f V", measuredvbat);
   display.display();
 }

@@ -38,14 +38,19 @@ void initializeBME280()  {
 * @return String with readings 
 **/
 String readBME280(){
-  if (bme280.takeForcedMeasurement()){
-    Tbme = bme280.readTemperature();
-    Pbme = bme280.readPressure() / 100; // for hPa
-    RHbme = bme280.readHumidity();
-  return (String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme) );
+  int counter = 0;
+  while (!bme280.takeForcedMeasurement()){
+    delay(100);
+      if (counter > 61){ 
+        stat |= 0x07;
+        break;
+      }
+      else
+        counter += 1;
   }
-  else{
-  stat |= 0x09;
-  return "None, None, None,";
-  }
+
+  Tbme = bme280.readTemperature();
+  Pbme = bme280.readPressure() / 100; // for hPa
+  RHbme = bme280.readHumidity();
+  return (String(Tbme) + String(", ") + String(Pbme) + String(", ") + String(RHbme));
 }

@@ -1,7 +1,3 @@
-
-
-
-
 /*!
 * @brief Makes an http get request and handles the response message by calling handleResponse()
 **/
