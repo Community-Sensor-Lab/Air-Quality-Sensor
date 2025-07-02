@@ -64,25 +64,37 @@ void doPost(String outstr) {
   else {
     Serial.println("Connected to server");
     // Make a HTTP request:
-    client.println("POST /macros/s/AKfycbxwxxCaHA24OhuHJWrZQ79a6qOfYCm4-fPbDFGRt9JSZEGv345UuFR-kJw6Sgv7wZq3Qw/exec? HTTP/1.0");//value=Hello HTTP/1.0");
+     client.println(String("POST /macros/s/") + String(provisionInfo.gsid) + String("/exec HTTP/1.1"));
     client.println("Host: " SERVER);
-    client.println("Content-Type: application/x-www-form-urlencoded");
+    client.println("Content-Type: application/json");
     //client.println("Connection: close");
     client.print("Content-Length: ");
     client.println(payload.length());
     client.println();
     //Serial.println(String(PRE_PAYLOAD) + String(payload) + String(POST_PAYLOAD));
     client.print(payload);
-    client.println();
-    delay(200);
-    Serial.println("\nResponse from client: ");
-    
-    while (client.connected()) {
-      while (client.available()) {
+
+    response = "";
+
+  // This approach was selected because it allowed the sensor to escape instances where a package never arrives completely.
+  // This approach also gives the sensor enough time to receive the message. (Still needs to be tested for instances where the internet connection is really poor and the
+  // request-response cycle between the server and the sensor takes longer than 3 seconds.)
+
+    unsigned long lastRead = millis();
+    const unsigned long timeout = 3000; // 3 seconds
+
+    while (client.connected() || client.available()) {
+      if (client.available()) {
         char c = client.read();
-        Serial.write(c);
+        response += c;
+        lastRead = millis(); // reset timer on data received
       }
-    }
+
+      if (millis() - lastRead > timeout) {
+        Serial.println("Response timeout. Exiting read loop.");
+       break;
+      }
+    } 
     client.stop();
   }
 }

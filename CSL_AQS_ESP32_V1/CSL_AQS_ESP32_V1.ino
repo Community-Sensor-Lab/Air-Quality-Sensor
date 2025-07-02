@@ -17,6 +17,8 @@
 */
 #include "CSL_AQS_ESP32_V1.h"
 
+String response = "";
+
 void setup() {
 
   Serial.begin(115200);
@@ -61,7 +63,7 @@ void loop() {
   sprintf(tstring, "%02u/%02u/%02u %02u:%02u:%02u, ",
           now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  String tempString = String(tstring) + ", " + readBME() + ", "+ readSCD41() + ", "+readSEN55() + ", " + String(sensorData.Vbat);
+  String tempString = String(tstring) + ", " + readBME() + ", "+ readSCD41() + ", " +readSEN55() + ", " + String(sensorData.Vbat);
 
   Serial.println(header);
   Serial.println(tempString);
@@ -88,7 +90,8 @@ void loop() {
   // If button A pressed re-provision wifi creds
   if (!provisionInfo.valid) {
     softAPprovision();
-    connectToWiFi();
+    connectToWiFi(); 
+
   }
 
   delay(60000); // 1 minute

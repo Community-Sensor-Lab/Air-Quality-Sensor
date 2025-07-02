@@ -51,13 +51,13 @@ void softAPprovision() {
     client = server.accept();  // listen and accept clients
     if (client) {
       Serial.println("----- new client");
-      String cl = "";
+      String currentLine = "";
       while (client.connected()) {
         if (client.available()) {  // anything to read from client?
           char c = client.read();
           Serial.write(c);
           if (c == '\n') {                        // is it eol?
-            if (cl.length() == 0) {               // was previous line empty too?
+            if (currentLine.length() == 0) {               // was previous line empty too?
               client.println("HTTP/1.1 200 OK");  // respond ok
               client.println("Content-type:text/html");
               client.println();
@@ -65,20 +65,13 @@ void softAPprovision() {
               client.println();
               break;
             } else {
-              if (cl.startsWith("GET /get?")) {  // does the line have the provisioning  info?
+              if (currentLine.startsWith("GET /get?")) {  // does the line have the provisioning  info?
                 // parse the provisioning info
-                String ssid = cl.substring(cl.indexOf("SSID=") + 5, cl.indexOf("&pass"));
-                ssid = decodeUrl(ssid);
-                String passcode = cl.substring(cl.indexOf("passcode=") + 9, cl.indexOf("&GSI"));
-                passcode = decodeUrl(passcode);
-                String gsid = cl.substring(cl.indexOf("GSID=") + 5, cl.indexOf(" HTTP"));
-                gsid = decodeUrl(gsid);
-                //Serial.printf("Saving to memory ssid: %s, passcode: %s, gsid: %s\n", ssid.c_str(), passcode.c_str(), gsid.c_str());
 
-                // save provisioning info to memory
-                strcpy(provisionInfo.ssid,ssid.c_str());
-                strcpy(provisionInfo.passcode,passcode.c_str());
-                strcpy(provisionInfo.gsid,gsid.c_str());
+                // strcpy (destination, source)
+                strcpy(provisionInfo.ssid, decodeUrl(currentLine.substring(currentLine.indexOf("SSID=") + 5, currentLine.indexOf("passcode=") - 1)).c_str());
+                strcpy(provisionInfo.passcode, decodeUrl(currentLine.substring(currentLine.indexOf("passcode=") + 9, currentLine.indexOf("GSID=") - 1)).c_str());
+                strcpy(provisionInfo.gsid, decodeUrl(currentLine.substring(currentLine.indexOf("GSID=") + 5, currentLine.indexOf(" HTTP"))).c_str());
                 provisionInfo.valid = true;
                 provisionInfo.noWifi = false;
                 storeProvisionInfo();
@@ -87,12 +80,12 @@ void softAPprovision() {
                 WiFi.softAPdisconnect();  // disconnect and turn off
                 return;
               } else {  // no provisioning info so clear line
-                cl = "";
+                currentLine = "";
               }
             }
           } else {            // not eol so keep going
             if (c != '\r') {  // disregard line returns
-              cl += c;        // and add everything else to the line
+              currentLine += c;        // and add everything else to the line
             }
           }
         }             // end of 'if client.available'

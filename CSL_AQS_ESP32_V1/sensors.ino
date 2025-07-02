@@ -131,7 +131,7 @@ String readSEN55() {
     Serial.println(errorMessage);
   }
 
-  return = (String(sensorData.mPm1_0) + String(", ") + String(sensorData.mPm2_5) + String(", ") + String(sensorData.mPm4_0) + String(", ")
+  return (String(sensorData.mPm1_0) + String(", ") + String(sensorData.mPm2_5) + String(", ") + String(sensorData.mPm4_0) + String(", ")
                         + String(sensorData.mPm10) + String(", ") + String(sensorData.RHsen) + String(", ") + String(sensorData.Tsen) + String(", ") 
                         + String(sensorData.VOCs) + String(", ") + String(sensorData.NOx) );
 
