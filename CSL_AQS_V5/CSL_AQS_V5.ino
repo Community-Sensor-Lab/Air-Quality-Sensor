@@ -209,9 +209,9 @@ void loop(void) {
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
-  pinMode(BUTTON_A, INPUT_PULLUP);
 
-  delay(5000);  // wait for the sps30 to stabilize
+
+  //delay(5000);  // wait for the sps30 to stabilize
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
@@ -231,51 +231,11 @@ void loop(void) {
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
       display.clearDisplay();
-     
-      display.setCursor(0, 0); 
-      display.print("CO2");
-      display.setCursor(40, 0); 
-      display.print(CO2scd41); 
-      display.print(" ppm");
-      display.print("  ");
-      display.print(measuredvbat, 2); 
-      display.print("V");
-
-
-      display.setCursor(0, 8); 
-      display.print("T");
-      display.setCursor(40, 8); 
-      display.print(Tbme, 2); 
-      display.print("C");
-
-      display.setCursor(0, 16);
-      display.print("P");
-      display.setCursor(40, 16);  
-      display.print(Pbme, 2);  
-      display.print(" mBar");
-
-      display.setCursor(0, 24);  
-      display.print("RH");
-      display.setCursor(40, 24); 
-      display.print(RHbme, 0);  
-      display.print("%");
-
-      display.setCursor(0, 32);  
-      display.print("VOC");
-      display.setCursor(40, 32); 
-      display.print(vocIndex, 2);  
-
-      display.setCursor(0, 40); 
-      display.print("NOX");
-      display.setCursor(40, 40); 
-      display.print(noxIndex, 2); 
-
-      display.setCursor(0, 48); 
-      display.print("Pm 2.5");
-      display.setCursor(40, 48);
-      display.print(massConcentrationPm2p5, 2); 
-
-      display.display();
+     display.setCursor(0, 0);
+     display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
+     display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5 , vocIndex, noxIndex);
+     display.printf("\nBat: %.2f V", measuredvbat);
+     display.display();
     } else {       
       display.clearDisplay();
       display.display();
