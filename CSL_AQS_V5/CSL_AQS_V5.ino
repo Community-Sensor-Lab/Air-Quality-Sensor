@@ -209,9 +209,8 @@ void loop(void) {
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
-
-
-  //delay(5000);  // wait for the sps30 to stabilize
+  pinMode(BUTTON_A, INPUT_PULLUP);
+  delay(5000);  
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
@@ -230,7 +229,7 @@ void loop(void) {
   for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) { // On
-      display.clearDisplay();
+     display.clearDisplay();
      display.setCursor(0, 0);
      display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
      display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5 , vocIndex, noxIndex);
