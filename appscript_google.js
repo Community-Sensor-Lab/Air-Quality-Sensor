@@ -4,7 +4,7 @@
 ****************************************************************************/
 
 // Current Sheet
-var SS = SpreadsheetApp.openById('<SCRIPT ID>');
+var SS = SpreadsheetApp.openById('<SHEET ID>');
 var sheet = SS.getSheetByName('Sheet1');
 
 function onOpen() { 
