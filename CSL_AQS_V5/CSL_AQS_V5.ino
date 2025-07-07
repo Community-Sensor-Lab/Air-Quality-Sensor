@@ -47,7 +47,7 @@
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
 #include "RTClib.h"                              
-#include "SparkFun_SCD30_Arduino_Library.h"                    
+// #include "SparkFun_SCD30_Arduino_Library.h"                    
 #include "SparkFun_SCD4x_Arduino_Library.h"                    
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>  
@@ -98,6 +98,9 @@ void makeMACssidAP(String startString);
 void payloadUpload(String payload);
 void initializeClient();
 
+// Force Provisioning
+bool force_pro = false;
+
 //Interrupt Handler
 void A() {
   force_pro = true;
@@ -142,8 +145,6 @@ float massConcentrationPm2p5 = 0;
 float vocIndex = 0;
 float noxIndex = 0;
 
-// Force Provisioning
-bool force_pro = false;
 
 // Sensor Componentns                                                                 
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
