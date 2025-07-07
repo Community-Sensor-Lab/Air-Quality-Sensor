@@ -140,7 +140,6 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
-
 }
 
 void loop(void) {
@@ -150,13 +149,9 @@ void loop(void) {
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
-  
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
   payloadUpload("\"" + String(outstr) + "," + readSCD41() + "," + readBME280() + "," + String(measuredvbat) + "," + String(stat) + "," + readSen5x());
-   
-  Serial.println("displayState: ");
-  Serial.println(displayState);
 
   display.clearDisplay();
   display.display();
@@ -171,12 +166,7 @@ void loop(void) {
 
   // Formula: remaining time = sampling period - time elapse
   int timeRemaining = max(0, samplingPeriod - (millis() - startTime)); // : Testing
-
-
-  while ( 0 < timeRemaining){ 
-    // Update time remaining
-    timeRemaining -=  Watchdog.sleep();
-  }
+  while ( 0 < timeRemaining){ timeRemaining -=  Watchdog.sleep();}
 }
 
 

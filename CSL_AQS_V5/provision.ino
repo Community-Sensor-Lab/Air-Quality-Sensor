@@ -1,9 +1,30 @@
 // HTML paged displayed during provisioning
 
+// const char webpage_html[] PROGMEM = R"rawliteral(
+// <!DOCTYPE HTML><html><head>
+//   <title>Community Sensor Lab provisioning page</title>
+//   <meta name="viewport" content="width=device-width, initial-scale=1">
+//   </head><body>
+//   <h1>NGENS Air Quality Sensor</h1>
+//   <form action="/get">
+//     ssid: <input type="text" name="SSID"><br>
+//     passcode: <input type="password" name="passcode"><br>
+//     gsid: <input type="text" name="GSID"><br>
+//     <input type="submit" value="Submit">
+//   </form>
+// </body></html>)rawliteral";
+
 const char webpage_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html><head>
+<!DOCTYPE HTML><html>
+  <head>
   <title>Community Sensor Lab provisioning page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      background-color: #88d9f5;
+      font-family: Verdana, sans-serif;
+    }
+  </style>
   </head><body>
   <h1>NGENS Air Quality Sensor</h1>
   <form action="/get">

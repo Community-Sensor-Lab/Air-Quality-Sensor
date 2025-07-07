@@ -43,10 +43,6 @@ void A() {
 * @brief Clear screen once
 * @details 
 */
-// void B(){
-//   displayState = !displayState;
- 
-// }
 
 bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce )  {
   if (digitalRead(button))  {
