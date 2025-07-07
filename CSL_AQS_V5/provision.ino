@@ -19,12 +19,6 @@ const char webpage_html[] PROGMEM = R"rawliteral(
   <head>
   <title>Community Sensor Lab provisioning page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body{
-      background-color: #88d9f5;
-      font-family: Verdana, sans-serif;
-    }
-  </style>
   </head><body>
   <h1>NGENS Air Quality Sensor</h1>
   <form action="/get">
