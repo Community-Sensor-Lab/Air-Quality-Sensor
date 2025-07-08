@@ -25,7 +25,7 @@
 ##  What You'll Build
 
 <p align="center">
-  <img src="images/Lab_hero_sticker.png" width="49%"/>
+  <img src="images/hero_sqr3_sticker.png" width="49%"/>
   <img src="images/CSL_AQS_solar2_Sticker.png" width="49%"/>
 </p>
 
