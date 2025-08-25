@@ -65,7 +65,7 @@ By completing this project, you'll gain hands-on experience with:
 | **1** | [ Skills & Tools](Contents/1.%20Required-Skills-and-Tools.md) | *Lorena* | What you'll need to get started |
 | **2** | [ Arduino Setup](Contents/2.%20Installing-Arduino-and-Getting-Started-2.3.6.md) | *Vincent* | Software installation & basics |
 | **3** | [ Soldering Guide](Contents/3.%20Soldering-Pins-and-Headers-on-Boards.md) | | Hardware assembly techniques |
-| **3.5** | [ WiFi Configuration](Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md) | *Fahmin* | Network connectivity setup |
+| **3.5** | [ WiFi Configuration](Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md) | *Fahmin: Flow chart* | Network connectivity setup |
 | **4** | [ Component Assembly](Contents/4%20Breadboard-Assembly-and-Component-Code-Testing.md) | *Lorena* | Breadboard wiring & testing |
 | **5** | [ Code Workshop](Contents/5.%20Code-Activity.md) | *Lorena* | Programming fundamentals |
 | **6** | [ GitHub Integration](Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.md) | *Mark* | Source code management |
