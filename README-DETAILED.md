@@ -78,7 +78,7 @@ By completing this detailed guide, students will master:
 | Section | Title | Author | Skills Developed | Duration |
 |:-------:|-------|--------|------------------|:--------:|
 | **3** | [ **Soldering Workshop**](Contents/3.%20Soldering-Pins-and-Headers-on-Boards.md) | | Advanced soldering, header installation, cable modification | 2 hours |
-| **3.5** | [ **WiFi Provisioning**](Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md) | | Network configuration, wireless setup | 30 min |
+| **3.5** | [ **WiFi Provisioning**](Contents/3.5%20Feather-M0-WiFi-Setup-Procedure.md) | *Fahmin: Flow chart* | Network configuration, wireless setup | 30 min |
 | **4** | [ **Breadboard Assembly**](Contents/4%20Breadboard-Assembly-and-Component-Code-Testing.md) | *Lorena* | Circuit building, sensor integration, testing procedures | 1.5 hours |
 
 **Key Learning Points:**
