@@ -71,7 +71,7 @@ By completing this project, you'll gain hands-on experience with:
 | **6** | [ GitHub Integration](Contents/6.%20Downloading-CSL-AQS-Code-from-GitHub.md) | *Mark* | Source code management |
 | **7** | [ Google Sheets Logging](Contents/7.%20Posting-to-Google-Logging-Spreadsheet.md) | *Vincent* | Cloud data integration |
 | **8** | [ Data Visualization](Contents/8.%20How-to-Make-Data-Graphs-Lines-and-Time-Series.md) | *Ricardo* | Creating meaningful charts |
-| **9** | [ PCB Design](Contents/9.%20Design-and-Assembly-of-PCB.md) | *Mark* | Professional circuit boards |
+| **9** | [ PCB Design](Contents/9.%20Design-and-Assembly-of-PCB.md) | *Mark* | Printed Circuit Boards |
 | **9.8** | [ Assembly of AQS Monitor on PCB Board](Contents/9.8%20Assembley-of-AQS-Monitor-on-PCB-Board.md) | | Soldering and mounting components onto the PCB |
 | **10** | [ Final Assembly](Contents/10.%20AQS-PCB-Mount.md) | *Vincent* | Enclosure & mounting |
 
