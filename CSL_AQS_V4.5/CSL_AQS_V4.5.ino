@@ -87,7 +87,7 @@ Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);       // large OLED d
 Adafruit_BME280 bme;                                             // the bme tprh sensor
 File logfile;                                                    // the logging file
 //SCD30 CO2sensor;                                                 // sensirion SCD30 CO2 NDIR
-SCD4x CO2sensor(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
+SCD4x scd41(SCD4x_SENSOR_SCD41); // Tell the library we have a SCD41 connected;
 
 // TruStabilityPressureSensor diffPresSens(HSC_CS, -100.0, 100.0);  // HSC differential pressure sensor for Met Eric Breunitg
 uint8_t stat = 0;                                                // status byte
@@ -166,7 +166,7 @@ void loop(void) {
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
 
-  delay(5000);  // wait for the sps30 to stabilize
+  delay(5000);  // wait for the sps40 to stabilize
 
   //  sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, %.2d, %.2f, %.2f, %.2f, %.2f, %.2f, %.2f, %x, ",
   //          now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second(),
@@ -190,7 +190,7 @@ void loop(void) {
       display.setCursor(0, 0);
       display.print("CO2 ppm ");
       display.print(CO2);
-      display.print("V ");
+      display.print(" V");
       display.println(measuredvbat);
       display.print("T C ");
       display.println(Tbme);

@@ -30,7 +30,7 @@ void initializeSCD41() {
 
   //mySensor.enableDebugging(); // Uncomment this line to get helpful debug messages on Serial
 
-  if (CO2sensor.begin(false, false, false) == false)  // Do not start periodic measurements
+  if (scd41.begin(false, false, false) == false)  // Do not start periodic measurements
   //measBegin_________/     |     |
   //autoCalibrate__________/      |
   //skipStopPeriodicMeasurements_/
@@ -43,7 +43,7 @@ void initializeSCD41() {
   //Let's call measureSingleShot to start the first conversion
   //bool success = mySensor.measureSingleShot();
   //if (success == false)
-  if (!CO2sensor.measureSingleShot()) {
+  if (!scd41.measureSingleShot()) {
     Serial.println(F("measureSingleShot failed. Are you sure you have a SCD41 connected? Freezing..."));
     while (1)
       ;
@@ -52,15 +52,15 @@ void initializeSCD41() {
 
 String readSCD41()
 {
-  CO2sensor.measureSingleShot();        // Request fresh data (should take 5 seconds)
-  while (!CO2sensor.readMeasurement())  // readMeasurement will return true when fresh data is available
+  scd41.measureSingleShot();        // Request fresh data (should take 5 seconds)
+  while (!scd41.readMeasurement())  // readMeasurement will return true when fresh data is available
   {
     Serial.print(F("."));
     delay(500);
   }
-  CO2 = CO2sensor.getCO2();
-  float Tco2 = CO2sensor.getTemperature();
-  float RHco2 = CO2sensor.getHumidity();
+  CO2 = scd41.getCO2();
+  float Tco2 = scd41.getTemperature();
+  float RHco2 = scd41.getHumidity();
 
   return (String(CO2) + String(", ") + String(Tco2) + String(", ") + String(RHco2) + String(", "));
 
