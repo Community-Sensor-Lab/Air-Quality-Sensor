@@ -210,6 +210,6 @@ void loop(void) {
       display.display();
     };
     //int sleepMS = Watchdog.sleep();// remove comment for low power
-    delay(16000);  // uncomment to debug because serial communication doesn't come back after sleeping
+    delay(800);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }
