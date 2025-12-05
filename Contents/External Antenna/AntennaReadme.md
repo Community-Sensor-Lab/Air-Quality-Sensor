@@ -1,7 +1,7 @@
-# External Antenna
-Welcome to the Community Sensor Lab's new addition, an external antenna. For site's with a unstable wireless connection.
+ # External Antenna
+### For the circumstances where the sensor cannot be place in an optimal position; the antenna resolves this issue.
 
-This antenna builds upon the current AQS with the following components: 
+Welcome to the Community Sensor Lab's new addition, an external antenna. This antenna builds upon the current AQS with the following components: 
 * Adafruit Feather M0 WiFi with uFL
 * WI-FI/Bluetooth Antenna 2.4/5.8GHZ
 * SMA Female to IPX U.FL 
