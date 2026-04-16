@@ -88,6 +88,13 @@ String readSen5x();
 
 File initializeSD();
 
+void resetI2C() {
+  Wire.end();
+  delay(100);
+  Wire.begin();
+  delay(100);
+}
+
 void payloadUpload(String payload);
 void printMacAddress(byte mac[]);
 void AP_getInfo(String &ssid, String &passcode, String &gsid);
@@ -139,6 +146,7 @@ float Pbme = 0;
 float RHbme = 0;
 
 //SEN 55
+uint16_t error;
 float massConcentrationPm2p5 = 0;
 float vocIndex = 0;
 float noxIndex = 0;
@@ -171,6 +179,7 @@ void setup() {
   // initializeSCD30(25);
   initializeBME280();
   initializeSen5x();
+
   initializeRTC();
   logfile = initializeSD();
 
@@ -190,6 +199,10 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
+  // TURN SEN55 TO IDLE
+  sen5x.stopMeasurement();
+  Serial.print("Stop measurement executed");
+  Serial.print("\n");
 }
 
 
@@ -197,16 +210,36 @@ void loop(void) {
 
   uint8_t ctr = 0;
 
+  Wire.begin();
+  delay(10);
+
+  // MEASUREMENTS
   // String scd30String = readSCD30(100);
   String scd41String = readSCD41();
   String bmeString = readBME280();
-  String sen5xString = readSen5x();
   DateTime now;
   now = rtc.now();
 
+  // START SEN55 IN NO PM MODE FOR 30S WARMUP
+  error = sen5x.startMeasurementWithoutPm();
+  Serial.print("Measurement (No PM) start");
+  Serial.print("\n");
+  delay(30000);
+
+  // START SEN55 IN FULL MODE FOR 30S MORE WARMUP
+  error = sen5x.startMeasurement();
+  Serial.print("Complete Measurement start");
+  Serial.print("\n");
+  delay(30000);
+
+  // MEASUREMENTS
+  String sen5xString = readSen5x();
+
+  // TURN SEN55 TO IDLE
   sen5x.stopMeasurement();
   Serial.print("Stop measurement executed");
   Serial.print("\n");
+  delay(1000);
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
@@ -226,10 +259,15 @@ void loop(void) {
   logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
+  Wire.end();
+  delay(10);
+
+  // SLEEP FOR 60S (FOR A 2MIN CYCLE)
   // sleep cycle
   for (int i = 1; i <= 8; i++) {  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
     if (displayState) {  // On
+
       display.clearDisplay();
       display.setCursor(0, 0);
       display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
@@ -244,12 +282,4 @@ void loop(void) {
     //int sleepMS = Watchdog.sleep();// remove comment for low power
     delay(8000);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
-  sen5x.startMeasurementWithoutPm();
-  Serial.print("Measurement (No PM) start");
-  Serial.print("\n");
-  delay(30000);
-  sen5x.startMeasurement();
-  Serial.print("Complete Measurement start");
-  Serial.print("\n");
-  delay(30000);
 }

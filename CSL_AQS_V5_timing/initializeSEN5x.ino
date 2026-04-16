@@ -31,7 +31,7 @@ void initializeSen5x() {
     Serial.println(" deg. Celsius (SEN54/SEN55 only");
   }
 
-  error = sen5x.startMeasurementWithoutPm();
+  error = sen5x.stopMeasurement();
   if (error) {
     Serial.print("Error trying to execute startMeasurement(): ");
     errorToString(error, errorMessage, 256);
