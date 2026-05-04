@@ -11,6 +11,7 @@ void initializeOLED()  {
     pinMode(BUTTON_A, INPUT_PULLUP);
     pinMode(BUTTON_B, INPUT_PULLUP);
     pinMode(BUTTON_C, INPUT_PULLUP);
+    pinMode(RESET, INPUT_PULLUP);
 
     display.clearDisplay();
     display.setTextSize(1);
