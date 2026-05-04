@@ -1,6 +1,6 @@
 // Uncoment if using SCD30 instead of SCD41
-
 /**
+
 void initializeSCD30(int samplingInterval)  {
   Serial.println("starting SCD30... ");
   if (!scd30.begin()) {
