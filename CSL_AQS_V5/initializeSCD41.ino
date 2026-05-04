@@ -1,6 +1,6 @@
-/*!
-* @brief 
-**/
+
+// @brief 
+
 void initializeSCD41() {
   Serial.println("starting SCD41... ");
   if (!scd41.begin(false, false, false)){                                                 // Do not start periodic measurements
@@ -17,10 +17,10 @@ void initializeSCD41() {
 }
 
 
-/*!
-* @brief read CO2, temperature and relative humidity from SCD41 sensor 
-* @return String with readings 
-**/
+
+// @brief read CO2, temperature and relative humidity from SCD41 sensor 
+// @return String with readings 
+
 
 String readSCD41() {
   int counter = 0;
