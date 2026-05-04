@@ -212,7 +212,7 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  if (Pbme < 0 || Tbme > 20) {
+  if (Pbme < 0 || Tbme > 85) {
     Serial.println("BME280 Readings-Not Taken. Resetting system");
 
     display.clearDisplay();
