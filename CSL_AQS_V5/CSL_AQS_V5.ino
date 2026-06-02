@@ -136,11 +136,16 @@ String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
 char header[] = "WiFi Strength, Google Connection, DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
- ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
+ ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x, Mac Address, WiFi, WiFi Strength";
 
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 uint8_t stat = 0;
+bool statusg = 0; // Google Connection Status
+int rssi = 0; //WiFi strength
+byte localMac[6];
+String localMacStr = "";
+
 // SCD30 & SCD40
 //uint16_t CO2scd30;
 uint16_t CO2scd41;
@@ -284,14 +289,14 @@ void loop(void) {
     NVIC_SystemReset();
   }
   // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
-  payloadUpload(payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  payloadUpload(payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + localMacStr + String(", ") + ssidg + String(", ") + String(rssi));
 
   Serial.println(header);
   // Serial.println(String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + localMacStr + String(", ") + ssidg + String(", ") + String(rssi));
 
   // logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
+  logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString + String(", ") + localMacStr + String(", ") + ssidg + String(", ") + String(rssi));
   logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
   resetI2C();

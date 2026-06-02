@@ -14,13 +14,10 @@ void payloadUpload(String payload) {
 
     if (WiFi.status() == WL_CONNECTED) {
       Serial.print("WiFi Status: Connected\n");
-      int rssi = WiFi.RSSI();
+      rssi = WiFi.RSSI(); 
       Serial.print("RSSI: ");
       Serial.print(rssi);
       Serial.print(" dBm");
-      logfile.print(rssi);
-      logfile.print(",");
-      logfile.flush();
 
       if (!client.connected()) {
         initializeClient();
@@ -47,9 +44,7 @@ void payloadUpload(String payload) {
       client.stop();
       if (!client.connected()) {
         Serial.println("disconnected from server");
-        logfile.print("1");  //Indictates Connection to Google
-        logfile.print(",");
-        logfile.flush();
+        statusg = 1;  
       };
       WiFi.end();
       break;
@@ -57,11 +52,8 @@ void payloadUpload(String payload) {
       Serial.print("Trying to connect to Wifi : ");
       Serial.println(i);
       if (i == 3) {
-        logfile.print("No WiFi");  //Indictates Connection to Google
-        logfile.print(",");
-        logfile.print("0");  //Indictates Connection to Google
-        logfile.print(",");
-        logfile.flush();
+        rssi = 0; // No WiFi available 
+        statusg = 0; 
       }
     }
   }
@@ -89,3 +81,5 @@ void initializeClient() {
   }
   Serial.println("end intializeClient");
 }
+
+

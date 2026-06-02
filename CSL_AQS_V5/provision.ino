@@ -22,20 +22,20 @@ const char webpage_html[] PROGMEM = R"rawliteral(
 */
 String urlDecode(String input) {
   String decoded = "";
-  char temp[] = "0x00"; // to hold the hex value
+  char temp[] = "0x00";  // to hold the hex value
 
   for (unsigned int i = 0; i < input.length(); i++) {
-    if (input[i] == '%') { // If a '%' is found, decode the following two hex characters
+    if (input[i] == '%') {  // If a '%' is found, decode the following two hex characters
       if (i + 2 < input.length()) {
         temp[2] = input[i + 1];
         temp[3] = input[i + 2];
-        decoded += (char) strtol(temp, NULL, 16); // Convert hex to character
+        decoded += (char)strtol(temp, NULL, 16);  // Convert hex to character
         i += 2;
       }
-    } else if (input[i] == '+') { // Convert '+' to space
+    } else if (input[i] == '+') {  // Convert '+' to space
       decoded += ' ';
     } else {
-      decoded += input[i]; // Append normal characters
+      decoded += input[i];  // Append normal characters
     }
   }
   return decoded;
@@ -83,6 +83,15 @@ void printMacAddress(byte mac[]) {
   Serial.println();
 }
 
+void updateMacString(byte mac[]) {
+  localMacStr = "";
+  for (int i = 5; i >= 0; i--) {
+    if (mac[i] < 16) localMacStr += "0";
+    localMacStr += String(mac[i], HEX);
+    if (i > 0) localMacStr += ":";
+  }
+}
+
 /**
 *   Makes AP and, when client connected, serves the 
 *   web page with entry fields. The fields are 
@@ -108,15 +117,18 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
   delay(1000);
   printWiFiStatus();
 
-  while (true) {  
-   
-    if (status != WiFi.status()) { 
+  while (true) {
+
+    if (status != WiFi.status()) {
       status = WiFi.status();
       if (status == WL_AP_CONNECTED) {
         byte remoteMac[6];
         Serial.print(F("Device connected to AP, MAC address: "));
         WiFi.APClientMacAddress(remoteMac);
         printMacAddress(remoteMac);
+
+        WiFi.macAddress(localMac); //Set local mac address
+        updateMacString(localMac);
 
         Serial.println(F("Starting server"));
         server.begin();
@@ -143,29 +155,29 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
       }
     }
 
-    client = server.available();  
+    client = server.available();
 
-    if (client) {                   
-      Serial.println(F("new client")); 
-      String currentLine = "";      
-      while (client.connected()) {  
+    if (client) {
+      Serial.println(F("new client"));
+      String currentLine = "";
+      while (client.connected()) {
 
-        if (client.available()) { 
-          char c = client.read();  
-          Serial.write(c);         
+        if (client.available()) {
+          char c = client.read();
+          Serial.write(c);
 
-          if (c == '\n') {  
-           
+          if (c == '\n') {
+
             if (currentLine.length() == 0) {
               client.println(F("HTTP/1.1 200 OK"));
               client.println(F("Content-type:text/html"));
               client.println();
-              client.print(webpage_html);  
+              client.print(webpage_html);
               client.println();
-              break;                   
-            } else {                                   
-              if (currentLine.startsWith("GET /get?")) {  
-              
+              break;
+            } else {
+              if (currentLine.startsWith("GET /get?")) {
+
                 ssid = urlDecode(currentLine.substring(currentLine.indexOf("SSID=") + 5, currentLine.indexOf("passcode=") - 1));
                 passcode = urlDecode(currentLine.substring(currentLine.indexOf("passcode=") + 9, currentLine.indexOf("GSID=") - 1));
                 gsid = urlDecode(currentLine.substring(currentLine.indexOf("GSID=") + 5, currentLine.indexOf(" HTTP")));
@@ -176,20 +188,19 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
                 delay(5000);
                 status = WiFi.status();
                 storeinfo(ssid, passcode, gsid);
-                return; 
+                return;
               }
-              currentLine = ""; 
+              currentLine = "";
             }
-          } else if (c != '\r') {  
-            currentLine += c;     
+          } else if (c != '\r') {
+            currentLine += c;
           }
-        }  
-      }    
+        }
+      }
       client.stop();
       Serial.println(F("Client disconnected"));
-
-    }  
-  }    
+    }
+  }
 }
 
 /**
