@@ -40,58 +40,70 @@
  
    RICARDO TOLEDO-CROW NGENS, ESI, ASRC, CUNY,
    AMALIA TORRES, CUNY, July 2021
-
+//Additional Debug Info
 */
 #include <SPI.h>
 #include <SD.h>
 #include <Wire.h>
 #include <Adafruit_SleepyDog.h>
-#include "RTClib.h"                              
-// #include "SparkFun_SCD30_Arduino_Library.h"                    
-#include "SparkFun_SCD4x_Arduino_Library.h"                    
+#include "RTClib.h"
+// #include "SparkFun_SCD30_Arduino_Library.h"
+#include "SparkFun_SCD4x_Arduino_Library.h"
 #include <Adafruit_GFX.h>
-#include <Adafruit_SH110X.h>  
+#include <Adafruit_SH110X.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
 #include <FlashStorage.h>
+//#include <malloc.h>
 
 
-#define VBATPIN A7                                              // this is also D9 button A disable pullup to read analog
-#define BUTTON_A 9                                              // Oled button also A7 enable pullup to read button
-#define BUTTON_B 6                                              // oled button
-#define BUTTON_C 5                                              // oled button
-#define SD_CS 10                                                // Chip select for SD card default for Adalogger
+#define VBATPIN A7  // this is also D9 button A disable pullup to read analog
+#define BUTTON_A 9  // Oled button also A7 enable pullup to read button
+#define BUTTON_B 6  // oled button
+#define BUTTON_C 5  // oled button
+#define SD_CS 10    // Chip select for SD card default for Adalogger
 #define MAXBUF_REQUIREMENT 48
 
-#if (defined(I2C_BUFFER_LENGTH) &&            \
-(I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || \
-(defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
+#if (defined(I2C_BUFFER_LENGTH) && (I2C_BUFFER_LENGTH >= MAXBUF_REQUIREMENT)) || (defined(BUFFER_LENGTH) && BUFFER_LENGTH >= MAXBUF_REQUIREMENT)
 #define USE_PRODUCT_INFO
 #endif
 
+extern "C" char *sbrk(int i);
+
+int freeMemory() {  //Debug Function
+  char stack_dummy = 0;
+  return &stack_dummy - sbrk(0);
+}
 
 // Function prototypes
 void initializeOLED();
-bool toggleButton(uint8_t button, bool state, bool& buttonState, int& prevTime, int debounce );
+bool toggleButton(uint8_t button, bool state, bool &buttonState, int &prevTime, int debounce);
 
 void initializeSCD30();
 String readSCD30();
 
-void initializeSCD41(); 
+void initializeSCD41();
 String readSCD41();
 
-void initializeBME280(); 
+void initializeBME280();
 String readBME280();
 
 void initializeSen5x();
-String readSen5x();   
+String readSen5x();
 
-File initializeSD(); 
+File initializeSD();
+
+void resetI2C() {
+  Wire.end();
+  delay(100);
+  Wire.begin();
+  delay(100);
+}
 
 void payloadUpload(String payload);
-void printMacAddress(byte mac[]); 
+void printMacAddress(byte mac[]);
 void AP_getInfo(String &ssid, String &passcode, String &gsid);
 void makeMACssidAP(String startString);
 
@@ -115,48 +127,50 @@ bool buttonAstate = true;
 int lastTimeToggle = 0;
 int timeDebounce = 100;
 
-char server[] = "script.google.com"; 
+char server[] = "script.google.com";
 
 String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\":";
 
 // char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
- ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x"; 
-char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
+ ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
+char header[] = "WiFi Strength, Google Connection, DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
 
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
-uint8_t stat = 0; 
-
+uint8_t stat = 0;
 // SCD30 & SCD40
 //uint16_t CO2scd30;
-uint16_t CO2scd41;  
+uint16_t CO2scd41;
 
 
 // BME
 float Tbme = 0;
 float Pbme = 0;
-float RHbme= 0;
+float RHbme = 0;
 
 //SEN 55
+uint16_t error;
 float massConcentrationPm2p5 = 0;
+float numberConcentrationPm2p5 = 0.1;
 float vocIndex = 0;
 float noxIndex = 0;
 
 
-// Sensor Componentns                                                                 
-Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);      
-Adafruit_BME280 bme280;  
-SensirionI2CSen5x sen5x; 
-RTC_PCF8523 rtc; 
-WiFiSSLClient client;                                          
-File logfile;                                                  
+// Sensor Componentns
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
+Adafruit_BME280 bme280;
+SensirionI2CSen5x sen5x;
+RTC_PCF8523 rtc;
+WiFiSSLClient client;
+File logfile;
 
-// SCD30 scd30;                                             
-SCD4x scd41(SCD4x_SENSOR_SCD41);                          
-
+// SCD30 scd30;
+SCD4x scd41(SCD4x_SENSOR_SCD41);
+FlashStorage(failureCountStore, int);
+uint8_t bmeID = bme280.sensorID();
 
 void setup() {
   pinMode(VBATPIN, INPUT);
@@ -169,11 +183,13 @@ void setup() {
   WiFi.setPins(8, 7, 4, 2);
 
   initializeOLED();
-  initializeSCD41();                                      
-  // initializeSCD30(25);                                                                          
-  initializeBME280();  
-  initializeSen5x(); 
-  initializeRTC();                                          
+  initializeSCD41();
+  // initializeSCD30(25);
+  initializeBME280();
+
+  initializeSen5x();
+
+  initializeRTC();
   logfile = initializeSD();
 
   delay(3000);
@@ -192,54 +208,112 @@ void setup() {
     display.display();
     storeinfo(ssidg, passcodeg, gsidg);
   }
+  // TURN SEN55 TO IDLE
+  sen5x.stopMeasurement();
+  Serial.print("Stop measurement executed");
+  Serial.print("\n");
 }
-
 
 void loop(void) {
 
   uint8_t ctr = 0;
-                                  
- 
+
+  // Serial.print("Free memory: ");
+  // Serial.println(freeMemory());
+
+  // MEASUREMENTS
   // String scd30String = readSCD30(100);
   String scd41String = readSCD41();
-  String bmeString   = readBME280();  
-  String sen5xString  = readSen5x();
+  String bmeString = readBME280();
   DateTime now;
-  now = rtc.now();                                                    
+  now = rtc.now();
+
+
+  // START SEN55 IN NO PM MODE FOR 30S WARMUP
+  error = sen5x.startMeasurementWithoutPm();
+  Serial.print("Measurement (No PM) start");
+  Serial.print("\n");
+  delay(30000);
+
+  // START SEN55 IN FULL MODE FOR 30S MORE WARMUP
+  error = sen5x.startMeasurement();
+  Serial.print("Complete Measurement start");
+  Serial.print("\n");
+  delay(30000);
+
+  // MEASUREMENTS
+  String sen5xString = readSen5x();
+
+
+  // TURN SEN55 TO IDLE
+  sen5x.stopMeasurement();
+  Serial.print("Stop measurement executed");
+  Serial.print("\n");
+  delay(1000);
 
   pinMode(VBATPIN, INPUT);  // read battery voltage
   float measuredvbat = analogRead(VBATPIN) * 0.006445;
   pinMode(BUTTON_A, INPUT_PULLUP);
-  delay(5000);  
+  delay(5000);
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
+  if (Pbme < -100 || Tbme > 85) {  //BME Error Reset
+    Serial.println("BME280 Readings-Not Taken. Resetting system");
+
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("BME280 Readings-N/A \nResetting");
+    display.display();
+
+    int failures = failureCountStore.read();
+    failures++;
+    failureCountStore.write(failures);
+
+    if (failures >= 3) {
+      Serial.println("Too many failures. Locking system");
+
+      display.clearDisplay();
+      display.setCursor(0, 0);
+      display.println("Too many failures \nLocking system");
+      display.display();
+
+      while (1)  //Freeze the program
+        ;
+    }
+    NVIC_SystemReset();
+  }
   // payloadUpload( payload + String("\"") + String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
-  payloadUpload( payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") +sen5xString);
+  payloadUpload(payload + String("\"") + String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
 
   Serial.println(header);
   // Serial.println(String(outstr) + scd30String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   Serial.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  
+
   // logfile.println(String(outstr) + scd30String + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
   logfile.println(String(outstr) + scd41String + bmeString + String(measuredvbat) + String(", ") + String(stat) + String(", ") + sen5xString);
-  logfile.flush();                                                // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
+  logfile.flush();  // Write to disk. Uses 2048 bytes of I/O to SD card, power and takes time
 
+  resetI2C();
+
+  // SLEEP FOR 60S (FOR A 2MIN CYCLE)
   // sleep cycle
-  for (int i = 1; i <= 8; i++) {                                  // 124s = 8x16s sleep, only toggle display
+  for (int i = 1; i <= 8; i++) {  // 124s = 8x16s sleep, only toggle display
     displayState = toggleButton(BUTTON_A, displayState, buttonAstate, lastTimeToggle, timeDebounce);
-    if (displayState) { // On
-     display.clearDisplay();
-     display.setCursor(0, 0);
-     display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
-     display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5 , vocIndex, noxIndex);
-     display.printf("\nBat: %.2f V", measuredvbat);
-     display.display();
-    } else {       
+    if (displayState) {  // On
+
+      display.clearDisplay();
+      display.setCursor(0, 0);
+      display.printf("T: %.2f C\nP: %.2f mBar\nRH: %.2f%%\n", Tbme, Pbme, RHbme);
+      display.printf("CO2: %d ppm\nPM2.5: %.2f ug/m^3\nVOCs: %.2f\nNOX: %.2f", CO2scd41, massConcentrationPm2p5, vocIndex, noxIndex);
+      display.printf("\nBat: %.2f V", measuredvbat);
+      display.display();
+    } else {
       display.clearDisplay();
       display.display();
     };
-    int sleepMS = Watchdog.sleep();// remove comment for low power
-    //delay(6000);  // uncomment to debug because serial communication doesn't come back after sleeping
+
+    //int sleepMS = Watchdog.sleep();// remove comment for low power
+    delay(8000);  // uncomment to debug because serial communication doesn't come back after sleeping
   }
 }
