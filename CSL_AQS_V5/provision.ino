@@ -83,15 +83,6 @@ void printMacAddress(byte mac[]) {
   Serial.println();
 }
 
-void updateMacString(byte mac[]) {
-  localMacStr = "";
-  for (int i = 5; i >= 0; i--) {
-    if (mac[i] < 16) localMacStr += "0";
-    localMacStr += String(mac[i], HEX);
-    if (i > 0) localMacStr += ":";
-  }
-}
-
 /**
 *   Makes AP and, when client connected, serves the 
 *   web page with entry fields. The fields are 
@@ -126,9 +117,6 @@ void AP_getInfo(String &ssid, String &passcode, String &gsid) {
         Serial.print(F("Device connected to AP, MAC address: "));
         WiFi.APClientMacAddress(remoteMac);
         printMacAddress(remoteMac);
-
-        WiFi.macAddress(localMac); //Set local mac address
-        updateMacString(localMac);
 
         Serial.println(F("Starting server"));
         server.begin();

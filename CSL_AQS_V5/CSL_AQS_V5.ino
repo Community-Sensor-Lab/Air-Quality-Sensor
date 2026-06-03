@@ -141,8 +141,8 @@ char header[] = "WiFi Strength, Google Connection, DateTime, CO2_scd41, T_scd41,
 int status = WL_IDLE_STATUS;
 String ssidg, passcodeg, gsidg;
 uint8_t stat = 0;
-bool statusg = 0; // Google Connection Status
-int rssi = 0; //WiFi strength
+bool statusg = 0;  // Google Connection Status
+int rssi = 0;      //WiFi strength
 byte localMac[6];
 String localMacStr = "";
 
@@ -155,6 +155,11 @@ uint16_t CO2scd41;
 float Tbme = 0;
 float Pbme = 0;
 float RHbme = 0;
+char BMEString[50];
+char Tbme_char[10];
+char Pbme_char[10];
+int Tbme_int = 0;
+int Pbme_int = 0;
 
 //SEN 55
 uint16_t error;
@@ -186,6 +191,10 @@ void setup() {
   delay(5000);
   Serial.println(__FILE__);
   WiFi.setPins(8, 7, 4, 2);
+
+  if (PM->RCAUSE.bit.EXT || PM->RCAUSE.bit.POR) {
+    failureCountStore.write(0);
+  }
 
   initializeOLED();
   initializeSCD41();
@@ -223,8 +232,8 @@ void loop(void) {
 
   uint8_t ctr = 0;
 
-  // Serial.print("Free memory: ");
-  // Serial.println(freeMemory());
+  Serial.print("Free memory: ");
+  Serial.println(freeMemory());
 
   // MEASUREMENTS
   // String scd30String = readSCD30(100);
@@ -263,7 +272,16 @@ void loop(void) {
 
   sprintf(outstr, "%02u/%02u/%02u %02u:%02u:%02u, ", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
 
-  if (Pbme < -100 || Tbme > 85) {  //BME Error Reset
+  bmeString.toCharArray(BMEString, 50);
+  sscanf(BMEString, "%[^,],%[^,]", Tbme_char, Pbme_char);  //Parse bmeString for Temp and Pressure Values
+  Tbme_int = atoi(Tbme_char);
+  Pbme_int = atoi(Pbme_char);
+  Serial.print("BME Temp:");
+  Serial.println(Tbme_int);
+  Serial.print("BME Pressure");
+  Serial.println(Pbme_int);
+
+  if (Pbme_int < -100 || Tbme_int > 85) {  //BME Error Reset
     Serial.println("BME280 Readings-Not Taken. Resetting system");
 
     display.clearDisplay();

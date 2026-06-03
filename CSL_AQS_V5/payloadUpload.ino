@@ -14,10 +14,13 @@ void payloadUpload(String payload) {
 
     if (WiFi.status() == WL_CONNECTED) {
       Serial.print("WiFi Status: Connected\n");
-      rssi = WiFi.RSSI(); 
+      rssi = WiFi.RSSI();
       Serial.print("RSSI: ");
       Serial.print(rssi);
       Serial.print(" dBm");
+
+      WiFi.macAddress(localMac);  //Set local mac address
+      updateMacString(localMac);
 
       if (!client.connected()) {
         initializeClient();
@@ -44,7 +47,7 @@ void payloadUpload(String payload) {
       client.stop();
       if (!client.connected()) {
         Serial.println("disconnected from server");
-        statusg = 1;  
+        statusg = 1;
       };
       WiFi.end();
       break;
@@ -52,8 +55,8 @@ void payloadUpload(String payload) {
       Serial.print("Trying to connect to Wifi : ");
       Serial.println(i);
       if (i == 3) {
-        rssi = 0; // No WiFi available 
-        statusg = 0; 
+        rssi = 0;  // No WiFi available
+        statusg = 0;
       }
     }
   }
@@ -82,4 +85,11 @@ void initializeClient() {
   Serial.println("end intializeClient");
 }
 
-
+void updateMacString(byte mac[]) {
+  localMacStr = "";
+  for (int i = 5; i >= 0; i--) {
+    if (mac[i] < 16) localMacStr += "0";
+    localMacStr += String(mac[i], HEX);
+    if (i > 0) localMacStr += ":";
+  }
+}
