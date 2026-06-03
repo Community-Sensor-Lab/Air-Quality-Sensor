@@ -60,7 +60,7 @@ void printWiFiStatus() {
   Serial.println(F(" dBm"));
 
   byte mac[6];
-  WiFi.macAddress(mac);
+  WiFi.macAddress(mac); //Writes MSB to LSB. Correct Mac Address
   Serial.print("MAC Address: ");
   Serial.print(mac[0], HEX);
   Serial.print(":");
