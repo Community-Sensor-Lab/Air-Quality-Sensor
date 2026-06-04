@@ -56,7 +56,6 @@
 #include <SensirionI2CSen5x.h>
 #include <WiFi101.h>
 #include <FlashStorage.h>
-//#include <malloc.h>
 
 
 #define VBATPIN A7  // this is also D9 button A disable pullup to read analog
@@ -168,7 +167,6 @@ float numberConcentrationPm2p5 = 0.1;
 float vocIndex = 0;
 float noxIndex = 0;
 
-
 // Sensor Componentns
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 Adafruit_BME280 bme280;
@@ -180,7 +178,7 @@ File logfile;
 // SCD30 scd30;
 SCD4x scd41(SCD4x_SENSOR_SCD41);
 FlashStorage(failureCountStore, int);
-uint8_t bmeID = bme280.sensorID();
+
 
 void setup() {
   pinMode(VBATPIN, INPUT);
@@ -200,9 +198,7 @@ void setup() {
   initializeSCD41();
   // initializeSCD30(25);
   initializeBME280();
-
   initializeSen5x();
-
   initializeRTC();
   logfile = initializeSD();
 
@@ -232,8 +228,8 @@ void loop(void) {
 
   uint8_t ctr = 0;
 
-  Serial.print("Free memory: ");
-  Serial.println(freeMemory());
+  // Serial.print("Free memory: ");
+  // Serial.println(freeMemory());
 
   // MEASUREMENTS
   // String scd30String = readSCD30(100);

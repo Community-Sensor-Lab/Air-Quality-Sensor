@@ -59,10 +59,31 @@ void printWiFiStatus() {
   Serial.print(rssi);
   Serial.println(F(" dBm"));
 
+  byte mac[6];
+  WiFi.macAddress(mac);  //Writes MSB to LSB. Correct Mac Address
+  Serial.print("MAC Address: ");
+  Serial.print(mac[0], HEX);
+  Serial.print(":");
+  Serial.print(mac[1], HEX);
+  Serial.print(":");
+  Serial.print(mac[2], HEX);
+  Serial.print(":");
+  Serial.print(mac[3], HEX);
+  Serial.print(":");
+  Serial.print(mac[4], HEX);
+  Serial.print(":");
+  Serial.println(mac[5], HEX);
+
+  char macStr[18];
+  sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X",
+          mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
   display.clearDisplay();
   display.setCursor(0, 0);
   display.println("Connect to SSID: ");
   display.println(WiFi.SSID());
+  display.println("\nWiFi Mac Address: ");
+  display.println(macStr);
   display.display();
 }
 
@@ -209,7 +230,7 @@ void makeMACssidAP(String startString) {
   printMacAddress(localMac);
 
   char myHexString[3];
-  sprintf(myHexString, "%02X%02X", localMac[1], localMac[0]);
+  sprintf(myHexString, "%02X%02X", localMac[4], localMac[5]);
   // EDIT LOCAL SERVER NAME BY CHANGING SSID
   String ssid = startString + String((char *)myHexString);
 
