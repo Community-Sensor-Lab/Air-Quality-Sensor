@@ -241,7 +241,7 @@ void makeMACssidAP(String startString) {
   printMacAddress(localMac);
 
   char myHexString[3];
-  sprintf(myHexString, "%02X%02X", localMac[1], localMac[0]);
+  sprintf(myHexString, "%02X%02X", localMac[4], localMac[5]);
   // EDIT LOCAL SERVER NAME BY CHANGING SSID
   String ssid = startString + String((char *)myHexString);
 
