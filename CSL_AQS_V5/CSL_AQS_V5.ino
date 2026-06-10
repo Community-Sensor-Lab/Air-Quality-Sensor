@@ -133,7 +133,7 @@ String payload = "{\"command\":\"appendRow\",\"sheet_name\":\"Sheet1\",\"values\
 // char header[] = "DateTime, CO2_scd30, T_scd30, RH_scd30, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x";
-char header[] = "WiFi Strength, Google Connection, DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
+char header[] = "DateTime, CO2_scd41, T_scd41, RH_scd41, T_bme280, P_bme280, RH_bme280, dvbat(mV), status, \
  mC_Pm1_sen5x, mC_Pm2_sen5x, mC_Pm4_sen5x, mC_Pm10_sen5x, nC_Pm0_5_sen5x, nC_Pm1_sen5x, nC_Pm2_sen5x, nC_Pm4_sen5x, nC_Pm10_sen5x, typPartSize_sen5x, \
  ambientRH_sen5x, ambientTemp_sen5x, vocIndex_sen5x, noxIndex_sen5x, Mac Address, WiFi, WiFi Strength";
 
@@ -272,9 +272,9 @@ void loop(void) {
   sscanf(BMEString, "%[^,],%[^,]", Tbme_char, Pbme_char);  //Parse bmeString for Temp and Pressure Values
   Tbme_int = atoi(Tbme_char);
   Pbme_int = atoi(Pbme_char);
-  Serial.print("BME Temp:");
+  Serial.print("BME Temp: ");
   Serial.println(Tbme_int);
-  Serial.print("BME Pressure");
+  Serial.print("BME Pressure: ");
   Serial.println(Pbme_int);
 
   if (Pbme_int < -100 || Tbme_int > 85) {  //BME Error Reset
